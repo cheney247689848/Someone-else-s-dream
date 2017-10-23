@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 3744181140
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 927bb07a798b199a2a43f6033d5a5629
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/ResLua/lua/core/observer/L_Observer.lua.bytes
+- Assets/ResLua/lua/core/observer/L_Subject.lua.bytes
+Dependencies: []

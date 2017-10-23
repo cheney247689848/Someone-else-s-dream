@@ -1,0 +1,60 @@
+module(...,package.seeall)
+
+m_eId = 0
+m_eNtity = nil
+m_nStatus = 0
+m_pOwner = nil
+m_nTimer = 0
+m_nTick = 0
+m_nTimerMax = 1
+m_nMark = 0
+
+function L_State:New(o , entity)--entity
+    
+    --m_eNtity = entity
+    o = o or {}
+    setmetatable(o , self)
+    self.__index = self
+    o.m_eNtity = entity
+    return o
+end
+
+function L_State:Enter()
+
+    --print("--- L_State:Enter() ---"..self.m_nTimerMax)
+end
+
+function L_State:Execute(nTime)
+
+    --print("--- L_State:Execute() ---"..nTime)
+end
+
+function L_State:FixedExcute(nTime)
+
+    --print("--- L_State:FixedExcute() ---"..nTime)
+end
+
+function L_State:LateExcute(nTime)
+
+    --print("--- L_State:LateExcute() ---"..nTime)
+end
+
+function L_State:Exit()
+
+   --print("--- L_State:Exit() ---")
+end
+
+function L_State:Effect(obj)
+
+   --print("--- L_State:Effect() ---")
+end
+
+function L_State:GetEntity()
+
+    return m_eNtity
+end
+
+function L_State:GetMark()
+
+    return m_nMark
+end

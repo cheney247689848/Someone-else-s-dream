@@ -1,0 +1,49 @@
+﻿--require "update/L_UpdateStrategy"
+--require "core/L_ByteStream"
+local GameObject = UnityEngine.GameObject
+-- require "example/L_ExpTextScene"
+require "bundle/L_Bundle"
+function Launch()
+
+    --init bundle
+    --L_Bundle.streamPath = localPath
+    --print("streamPath : " .. L_Bundle.streamPath)
+    --print("PersistentPath : " .. persPath)
+    ----print(L_ProxyScene.anchor)
+    --L_NetServer:Init(L_ProxyScene.anchor)
+    --L_ProxyScene.ChangeView(L_SceneLogin)
+
+    --L_UpdateStrategy.localPath = localPath
+    --L_UpdateStrategy.persPath = persPath
+    print("Launch")
+    --L_ExpTextScene:Init()
+
+  
+    L_Bundle.streamPath = localPath
+    print(L_Bundle.streamPath)
+
+
+    -- require("example/L_ExpBundleScene")
+    -- L_ExpBundleScene:Init()
+
+    -- require ("three/Three")
+    -- local three = L_Three:New({["abc"] = 123})
+    -- three:AddBranch(three.trunk)
+    -- print("res = " .. three.trunk[1].abc)
+
+    local province = "睢宁"
+    local city = "睢xiyi"
+    local district =  nil
+
+    local combAddress = (province or "") .. (city or "") .. (district or "");
+    if(string.find(combAddress,"睢宁")) then
+        
+        print("sss : " , true)
+    else
+        print("sss : " , false)
+    end
+end
+
+--配置信息
+--游戏启动  进入热更新  更新结束 转入类  （不关联任何  require lua 脚步）
+--场景转换

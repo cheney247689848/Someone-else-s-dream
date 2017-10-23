@@ -1,0 +1,23 @@
+--客户端版本信息
+version = "1.0.0"
+--客户端脚步版本信息
+bundleScriptInfo = {
+
+    101 , "abundle_scriptlua",
+}
+--每个资源包的版本号
+bundleInfo = {
+    --{版本号，对应的bundleName}
+    {101 , "abundle_login"},
+	{101 , "abundle_audio"},
+	{101 , "abundle_public"},
+	{101 , "abundle_main"},
+	{101 , "abundle_match"},
+	{101 , "abundle_clean"},
+	{101 , "abundle_raiders"},
+	{101 , "abundle_battle"},
+	{101 , "abundle_bar"},
+	{101 , "abundle_card"},
+	{101 , "abundle_library"},
+	{101 , "abundle_pub"},
+}

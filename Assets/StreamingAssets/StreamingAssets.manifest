@@ -1,0 +1,11 @@
+ManifestFileVersion: 0
+CRC: 1945408960
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: slogin_texture_noticebg
+      Dependencies: {}
+    Info_1:
+      Name: slogin_prafab_prafabimage
+      Dependencies:
+        Dependency_0: slogin_texture_noticebg

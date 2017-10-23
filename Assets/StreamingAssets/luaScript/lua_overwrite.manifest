@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 3392415021
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 388e4205a8e4991f7baef4bcfc2db727
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/ResLua/lua/overWrite/L_Father.lua.bytes
+- Assets/ResLua/lua/overWrite/L_Son.lua.bytes
+Dependencies: []

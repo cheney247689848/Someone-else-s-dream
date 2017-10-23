@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 1953986567
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 1df80e671763b5a2121c22f2a96b1fb4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/ResLua/lua/type/L_TypeSceneState.lua.bytes
+Dependencies: []

@@ -1,0 +1,55 @@
+ManifestFileVersion: 0
+CRC: 3897587526
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: lua
+      Dependencies: {}
+    Info_1:
+      Name: lua_bundle
+      Dependencies: {}
+    Info_2:
+      Name: lua_core
+      Dependencies: {}
+    Info_3:
+      Name: lua_core_observer
+      Dependencies: {}
+    Info_4:
+      Name: lua_core_scene
+      Dependencies: {}
+    Info_5:
+      Name: lua_core_state
+      Dependencies: {}
+    Info_6:
+      Name: lua_example
+      Dependencies: {}
+    Info_7:
+      Name: lua_net
+      Dependencies: {}
+    Info_8:
+      Name: lua_observer
+      Dependencies: {}
+    Info_9:
+      Name: lua_other
+      Dependencies: {}
+    Info_10:
+      Name: lua_overwrite
+      Dependencies: {}
+    Info_11:
+      Name: lua_proxyscene
+      Dependencies: {}
+    Info_12:
+      Name: lua_scene
+      Dependencies: {}
+    Info_13:
+      Name: lua_three
+      Dependencies: {}
+    Info_14:
+      Name: lua_tool
+      Dependencies: {}
+    Info_15:
+      Name: lua_type
+      Dependencies: {}
+    Info_16:
+      Name: lua_update
+      Dependencies: {}

@@ -1,0 +1,41 @@
+require "L_Scene"
+require "L_SceneLogin"
+local Resources = UnityEngine.Resources
+local GameObject = UnityEngine.GameObject
+module(...,package.seeall)
+
+--当前场景
+local currentScene = nil
+anchor = GameObject.Find("Anchor") 
+function ChangeView(scene)
+    
+    if type(scene) == "table" then
+    
+        if currentScene ~= nil then
+            
+            currentScene.machine:GetCurrentState():Exit()
+            currentScene:RemoveEvent()
+            currentScene:OnDestory()
+            currentScene = nil;
+            Resources.UnloadUnusedAssets()
+        end
+
+        if(getmetatable(scene) == L_Scene) then
+        
+            --已经new过
+            currentScene = scene
+        else
+        
+            currentScene = L_Scene:New(scene)
+            currentScene:ConfState()
+        end
+        currentScene:Init()
+        currentScene:InitEvent()
+        print(" ::: ViewChange -> "..currentScene.name)
+    end
+end
+
+function GetCurrentScene()
+    
+    return currentScene
+end

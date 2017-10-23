@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 3569644618
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 1f105b51d2eaa545daca32a4550a8a9d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9dea23ffc7e96552740e12d1ee5309d8
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Res/sLogin/Texture/noticebg.jpg
+Dependencies: []

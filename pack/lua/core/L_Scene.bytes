@@ -1,0 +1,128 @@
+--Scene Base
+local GameObject = UnityEngine.GameObject
+require "L_State"
+require "L_StateMachine"
+module(...,package.seeall)
+
+isInit = false
+name = "No Name"
+view = nil
+machine = nil
+stateLoad = nil
+stateGuide = nil
+stateIdle = nil
+stateExit = nil
+bundle = nil
+
+local LS = L_Scene
+function LS:Init()
+
+  print("you need to overwrite Init")
+end
+
+function LS:ConfState()
+
+  print("you need to overwrite ConfState")
+end
+
+function LS:ChangeToLoad()
+
+    self.machine:ChangeState(self.stateLoad)
+end
+
+function LS:ChangeToGuide()
+
+    self.machine:ChangeState(self.stateGuide)
+end
+
+function LS:ChangeToIdle()
+
+    self.machine:ChangeState(self.stateIdle)
+end
+
+function LS:ChangeToExit()
+
+    self.machine:ChangeState(self.stateExit)
+end
+
+function LS:Update()
+
+    --print("update  ".. UnityEngine.Time.deltaTime)
+end
+
+function LS:FixedUpdate()
+
+    --print("FixedUpdate  "..UnityEngine.Time.deltaTime)
+end
+
+function LS:OnDestory()
+
+     
+     print("--- L_Scene:OnDestory() ---")
+end
+
+function LS:RemoveEvent()
+    
+    print("--- UpdateBeat . Remove [Update] ---")
+    UpdateBeat:Remove(self.Update, self)
+end
+
+function LS:InitEvent()
+
+    print("--- UpdateBeat . Add [Update] ---")
+    UpdateBeat:Add(self.Update , self)
+    --FixedUpdateBeat:Add(self.FixedUpdate , self)
+end
+
+local function Search(k , plist)
+
+    for i = 1, #plist do
+        local v = plist[i][k]
+        if v then return v end
+    end
+end
+
+function LS:New(...)
+    
+    local c = {}
+    local parents = {}
+
+    setmetatable(c , {__index = function(t , k)
+    return Search(k , parents)
+    end})
+    c.__index = c
+    return c
+end
+
+function LS:New(o)
+
+    o = o or {}
+    setmetatable(o , self)
+    self.__index = self
+    return o;
+end
+
+
+function LS:LoadAssectInstantiate(args , gType)
+    
+    if self.bundle ~= nil then
+    
+      local prefab = self.bundle:LoadAsset(args , gType)
+      return GameObject.Instantiate(prefab)
+    end
+    print("Error No bundle")
+end
+
+function LS:LoadGameObjectInstantiate(args , parent)
+    
+    if self.bundle ~= nil then
+    
+      local prefab = self.bundle:LoadAsset(args , typeof(GameObject))
+      local assect = GameObject.Instantiate(prefab)
+      assect.transform.parent = parent.transform
+      assect.transform.localPosition = Vector3.zero
+      assect.transform.localScale = Vector3.one
+      return assect
+    end
+    print("Error No bundle")
+end
