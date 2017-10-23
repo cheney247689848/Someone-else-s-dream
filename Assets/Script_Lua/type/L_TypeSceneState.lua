@@ -8,5 +8,8 @@ L_TypeSceneState = {
 
     Layout = 5,
     Process = 6,
-    Global = 7
+    Global = 7,
+
+
+    MapLayout = 20,
 }

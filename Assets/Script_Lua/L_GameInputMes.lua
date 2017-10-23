@@ -17,15 +17,15 @@ local _this = L_GameInputMes
 
 function _this:Update()
     
-    if Input.GetKeyDown(KeyCode.Alpha1) then
+    -- if Input.GetKeyDown(KeyCode.Alpha1) then
 
-        require "scene/L_SceneLogin"
-        L_ProxyScene:ChangeScene(L_SceneLogin)
+    --     require "scene/L_SceneLogin"
+    --     L_ProxyScene:ChangeScene(L_SceneLogin)
 
-    elseif Input.GetKeyDown(KeyCode.Alpha2) then
+    -- elseif Input.GetKeyDown(KeyCode.Alpha2) then
 
-        require "scene/L_SceneMajor"
-        L_ProxyScene:ChangeScene(L_SceneMajor)
-    end
+    --     require "scene/L_SceneMajor"
+    --     L_ProxyScene:ChangeScene(L_SceneMajor)
+    -- end
 end
 UpdateBeat:Add(_this.Update , _this)

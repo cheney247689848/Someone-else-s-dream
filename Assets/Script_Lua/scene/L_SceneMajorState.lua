@@ -33,6 +33,12 @@ _this.stateLayout = function (o , eNtity)
     function state:Execute(nTime)
         
         --do thing
+        if 0 == self.m_nTick then
+            
+            require "scene/L_SceneGame"
+            L_ProxyScene:ChangeScene(L_SceneGame)
+            self.m_nTick = 1
+        end
     end
 
     function state:Exit()

@@ -1,6 +1,6 @@
-L_SceneLoginState = {}
-setmetatable(L_SceneLoginState, {__index = _G})
-local _this = L_SceneLoginState
+L_SceneGameState = {}
+setmetatable(L_SceneGameState, {__index = _G})
+local _this = L_SceneGameState
 
 _this.stateGlobal = function (o , eNtity)
     
@@ -33,17 +33,39 @@ _this.stateLayout = function (o , eNtity)
     function state:Execute(nTime)
         
         --do thing
-        if 0 == self.m_nTick then
+        self.m_eNtity:ChangeToState(self.m_eNtity.stateMapLayout)
+    end
 
-            require "scene/L_SceneMajor"
-            L_ProxyScene:ChangeScene(L_SceneMajor)
+    function state:Exit()
+
+    print("------退出Layout状态------")
+    end
+    return state
+end
+
+_this.stateMapLayout = function (o , eNtity)
+    
+    local state = L_State.New(o , eNtity)
+    function state:Enter()
+
+        print("------进入MapLayout状态------")
+        self.m_nTimer = 0
+        self.m_nTick = 0
+    end
+
+    function state:Execute(nTime)
+        
+        --do thing
+        if 0 == self.m_nTick then
+            
+            print("配置地形")
             self.m_nTick = 1
         end
     end
 
     function state:Exit()
 
-    print("------退出Layout状态------")
+    print("------退出MapLayout状态------")
     end
     return state
 end

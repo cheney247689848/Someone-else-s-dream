@@ -11,13 +11,15 @@ local _this = L_ScenePreloading
 
 _this.data = {
 
-    {"Login" , "a|b|c|d|d|f|g" , name = "login"}
+    {"Login" , "a|b|c|d|d|f|g" , name = "Login"},
+    {"Major" , "a|b|c|d|d|f|g" , name = "Major"},
+    {"Game" , "a|b|c|d|d|f|g" , name = "Game"}
 }
 
 function _this:GetPreLoadingData(sceneName)
     
     for i,v in ipairs(self.data) do
-        print(i,v)
+
         if v.name == sceneName then
             return v
         end

@@ -45,8 +45,8 @@ _this.stateLoad = function (o , eNtity)
         if 0 == self.m_nTick then
             
             self.m_nTimer = self.m_nTimer + nTime
-            print(self.m_nTimer)
-            if self.m_nTimer > 3 then
+            -- print(self.m_nTimer)
+            if self.m_nTimer > 1 then
                 
                 self.m_eNtity:ChangeToState(self.m_eNtity.stateNone)
             end
@@ -76,12 +76,14 @@ _this.stateExit = function (o , eNtity)
         --do thing
         if 0 == self.m_nTick then
             
-            self.m_nTimer = self.m_nTimer + nTime
-            print(self.m_nTimer)
-            if self.m_nTimer > 3 then
+            -- self.m_nTimer = self.m_nTimer + nTime
+            -- -- print(self.m_nTimer)
+            -- if self.m_nTimer > 1 then
             
-                self.m_eNtity:ChangeToState(self.m_eNtity.stateNone)
-            end
+            --     self.m_eNtity:ChangeToState(self.m_eNtity.stateNone)
+            -- end
+            self.m_eNtity:ChangeToState(self.m_eNtity.stateNone)
+            self.m_nTick = 1
         end
     end
 

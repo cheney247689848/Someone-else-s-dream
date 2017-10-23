@@ -34,10 +34,10 @@ function Launch()
     -- three:AddBranch(three.trunk)
     -- print("res = " .. three.trunk[1].abc)
 
-    --L_ProxyScene:ChangeScene(L_SceneLogin)
+    L_ProxyScene:ChangeScene(L_SceneLogin)
 
-    require "other/L_ReadOnly"
-    require "table/L_TestTable"
+    -- require "other/L_ReadOnly"
+    -- require "table/L_TestTable"
 
 
     -- f = 4  
@@ -91,7 +91,7 @@ end
 
 -- New(observer)
 
-
+--中国象棋和塔防对战结合
 
 -- observer[type] = observer[type] + listener  --添加侦听
 -- observer[type] = observer[type] - listener  --移除侦听

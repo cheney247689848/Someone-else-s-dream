@@ -2,14 +2,14 @@ require "core/scene/L_Scene"
 require "core/state/L_StateMachine"
 require "other/L_ScenePreloading"
 require "scene/L_StatePublic"
-require "scene/L_SceneLoginView"
-require "scene/L_SceneLoginState"
+require "scene/L_SceneGameView"
+require "scene/L_SceneGameState"
 require "type/L_TypeSceneState"
 --场景类
 
-local pData = L_ScenePreloading:GetPreLoadingData("Login")
-L_SceneLogin = L_Scene.New( pData ~= nil and pData or {})
-local _this = L_SceneLogin
+local pData = L_ScenePreloading:GetPreLoadingData("Game")
+L_SceneGame = L_Scene.New( pData ~= nil and pData or {})
+local _this = L_SceneGame
 
 _this.stateLayout = nil
 _this.stateProcess = nil
@@ -24,13 +24,17 @@ end
 
 function _this:ConfState()
     --state config
-    _this.view = L_SceneLoginView --conn view class
+    _this.view = L_SceneGameView --conn view class
     _this.stateNone = L_StatePublic.stateNone({m_nStatus = L_TypeSceneState.None} , _this)
     _this.stateLoad = L_StatePublic.stateLoad({m_nStatus = L_TypeSceneState.Load} , _this)
     _this.stateExit = L_StatePublic.stateExit({m_nStatus = L_TypeSceneState.Exit} , _this)
-    _this.stateLayout = L_SceneLoginState.stateLayout({m_nStatus = L_TypeSceneState.Layout} , _this)
-    _this.stateProcess = L_SceneLoginState.stateProcess({m_nStatus = L_TypeSceneState.Process} , _this)
-    _this.stateGlobal = L_SceneLoginState.stateGlobal({m_nStatus = L_TypeSceneState.Global} , _this)
+    _this.stateLayout = L_SceneGameState.stateLayout({m_nStatus = L_TypeSceneState.Layout} , _this)
+    _this.stateProcess = L_SceneGameState.stateProcess({m_nStatus = L_TypeSceneState.Process} , _this)
+    _this.stateGlobal = L_SceneGameState.stateGlobal({m_nStatus = L_TypeSceneState.Global} , _this)
+
+    --other
+    _this.stateMapLayout = L_SceneGameState.stateMapLayout({m_nStatus = L_TypeSceneState.Exit} , _this)    
+
 
     _this.machine = L_StateMachine.New()
     _this.machine:SetGlobalState(_this.stateGlobal)
