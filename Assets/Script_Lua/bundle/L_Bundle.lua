@@ -25,7 +25,7 @@ _this.path = ""
 _this.fCallBack = nil
 _this.cBundle = nil
 
-_this.loadBundleList = {}
+_this.loadDataList = {}
 _this.bundles = {}
 
 function _this:AddBundle(bName , args)
@@ -66,16 +66,17 @@ end
 
 function _this:LoadBundle(bName , call)
 
-    local loadData = {["bundleName"] = bName , 
-                      ["call"] = call , 
-                      ["path"] = self.streamPath..bName , 
-                      ["dependencies"] = {}}
+
     if self.isLoad == false then
        self.isLoad = true
+       local loadData = {["bundleName"] = bName , 
+       ["call"] = call , 
+       ["path"] = self.streamPath..bName , 
+       ["dependencies"] = {}}
        coroutine.start(self.IELoadBundle , loadData)
     else
         --添加到队列中
-        table.insert( _this.loadBundleList, loadData)
+        table.insert(self.loadDataList, {bName , call})
     end
 end
 
@@ -136,6 +137,14 @@ function _this.IELoadBundle(loadData)
     loadData.call(assect)
     loadData = nil
     _this.isLoad = false
+
+    --继续队列
+    if #_this.loadDataList > 0 then
+        
+        local d = _this.loadDataList[1]
+        table.remove(_this.loadDataList, 1)
+        _this:LoadBundle(d[1] , d[2])
+    end
 end
 
 function _this:InitMainifest(mainifestName)

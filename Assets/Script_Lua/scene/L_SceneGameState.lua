@@ -1,3 +1,5 @@
+require "map/L_Map"
+
 L_SceneGameState = {}
 setmetatable(L_SceneGameState, {__index = _G})
 local _this = L_SceneGameState
@@ -28,6 +30,7 @@ _this.stateLayout = function (o , eNtity)
     function state:Enter()
 
         print("------进入Layout状态------")
+        self.m_eNtity.view:InitView()
     end
 
     function state:Execute(nTime)
@@ -59,6 +62,8 @@ _this.stateMapLayout = function (o , eNtity)
         if 0 == self.m_nTick then
             
             print("配置地形")
+            L_Map.SetConfigRamdom()
+            self.m_eNtity.view:InitMap(L_Map.formx ,L_Map.formy,L_Map.metaData)
             self.m_nTick = 1
         end
     end

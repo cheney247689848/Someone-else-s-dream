@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3654856329
+CRC: 1230328859
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: bf4845348f1ff6f91d304b79f5f7d1b6
+    Hash: e19b6d1e0048ad8ebbebd56908327b68
   TypeTreeHash:
     serializedVersion: 2
     Hash: fed6367c8a4f3c557f44f1eafd41970c
@@ -22,6 +22,6 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Res/sLogin/Prafab/PrafabImage.prefab
+- Assets/Res/sLogin/Prefab/PrafabImage.prefab
 Dependencies:
 - Assets/StreamingAssets/slogin_texture_noticebg

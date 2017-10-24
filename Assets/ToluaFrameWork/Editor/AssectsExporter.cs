@@ -109,18 +109,18 @@ public class AssectsExporter : EditorWindow
         }
     }
 
-    [MenuItem("Build Bundle/ Test dec lua")]
-    static void DesLua(){
+    // [MenuItem("Build Bundle/ Test dec lua")]
+    // static void DesLua(){
 
-        // string path = System.IO.Path.Combine(Application.dataPath , "Assets/ResLua/lua/L_Game.lua.bytes");
-        TextAsset t = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/ResLua/lua/L_Game.lua.bytes");
-        Debug.Log(t.bytes.Length);
-        Debug.Log(DesEncrypt.Decrypt(t.text));
-        // FileStream stream = new FileInfo(path).OpenRead();
-        // Byte[] buffer = new Byte[stream.Length];
-        // stream.Read(buffer, 0, Convert.ToInt32(stream.Length));
-        // Debug.Log(System.Text.Encoding.ASCII.GetString(DesEncrypt.Decrypt(buffer)));
-    }
+    //     // string path = System.IO.Path.Combine(Application.dataPath , "Assets/ResLua/lua/L_Game.lua.bytes");
+    //     TextAsset t = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/ResLua/lua/L_Game.lua.bytes");
+    //     Debug.Log(t.bytes.Length);
+    //     Debug.Log(DesEncrypt.Decrypt(t.text));
+    //     // FileStream stream = new FileInfo(path).OpenRead();
+    //     // Byte[] buffer = new Byte[stream.Length];
+    //     // stream.Read(buffer, 0, Convert.ToInt32(stream.Length));
+    //     // Debug.Log(System.Text.Encoding.ASCII.GetString(DesEncrypt.Decrypt(buffer)));
+    // }
 
 
     /*
@@ -133,8 +133,9 @@ public class AssectsExporter : EditorWindow
         //配置打包信息
         string sPath = "Assets/Res";
         StringBuilder packList = new StringBuilder();
-        packList.AppendFormat("Prafab:{0}" , 1);packList.Append(",");
-        packList.AppendFormat("Texture:{0}" , 1);
+        packList.AppendFormat("Prefab:{0}" , 1);packList.Append(",");
+        packList.AppendFormat("Texture:{0}" , 1);packList.Append(",");
+        packList.AppendFormat("PackTextures:{0}" , 2);
 
         accestsPackages.Clear();
         string[] packageList = AssetDatabase.GetSubFolders(sPath);
@@ -147,7 +148,7 @@ public class AssectsExporter : EditorWindow
                 int dex = pList[p].IndexOf(':');
                 string pName = pList[p].Substring(0 , dex);
                 int nType = int.Parse(pList[p].Substring(dex + 1,1));
-                Debug.Log(string.Format("pName = {0} , type = {1}" ,pName, nType));
+                // Debug.Log(string.Format("pName = {0} , type = {1}" ,pName, nType));
                 Collect(System.IO.Path.Combine(packageList[i] , pName) , nType);
             }
         }
@@ -156,11 +157,16 @@ public class AssectsExporter : EditorWindow
 
     static void Collect(string pathName  , int nType)
     {
+
+        if (!Directory.Exists(pathName))return;
         List<package> pl = new List<package>();
         switch (nType)
         {
             case 1:
                 TypeCollect(pathName);
+            break;
+            case 2:
+                TypePackCollect(pathName);
             break;
             default:
             break;
@@ -186,6 +192,30 @@ public class AssectsExporter : EditorWindow
                 accestsPackages.Add(p);
             }
         }
+    }
+
+    static void TypePackCollect(string pathName){
+
+        string strp = pathName.Replace("\\" , "/");
+        int ds = strp.IndexOf("/" , 7);
+        int de = strp.IndexOf(".");
+        string s = strp.Substring(ds + 1 , strp.Length - ds - 1);
+        s = s.Replace("/" , "_");//Debug.Log(s);
+        package p;
+        p.sName = s;
+        p.assets = null;
+        List<string> assets = new List<string>();
+        string[] collects = Directory.GetFiles(pathName, "*", SearchOption.AllDirectories);
+        for (int i = 0; i < collects.Length; i++)
+        {
+            if (!collects[i].EndsWith(".meta"))
+            {
+                //Debug.Log(collects[i]);
+                assets.Add(collects[i]);
+            }
+        }
+        p.assets = assets.ToArray();
+        accestsPackages.Add(p);
     }
 
     static void Pack(List<package> packages , string dirName){
@@ -241,7 +271,6 @@ public class AssectsExporter : EditorWindow
         BuildPipeline.BuildAssetBundles(path, buildMap, options, BuildTarget.Android);
 #endif
         AssetDatabase.Refresh();
-        Debug.Log("pack finsh");
+        Debug.Log(string.Format("pack finsh len = {0}" , packages.Count));
     }
-
 }

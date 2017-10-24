@@ -11,9 +11,9 @@ local _this = L_ScenePreloading
 
 _this.data = {
 
-    {"Login" , "a|b|c|d|d|f|g" , name = "Login"},
-    {"Major" , "a|b|c|d|d|f|g" , name = "Major"},
-    {"Game" , "a|b|c|d|d|f|g" , name = "Game"}
+    {name = "Login" , loadBundles = "slogin_texture_noticebg|slogin_prefab_prafabimage|slogin_prefab_cube"},
+    {name = "Major" , loadBundles = ""},
+    {name = "Game" , loadBundles = "sgame_packtextures|sgame_prefab_cube|sgame_prefab_block"}
 }
 
 function _this:GetPreLoadingData(sceneName)

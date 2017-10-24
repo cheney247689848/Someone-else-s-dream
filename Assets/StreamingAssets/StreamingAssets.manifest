@@ -1,11 +1,24 @@
 ManifestFileVersion: 0
-CRC: 1945408960
+CRC: 1835949464
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: slogin_texture_noticebg
-      Dependencies: {}
+      Name: sgame_prefab_block
+      Dependencies:
+        Dependency_0: sgame_packtextures
     Info_1:
-      Name: slogin_prafab_prafabimage
+      Name: sgame_prefab_cube
+      Dependencies: {}
+    Info_2:
+      Name: sgame_packtextures
+      Dependencies: {}
+    Info_3:
+      Name: slogin_prefab_cube
+      Dependencies: {}
+    Info_4:
+      Name: slogin_prefab_prafabimage
       Dependencies:
         Dependency_0: slogin_texture_noticebg
+    Info_5:
+      Name: slogin_texture_noticebg
+      Dependencies: {}

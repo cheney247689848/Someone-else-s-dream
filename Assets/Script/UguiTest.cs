@@ -14,14 +14,17 @@ public class UguiTest : MonoBehaviour {
         //b.onClick.AddListener(OnClick__Cal);
         //print("addListener");
       
-
+        
         Debug.Log(0x00000001);
         Debug.Log(0x00000010);
         Debug.Log(0x00000100);
         Debug.Log(0x00001000);
 
-        
+        // AssetBundle bundle;
+        // bundle.LoadAsset()
+        // unit
 
+        // GameObject.Instantiate()
 	}
 	
 	// Update is called once per frame

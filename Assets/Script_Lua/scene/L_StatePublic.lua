@@ -32,6 +32,7 @@ end
 _this.stateLoad = function (o , eNtity)
     
     local state = L_State.New(o , eNtity)
+    state.loadCount = 0
     function state:Enter()
 
         print("------进入Load状态------")
@@ -41,14 +42,31 @@ _this.stateLoad = function (o , eNtity)
 
     function state:Execute(nTime)
         
-        --do thing
+        --读取配置加载bundle
         if 0 == self.m_nTick then
             
-            self.m_nTimer = self.m_nTimer + nTime
-            -- print(self.m_nTimer)
-            if self.m_nTimer > 1 then
+            -- print(self.m_eNtity.loadBundles)
+            for v in string.gfind(self.m_eNtity.loadBundles, '[^|]+') do
+                -- print("load " .. v)
+                state.loadCount = state.loadCount + 1
+                L_Bundle:LoadBundle( v , function (cBundle)
+
+                    state.loadCount = state.loadCount - 1
+                    if cBundle == nil then
+                        
+                        print("load Error")
+                    end
+                end)
+            end
+            self.m_nTick = 1
+        end
+
+        if 1 == self.m_nTick then
+
+            if state.loadCount == 0 then
                 
                 self.m_eNtity:ChangeToState(self.m_eNtity.stateNone)
+                self.m_nTick = 2
             end
         end
         
@@ -56,7 +74,7 @@ _this.stateLoad = function (o , eNtity)
 
     function state:Exit()
 
-    print("------退出Load状态------")
+        print("------退出Load状态------")
     end
     return state
 end

@@ -12,6 +12,7 @@ function Launch()
     --配置加载信息
     L_Bundle.streamPath = localPath
     print(L_Bundle.streamPath)
+    L_Bundle:InitMainifest("StreamingAssets")
 
     --init bundle
     --L_Bundle.streamPath = localPath
@@ -90,8 +91,6 @@ end
 -- end
 
 -- New(observer)
-
---中国象棋和塔防对战结合
 
 -- observer[type] = observer[type] + listener  --添加侦听
 -- observer[type] = observer[type] - listener  --移除侦听
