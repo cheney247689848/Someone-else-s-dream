@@ -7,11 +7,13 @@ setmetatable(L_SceneGameView, {__index = _G})
 local _this = L_SceneGameView
 
 _this.sceneNode = nil
+_this.blockNode = nil
 
 function _this:InitView()
 
     print(" --- init view --- ")
     _this.sceneNode = GameObject.Find("Canvas")
+    _this.blockNode = GameObject.Find("BlockNode")  ---595  315
 end
 
 function _this:InitMap(fx , fy , data)
@@ -23,9 +25,9 @@ function _this:InitMap(fx , fy , data)
         for x = 0 , fx - 1 do
             local v = x + y * fx
             
-            local block = L_Unit:Instantiate(bPrefab , _this.sceneNode)
-            block.transform.localPosition = Vector3(-45 + L_Map.rect.x * x , 45 + L_Map.rect.y * y , 0)
-            print(v , block.transform.localPosition.x , block.transform.localPosition.y)
+            local block = L_Unit:Instantiate(bPrefab , _this.blockNode)
+            block.transform.localPosition = Vector3(L_Map.rect.x * x , - L_Map.rect.y * y , 0)
+            -- print(v , block.transform.localPosition.x , block.transform.localPosition.y)
         end
     end
 end
