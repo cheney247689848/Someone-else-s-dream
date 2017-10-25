@@ -15,6 +15,7 @@ public static class LuaBinder
 		ZipToolWrap.Register(L);
 		MgrLuaThreadWrap.Register(L);
 		MgrLuaInterpWrap.Register(L);
+		PathSystemWrap.Register(L);
 		L.BeginModule("UnityEngine");
 		UnityEngine_ComponentWrap.Register(L);
 		UnityEngine_TransformWrap.Register(L);

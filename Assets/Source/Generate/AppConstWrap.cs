@@ -12,7 +12,7 @@ public class AppConstWrap
 		L.RegVar("Name", get_Name, null);
 		L.RegConstant("GameFrameRate", 60);
 		L.RegConstant("DebugMode", 0);
-		L.RegConstant("isUpdateMode", 0);
+		L.RegConstant("isUpdateMode", 1);
 		L.RegConstant("isZip", 0);
 		L.RegVar("AssetDir", get_AssetDir, set_AssetDir);
 		L.RegVar("boxAssetDir", get_boxAssetDir, set_boxAssetDir);
