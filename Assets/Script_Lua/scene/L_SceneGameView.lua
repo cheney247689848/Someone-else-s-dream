@@ -34,4 +34,11 @@ function _this:InitMap(fx , fy , data)
         end
     end
 end
+
+function _this:DebugPos(pos)
+    
+    local bundle = L_Bundle:GetBundle("sgame_prefab_point")
+    local point = L_Unit:LoadPrefabInstantiate("point" , bundle , _this.blockNode)
+    point.transform.localPosition = pos
+end
 --do otherthing

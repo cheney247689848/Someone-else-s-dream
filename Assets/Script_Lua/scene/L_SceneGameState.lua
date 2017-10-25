@@ -66,12 +66,33 @@ _this.stateMapLayout = function (o , eNtity)
             self.m_eNtity.view:InitMap(L_Map.formx ,L_Map.formy,L_Map.metaData)
             self.m_nTick = 1
 
-            local paths = L_Map:FindPath(0 , 60)
-            -- for i = 1, #paths do
-            --     print('table: '.. tostring(paths[i]))
-            -- end
+            local paths = L_Map:FindPath(0 , 61)
+
+            -- local pos = L_Map:GetPosition(0)
+            -- print(pos.x , pos.y)
+            -- self.m_eNtity.view:DebugPos(pos)
+            -- pos = L_Map:GetPosition(1)
+            -- print(pos.x , pos.y)
+            -- self.m_eNtity.view:DebugPos(pos)
+            -- pos = L_Map:GetPosition(2)
+            -- print(pos.x , pos.y)
+            -- self.m_eNtity.view:DebugPos(pos)
+            -- pos = L_Map:GetPosition(30)
+            -- print(pos.x , pos.y)
+            -- self.m_eNtity.view:DebugPos(pos)
+            -- pos = L_Map:GetPosition(111)
+            -- print(pos.x , pos.y)
+            -- self.m_eNtity.view:DebugPos(pos)
+
+            for i = 1, #paths do
+
+                print('i : '.. tostring(paths[i]))
+                local pos = L_Map:GetPosition(paths[i])
+                -- print(pos.x , pos.y)
+                self.m_eNtity.view:DebugPos(pos)
+            end
             -- ZCLOG(paths)
-            print_r(paths)
+            -- print_r(paths)
         end
     end
 

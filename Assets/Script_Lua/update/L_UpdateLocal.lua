@@ -251,7 +251,7 @@ function _this:IEChangeToGame()
     end
 
     coroutine.stop(_this.IEChangeToGame) 
-    _this.view:UpdateLabel("启动游戏......")
+    _this.view:UpdateLabel("启动中......")
     require "L_Game"
     Launch()
 end

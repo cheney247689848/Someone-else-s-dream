@@ -34,19 +34,17 @@ end
 function _this:SetConfigRamdom()
     
     _this.metaData = {
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
     0,0,0,0,1,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,1,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,1,0,0,0,0,0,0,0,0,0,
+    0,0,0,1,1,0,0,0,0,0,0,0,0,0,
+    0,0,0,1,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,1,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,1,0,0,0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,0,0,0,0,0,0
     }
 
-    _this.pathSystem = PathSystem.New(_this.formx , _this.formy)
-    _this.pathSystem.data = _this.metaData
-    _this.pathSystem:Init()
+    _this.pathSystem = PathSystem.New(_this.formx , _this.formy , _this.metaData)
     --print(_this.pathSystem.data)
 end
 
@@ -68,11 +66,18 @@ function _this:FindPath(sPos , ePos)
     return path
 end
 
-function _this:PrintPath(path)
-
-    for i = 1, #paths do
-        print('table: '.. tostring(paths[i]))
+function _this:GetPosition(index)
+    
+    if _this.metaData[index + 1] == nil then
+        
+        print(string.format( "Error index = %d", index ))
+        return nil
     end
+    local x , v1 = math.modf(index % _this.formx)-- = index % _this.formx
+    local y , v2 = math.modf(index / _this.formx)
+    -- local y = index / _this.formy
+    print(x , y)
+    return Vector3(L_Map.rect.x * x , - (L_Map.rect.y * y ), 0)
 end
 
 --思路

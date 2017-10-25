@@ -7,11 +7,19 @@ public class PathSystemWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(PathSystem), typeof(System.Object));
-		L.RegFunction("Init", Init);
+		L.RegFunction("SetDynData", SetDynData);
+		L.RegFunction("DynDataClean", DynDataClean);
+		L.RegFunction("SetStaticData", SetStaticData);
+		L.RegFunction("StaticDataClean", StaticDataClean);
+		L.RegFunction("SetWeight", SetWeight);
+		L.RegFunction("SmoothPath", SmoothPath);
 		L.RegFunction("FindThePath", FindThePath);
+		L.RegFunction("IsExitBarrier", IsExitBarrier);
 		L.RegFunction("New", _CreatePathSystem);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("data", get_data, set_data);
+		L.RegVar("data", get_data, null);
+		L.RegVar("dynData", get_dynData, null);
+		L.RegVar("staticData", get_staticData, null);
 		L.EndClass();
 	}
 
@@ -22,11 +30,12 @@ public class PathSystemWrap
 		{
 			int count = LuaDLL.lua_gettop(L);
 
-			if (count == 2)
+			if (count == 3)
 			{
 				int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
 				int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
-				PathSystem obj = new PathSystem(arg0, arg1);
+				int[] arg2 = ToLua.CheckNumberArray<int>(L, 3);
+				PathSystem obj = new PathSystem(arg0, arg1, arg2);
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
@@ -42,14 +51,101 @@ public class PathSystemWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Init(IntPtr L)
+	static int SetDynData(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			PathSystem obj = (PathSystem)ToLua.CheckObject(L, 1, typeof(PathSystem));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
+			obj.SetDynData(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int DynDataClean(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			PathSystem obj = (PathSystem)ToLua.CheckObject(L, 1, typeof(PathSystem));
-			obj.Init();
+			obj.DynDataClean();
 			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetStaticData(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			PathSystem obj = (PathSystem)ToLua.CheckObject(L, 1, typeof(PathSystem));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
+			obj.SetStaticData(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int StaticDataClean(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PathSystem obj = (PathSystem)ToLua.CheckObject(L, 1, typeof(PathSystem));
+			obj.StaticDataClean();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetWeight(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			PathSystem obj = (PathSystem)ToLua.CheckObject(L, 1, typeof(PathSystem));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.SetWeight(arg0);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SmoothPath(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			PathSystem obj = (PathSystem)ToLua.CheckObject(L, 1, typeof(PathSystem));
+			int[] arg0 = ToLua.CheckNumberArray<int>(L, 2);
+			int[] o = obj.SmoothPath(arg0);
+			ToLua.Push(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{
@@ -68,6 +164,25 @@ public class PathSystemWrap
 			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
 			int[] o = obj.FindThePath(arg0, arg1);
 			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsExitBarrier(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			PathSystem obj = (PathSystem)ToLua.CheckObject(L, 1, typeof(PathSystem));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
+			bool o = obj.IsExitBarrier(arg0, arg1);
+			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}
 		catch(Exception e)
@@ -96,7 +211,7 @@ public class PathSystemWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_data(IntPtr L)
+	static int get_dynData(IntPtr L)
 	{
 		object o = null;
 
@@ -104,13 +219,32 @@ public class PathSystemWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			PathSystem obj = (PathSystem)o;
-			int[] arg0 = ToLua.CheckNumberArray<int>(L, 2);
-			obj.data = arg0;
-			return 0;
+			int[] ret = obj.dynData;
+			ToLua.Push(L, ret);
+			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index data on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index dynData on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_staticData(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			PathSystem obj = (PathSystem)o;
+			int[] ret = obj.staticData;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index staticData on a nil value" : e.Message);
 		}
 	}
 }

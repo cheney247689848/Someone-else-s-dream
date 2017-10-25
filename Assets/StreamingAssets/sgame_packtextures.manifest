@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3281770488
+CRC: 3029614888
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0ea1db71cd5b888cf76c19c763a07a39
+    Hash: eaf93f24d4d04de9dffa5d9bcd29bca6
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9dea23ffc7e96552740e12d1ee5309d8
@@ -15,4 +15,5 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Res/sGame/PackTextures/block90X90.png
+- Assets/Res/sGame/PackTextures/pathPoint.png
 Dependencies: []
