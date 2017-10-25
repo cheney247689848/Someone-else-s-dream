@@ -172,6 +172,8 @@ public static class CustomSettings
         _GT(typeof(System.Collections.Generic.List<object>)),
         _GT(typeof(MgrLuaThread)),
         _GT(typeof(MgrLuaInterp)),
+
+        _GT(typeof(PathSystem)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

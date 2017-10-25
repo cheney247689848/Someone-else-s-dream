@@ -58,3 +58,71 @@ function _this:LoadShader(sName , bundle)
     local pShader = bundle:LoadAsset(sName , typeof(Shader))
     return pShader
 end
+
+function ZCLOG(Lua_table)  
+
+        local function define_print(_tab,str)  
+            str = str .. "  "  
+            for k,v in pairs(_tab) do  
+                if type(v) == "table" then  
+                    if not tonumber(k) then  
+                        print(str.. k .."{")  
+                    else  
+                        print(str .."{")  
+                    end  
+                    define_print(v,str)  
+                    print( str.."}")  
+                else  
+                    print(str .. tostring(k) .. " " .. tostring(v))  
+                end  
+            end  
+        end  
+    if type(Lua_table) == "table" then  
+        define_print(Lua_table," ")  
+    else  
+        print(tostring(Lua_table))  
+    end  
+end
+
+function print_r ( t )  
+    local print_r_cache={}
+    local function sub_print_r(t,indent)
+        if (print_r_cache[tostring(t)]) then
+            print(indent.."*"..tostring(t))
+        else
+            print_r_cache[tostring(t)]=true
+            if (type(t)=="table") then
+                for pos,val in pairs(t) do
+                    if (type(val)=="table") then
+                        -- print(indent.."["..pos.."] => "..tostring(t).." {")
+                        indent = indent.."["..pos.."] => "..tostring(t).." {"
+                        sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
+                        -- print(indent..string.rep(" ",string.len(pos)+6).."}")
+                        indent = indent..string.rep(" ",string.len(pos)+6).."}"
+                    elseif (type(val)=="string") then
+                        -- print(indent.."["..pos..'] => "'..val..'"')
+                        indent = indent.."["..pos..'] => "'..val..'"'
+                    else
+                        -- print(indent.."["..pos.."] => "..tostring(val))
+                        indent = indent.."["..pos.."] => "..tostring(val)
+                    end
+                end
+            else
+                -- print(indent..tostring(t))
+                indent = indent..tostring(t)
+            end
+        end
+        print(indent)
+    end
+    
+    if (type(t)=="table") then
+        -- print(tostring(t).." {")
+        print(tostring(t).." {")
+        sub_print_r(t,"  ")
+        -- print("}")
+        print("}")
+    else
+        sub_print_r(t,"  ")
+    end
+    print()
+end

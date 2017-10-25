@@ -65,6 +65,13 @@ _this.stateMapLayout = function (o , eNtity)
             L_Map.SetConfigRamdom()
             self.m_eNtity.view:InitMap(L_Map.formx ,L_Map.formy,L_Map.metaData)
             self.m_nTick = 1
+
+            local paths = L_Map:FindPath(0 , 60)
+            -- for i = 1, #paths do
+            --     print('table: '.. tostring(paths[i]))
+            -- end
+            -- ZCLOG(paths)
+            print_r(paths)
         end
     end
 

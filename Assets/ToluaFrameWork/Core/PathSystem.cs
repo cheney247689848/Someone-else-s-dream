@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 public class Square{
 	
@@ -57,6 +58,13 @@ public class PathSystem {
 			Debug.Log("Path data = null");
 			return ;
 		}
+
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < data.Length; i++)
+		{
+			s.Append(data[i] + ",");
+		}
+		Debug.Log(s.ToString());
 		
 		allList = new List<Square>();
 		for(int i = 0; i < data.Length; ++i){
