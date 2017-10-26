@@ -68,13 +68,13 @@ end
 
 function _this:GetPosition(index)
     
-    if _this.metaData[index + 1] == nil then
+    if _this.metaData[index] == nil then
         
         print(string.format( "Error index = %d", index ))
         return nil
     end
-    local x , v1 = math.modf(index % _this.formx)-- = index % _this.formx
-    local y , v2 = math.modf(index / _this.formx)
+    local x , v1 = math.modf((index - 1) % _this.formx)-- = index % _this.formx
+    local y , v2 = math.modf((index - 1) / _this.formx)
     -- local y = index / _this.formy
     -- print(x , y)
     return Vector3(L_Map.rect.x * x , - (L_Map.rect.y * y ), 0)

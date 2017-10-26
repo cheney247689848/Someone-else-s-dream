@@ -82,8 +82,7 @@ _this.stateMapLayout = function (o , eNtity)
             print("配置地形")
             L_Map.SetConfigRamdom()
             self.m_eNtity.view:InitMap(L_Map.formx ,L_Map.formy,L_Map.metaData)
-            L_NodeController:Init(L_Map.formx * L_Map.formy)
-            self.m_nTick = 1
+            L_NodeController:Init(L_Map.formx * L_Map.formy , self.m_eNtity.view.blockNode)
             -- local paths = L_Map:FindPath(0 , 5)
             -- for i = 1, #paths do
 
@@ -102,7 +101,7 @@ _this.stateMapLayout = function (o , eNtity)
                     if paths ~= nil then
                         
                         if #paths >= 2 then
-                            v:SetTarIndex(paths[#paths - 1] + 1)
+                            v:SetTarIndex(paths[#paths - 1] + 1 , #paths)
                         else
                             print("Error paths len = " , #paths , dex)
                         end
@@ -111,14 +110,21 @@ _this.stateMapLayout = function (o , eNtity)
                     end
                 end
             end
+
+            
+            self.m_nTick = 1
         end
 
         if 1 == self.m_nTick then
 
             self.m_nTimer = self.m_nTimer + nTime
             if self.m_nTimer > 1 then
-                
-                -- L_Map:Refresh()
+
+                print("REFRESH")
+                L_NodeController:Sort()
+                L_NodeController:Refresh()
+
+                -- self.m_nTick = 2
                 self.m_nTimer = 0
             end
         end
