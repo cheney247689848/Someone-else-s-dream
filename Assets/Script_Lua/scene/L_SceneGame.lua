@@ -1,6 +1,7 @@
+local Camera = UnityEngine.Camera
 require "core/scene/L_Scene"
 require "core/state/L_StateMachine"
-require "other/L_ScenePreloading"
+require "other/L_ScenePreloading"   
 require "scene/L_StatePublic"
 require "scene/L_SceneGameView"
 require "scene/L_SceneGameState"
@@ -51,6 +52,36 @@ end
 function _this:FixedUpdate()
     --print("FixedUpdate  "..UnityEngine.Time.deltaTime)
 end
+
+function _this:UpdateInput(mousePosition)
+    
+    -- blockNode
+    local vPos = self.view.blockNode.transform:InverseTransformPoint(
+        Camera.main:ScreenToWorldPoint(mousePosition));
+    return L_Map:GetIndexByPosition(vPos)
+    -- vPos.y = -vPos.y;
+    -- if (m_rCenter.Contains(vPos))
+    -- {
+    
+    --     int nDx = ((int)(vPos.x + nLengthPic / 2) / Block.nLengthPic) + ((int)(vPos.y + nLengthPic / 2) / Block.nLengthPic) * Block.nLengthVet;
+    --     if (0 <= nDx && nDx < Block.nLengthLife)
+    --     {
+    
+    --         for (int i = 0; i < Block.nLengthLife; ++i)
+    --         {
+    
+    --             if (m_FixedNodeList[i].GetIndex() == nDx)
+    --             {
+    
+    --                 return i;
+    --             }
+    --         }
+    --     }
+    -- }
+    -- return -1;
+end
+
+
 
 function _this:OnDestory()
 

@@ -25,6 +25,8 @@ public class UguiTest : MonoBehaviour {
         // unit
 
         // GameObject.Instantiate()
+
+        
 	}
 	
 	// Update is called once per frame

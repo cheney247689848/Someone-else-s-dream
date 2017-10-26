@@ -11,6 +11,7 @@ L_Map = {}
 setmetatable(L_Map, {__index = _G})
 local _this = L_Map
 
+_this.offsetx = 10 --10像素的位移
 _this.formx = 14
 _this.formy = 8
 _this.rect = {x = 90 , y = 90}
@@ -45,7 +46,6 @@ function _this:SetConfigRamdom()
     }
 
     _this.pathSystem = PathSystem.New(_this.formx , _this.formy , _this.metaData)
-    --print(_this.pathSystem.data)
 end
 
 function _this:IsBlock(dex)
@@ -59,7 +59,7 @@ end
 
 function _this:FindPath(sPos , ePos)
     
-    local path = _this.pathSystem:FindThePath(sPos , ePos):ToTable()
+    local path = _this.pathSystem:FindThePath(sPos - 1 , ePos - 1):ToTable()
     -- if path ~= nil then
     --     path = path:ToTable()
     -- end
@@ -76,26 +76,30 @@ function _this:GetPosition(index)
     local x , v1 = math.modf(index % _this.formx)-- = index % _this.formx
     local y , v2 = math.modf(index / _this.formx)
     -- local y = index / _this.formy
-    print(x , y)
+    -- print(x , y)
     return Vector3(L_Map.rect.x * x , - (L_Map.rect.y * y ), 0)
 end
 
---思路
---寻找最短的路径
---path list 
-
-function _this:Refresh()
+function _this:GetIndexByPosition(pos)
     
-    for i = 1 , 10 do  --for metadata
+    -- pos.x = pos.x + _this.offsetx
+    pos.x = pos.x + _this.rect.x / 2
+    pos.y = -(pos.y - _this.rect.y / 2)
+    -- print(pos.x , pos.y)
 
-        if condition then   --寻找空格子
-            
-            --保存得出的路径  添加到队列中
-        end
+    local x , v1 = math.modf(pos.x / _this.rect.x)
+    local y , v2 = math.modf(pos.y / _this.rect.y)
+
+    local index = x + _this.formx * y + 1
+    
+    print(pos.x , pos.y , index)
+    if _this.metaData[index] ~= nil then
+        
+        return index
     end
-    --合并路径  得出需移动的路线
-    --复制元数据 标记路径 碰到路径就断开
-    --计算出每个空格子填充的方向属性
+    return -1
 end
+
+
 
 

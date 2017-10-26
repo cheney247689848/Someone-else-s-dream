@@ -1,3 +1,8 @@
+local Input = UnityEngine.Input
+local KeyCode = UnityEngine.KeyCode
+
+require "node/L_Node"
+require "node/L_NodeController"
 require "map/L_Map"
 
 L_SceneGameState = {}
@@ -14,7 +19,20 @@ _this.stateGlobal = function (o , eNtity)
 
     function state:Execute(nTime)
         
-        --do thing
+        -- if Input.GetKeyDown(KeyCode.Alpha1) then
+
+
+        -- elseif Input.GetKeyDown(KeyCode.Alpha2) then
+            
+        -- end
+        if Input.GetMouseButtonDown(0) then
+            
+            local index = self.m_eNtity:UpdateInput(Input.mousePosition)
+            if index ~= -1 then
+
+                print(string.format("index = %d , tarIndex = %d" , index ,L_NodeController.nodeList[index].tarIndex ))
+            end
+        end
     end
 
     function state:Exit()
@@ -64,35 +82,45 @@ _this.stateMapLayout = function (o , eNtity)
             print("配置地形")
             L_Map.SetConfigRamdom()
             self.m_eNtity.view:InitMap(L_Map.formx ,L_Map.formy,L_Map.metaData)
+            L_NodeController:Init(L_Map.formx * L_Map.formy)
             self.m_nTick = 1
+            -- local paths = L_Map:FindPath(0 , 5)
+            -- for i = 1, #paths do
 
-            local paths = L_Map:FindPath(0 , 61)
-
-            -- local pos = L_Map:GetPosition(0)
-            -- print(pos.x , pos.y)
-            -- self.m_eNtity.view:DebugPos(pos)
-            -- pos = L_Map:GetPosition(1)
-            -- print(pos.x , pos.y)
-            -- self.m_eNtity.view:DebugPos(pos)
-            -- pos = L_Map:GetPosition(2)
-            -- print(pos.x , pos.y)
-            -- self.m_eNtity.view:DebugPos(pos)
-            -- pos = L_Map:GetPosition(30)
-            -- print(pos.x , pos.y)
-            -- self.m_eNtity.view:DebugPos(pos)
-            -- pos = L_Map:GetPosition(111)
-            -- print(pos.x , pos.y)
-            -- self.m_eNtity.view:DebugPos(pos)
-
-            for i = 1, #paths do
-
-                print('i : '.. tostring(paths[i]))
-                local pos = L_Map:GetPosition(paths[i])
-                -- print(pos.x , pos.y)
-                self.m_eNtity.view:DebugPos(pos)
-            end
+            --     local pos = L_Map:GetPosition(paths[i])
+            --     self.m_eNtity.view:DebugPos(pos)
+            -- end
             -- ZCLOG(paths)
             -- print_r(paths)
+
+            for i,v in ipairs(L_NodeController.nodeList) do
+                
+                local dex = v.index
+                if 1 ~= dex and L_Map:IsBlock(dex) then
+                    
+                    local paths = L_Map:FindPath(1 , dex)
+                    if paths ~= nil then
+                        
+                        if #paths >= 2 then
+                            v:SetTarIndex(paths[#paths - 1] + 1)
+                        else
+                            print("Error paths len = " , #paths , dex)
+                        end
+                    else
+                        print("Error Path is nil")
+                    end
+                end
+            end
+        end
+
+        if 1 == self.m_nTick then
+
+            self.m_nTimer = self.m_nTimer + nTime
+            if self.m_nTimer > 1 then
+                
+                -- L_Map:Refresh()
+                self.m_nTimer = 0
+            end
         end
     end
 

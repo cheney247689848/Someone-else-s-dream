@@ -21,8 +21,8 @@ function _this:InitMap(fx , fy , data)
     local bundle = L_Bundle:GetBundle("sgame_prefab_block")
     local bPrefab = L_Unit:LoadPrefab("block" , bundle)
 
-    for y = 0 , fy do
-        for x = 0 , fx do
+    for y = 0 , fy - 1 do
+        for x = 0 , fx - 1 do
 
             local v = x + y * fx + 1
             if L_Map:IsBlock(v) then
