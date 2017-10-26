@@ -50,7 +50,11 @@ function _this:Sort()
             if _this.SortList[j].tarLen < _this.SortList[j+1].tarLen then  
                 tmp = _this.SortList[j]  
                 _this.SortList[j] = _this.SortList[j+1]
-                _this.SortList[j+1] = tmp  
+                _this.SortList[j+1] = tmp
+            elseif _this.SortList[j].tarLen == _this.SortList[j+1].tarLen and _this.SortList[j].weight <  _this.SortList[j+1].weight then
+                tmp = _this.SortList[j]  
+                _this.SortList[j] = _this.SortList[j+1]
+                _this.SortList[j+1] = tmp
             end  
         end  
     end
@@ -84,6 +88,8 @@ function _this:Refresh()
                         self.nodeList[v.tarIndex].status = L_TypeStatusNode.NONE
                         v.status = L_TypeStatusNode.IDLE
                         print("creat tranf : " , v.tarIndex , v.index)
+                    else
+                        self.nodeList[v.tarIndex].weight = self.nodeList[v.tarIndex].weight + 1
                     end
                 end
             end

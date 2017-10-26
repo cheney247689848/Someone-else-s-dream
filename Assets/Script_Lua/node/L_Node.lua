@@ -13,6 +13,7 @@ local _this = L_Node
 _this.index = nil
 _this.tarIndex = nil
 _this.tarLen = nil
+_this.weight = nil
 _this.color = nil
 _this.status = nil
 _this.position = nil
@@ -23,6 +24,7 @@ function _this:Init()
     
     self.index = -1
     self.tarIndex = -1
+    self.weight = -1
     self.tarLen = -1
     self.color = -1
     self.status = L_TypeStatusNode.NONE
@@ -60,13 +62,13 @@ function _this:UpdateStatus()
         else
             self.uiObject:SetActive(true)
         end
+        self.weight = -1
     else
         
         if self.uiObject ~= nil then
 
             self.uiObject:SetActive(false)
         end
-        
     end
 
 end
