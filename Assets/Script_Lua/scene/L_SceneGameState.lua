@@ -27,11 +27,12 @@ _this.stateGlobal = function (o , eNtity)
         -- end
         if Input.GetMouseButtonDown(0) then
             
-            local index = self.m_eNtity:UpdateInput(Input.mousePosition)
-            if index ~= -1 then
+            -- print(Input.mousePosition.x , Input.mousePosition.y ,Input.mousePosition.z)
+            -- local index = self.m_eNtity:UpdateInput(Input.mousePosition)
+            -- if index ~= -1 then
 
-                print(string.format("index = %d , tarIndex = %d" , index ,L_NodeController.nodeList[index].tarIndex ))
-            end
+            --     print(string.format("index = %d , tarIndex = %d" , index ,L_NodeController.nodeList[index].tarIndex ))
+            -- end
         end
     end
 
@@ -80,17 +81,9 @@ _this.stateMapLayout = function (o , eNtity)
         if 0 == self.m_nTick then
             
             print("配置地形")
-            L_Map.SetConfigRamdom()
+            L_Map:SetConfigRamdom()
             self.m_eNtity.view:InitMap(L_Map.formx ,L_Map.formy,L_Map.metaData)
             L_NodeController:Init(L_Map.formx * L_Map.formy , self.m_eNtity.view.blockNode)
-            -- local paths = L_Map:FindPath(0 , 5)
-            -- for i = 1, #paths do
-
-            --     local pos = L_Map:GetPosition(paths[i])
-            --     self.m_eNtity.view:DebugPos(pos)
-            -- end
-            -- ZCLOG(paths)
-            -- print_r(paths)
 
             for i,v in ipairs(L_NodeController.nodeList) do
                 
@@ -111,16 +104,35 @@ _this.stateMapLayout = function (o , eNtity)
                 end
             end
 
-            
+            -- local paths = L_Map:FindPath(0 , 5)
+            -- for i = 1, #paths do
+
+            --     local pos = L_Map:GetPosition(paths[i])
+            --     self.m_eNtity.view:DebugPos(pos)
+            -- end
+            -- ZCLOG(paths)
+            -- print_r(paths)
+            L_NodeController:UpdateDebugUI()
             self.m_nTick = 1
         end
 
+        --优先填充pathlen短的
+
         if 1 == self.m_nTick then
+
+        if Input.GetKeyDown(KeyCode.Alpha1) then
+
+            print("REFRESH")
+            L_NodeController:Sort()
+            L_NodeController:Refresh()
+            L_NodeController:UpdateDebugUI()
+        end
+
 
             self.m_nTimer = self.m_nTimer + nTime
             if self.m_nTimer > 1 then
-
-                print("REFRESH")
+    
+                -- print("REFRESH")
                 L_NodeController:Sort()
                 L_NodeController:Refresh()
 

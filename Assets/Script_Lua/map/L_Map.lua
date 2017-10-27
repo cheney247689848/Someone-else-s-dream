@@ -7,6 +7,8 @@
 -------------------------------------------------------------------
 require "PathSystem"
 
+local Rect = UnityEngine.Rect
+
 L_Map = {}
 setmetatable(L_Map, {__index = _G})
 local _this = L_Map
@@ -14,9 +16,11 @@ local _this = L_Map
 _this.offsetx = 10 --10像素的位移
 _this.formx = 14
 _this.formy = 8
-_this.rect = {x = 90 , y = 90}
+_this.imgRect = {x = 90 , y = 90}
 _this.metaData = nil --暂定是一维数据
 _this.pathSystem = nil
+
+_this.sceneRect = Rect.New(0,0,1280,720)
 
 --get
 
@@ -29,12 +33,12 @@ _this.pathSystem = nil
 
 function _this:SetConfig(data)
     
-    _this.metaData = data
+    self.metaData = data
 end
 
 function _this:SetConfigRamdom()
     
-    _this.metaData = {
+    self.metaData = {
     0,0,0,0,1,0,0,0,0,0,0,0,0,0,
     0,0,0,0,1,0,0,0,0,0,0,0,0,0,
     0,0,0,0,1,0,0,0,0,0,0,0,0,0,
@@ -45,12 +49,12 @@ function _this:SetConfigRamdom()
     0,0,0,0,0,0,0,0,0,0,0,0,0,0
     }
 
-    _this.pathSystem = PathSystem.New(_this.formx , _this.formy , _this.metaData)
+    self.pathSystem = PathSystem.New(self.formx , self.formy , self.metaData)
 end
 
 function _this:IsBlock(dex)
 
-    if _this.metaData[dex] == 0 then
+    if self.metaData[dex] == 0 then
         
         return true
     end
@@ -68,32 +72,29 @@ end
 
 function _this:GetPosition(index)
     
-    if _this.metaData[index] == nil then
+    if self.metaData[index] == nil then
         
         print(string.format( "Error index = %d", index ))
         return nil
     end
-    local x , v1 = math.modf((index - 1) % _this.formx)-- = index % _this.formx
-    local y , v2 = math.modf((index - 1) / _this.formx)
+    local x , v1 = math.modf((index - 1) % self.formx)-- = index % _this.formx
+    local y , v2 = math.modf((index - 1) / self.formx)
     -- local y = index / _this.formy
     -- print(x , y)
-    return Vector3(L_Map.rect.x * x , - (L_Map.rect.y * y ), 0)
+    return Vector3(self.imgRect.x * x , - (self.imgRect.y * y ), 0)
 end
 
 function _this:GetIndexByPosition(pos)
     
     -- pos.x = pos.x + _this.offsetx
-    pos.x = pos.x + _this.rect.x / 2
-    pos.y = -(pos.y - _this.rect.y / 2)
     -- print(pos.x , pos.y)
+    local x , v1 = math.modf(pos.x / self.imgRect.x)
+    local y , v2 = math.modf(pos.y / self.imgRect.y)
 
-    local x , v1 = math.modf(pos.x / _this.rect.x)
-    local y , v2 = math.modf(pos.y / _this.rect.y)
-
-    local index = x + _this.formx * y + 1
+    local index = x + self.formx * y + 1
     
-    print(pos.x , pos.y , index)
-    if _this.metaData[index] ~= nil then
+    -- print(pos.x , pos.y , index)
+    if self.metaData[index] ~= nil then
         
         return index
     end

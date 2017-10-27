@@ -12,7 +12,8 @@ local _this = L_NodeController
 
 _this.nodeParent = nil
 _this.nodeList = nil
-_this.SortList = nil
+_this.sortList = nil
+_this.creatList = nil
 
 function _this:Init(num , parent)
     
@@ -31,47 +32,65 @@ end
 function _this:Sort()
     
     --clean
-    _this.SortList = nil
-    _this.SortList = {}
+    _this.sortList = nil
+    _this.sortList = {}
+
+    _this.creatList = nil
+    _this.creatList = {}
 
     for i,v in ipairs(_this.nodeList) do
         
         if v.tarIndex ~= -1 then
             
-            table.insert( _this.SortList, v)
+            table.insert( _this.sortList, v)
         end
     end
-    --print("SortList len = " , #_this.SortList)
+    --print("sortList len = " , #_this.sortList)
 
     --sort
     local tmp = nil
-    for i=1 , #_this.SortList - 1 do  
-        for j=1 , #_this.SortList - i do  
-            if _this.SortList[j].tarLen < _this.SortList[j+1].tarLen then  
-                tmp = _this.SortList[j]  
-                _this.SortList[j] = _this.SortList[j+1]
-                _this.SortList[j+1] = tmp
-            elseif _this.SortList[j].tarLen == _this.SortList[j+1].tarLen and _this.SortList[j].weight <  _this.SortList[j+1].weight then
-                tmp = _this.SortList[j]  
-                _this.SortList[j] = _this.SortList[j+1]
-                _this.SortList[j+1] = tmp
-            end  
+    for i = 1 , #_this.sortList do  
+        for j = 1 , #_this.sortList - i do 
+            
+            if _this.sortList[j].weight < _this.sortList[j+1].weight then
+                tmp = _this.sortList[j]  
+                _this.sortList[j] = _this.sortList[j+1]
+                _this.sortList[j+1] = tmp
+            elseif _this.sortList[j].weight == _this.sortList[j+1].weight and _this.sortList[j].tarLen < _this.sortList[j+1].tarLen then
+                tmp = _this.sortList[j]  
+                _this.sortList[j] = _this.sortList[j+1]
+                _this.sortList[j+1] = tmp
+            end
+
+            -- if _this.sortList[j].tarIndex == 1 and _this.sortList[j+1].tarIndex ~= 1 then
+            --     tmp = _this.sortList[j]  
+            --     _this.sortList[j] = _this.sortList[j+1]
+            --     _this.sortList[j+1] = tmp
+            -- elseif _this.sortList[j].tarIndex ~= 1 and _this.sortList[j+1].tarIndex ~= 1 then
+
+            --     if _this.sortList[j].tarLen > _this.sortList[j+1].tarLen then  
+            --         tmp = _this.sortList[j]  
+            --         _this.sortList[j] = _this.sortList[j+1]
+            --         _this.sortList[j+1] = tmp
+            --     elseif _this.sortList[j].tarLen == _this.sortList[j+1].tarLen and _this.sortList[j].weight >  _this.sortList[j+1].weight then
+            --         tmp = _this.sortList[j]  
+            --         _this.sortList[j] = _this.sortList[j+1]
+            --         _this.sortList[j+1] = tmp
+            --     end 
+            -- end
         end  
     end
 
     --debug
-    -- for i,v in ipairs(_this.SortList) do
+    for i,v in ipairs(_this.sortList) do
         
-    --     print(v.tarLen , v.tarIndex , v.index)
-    -- end
+        print(string.format( "wei = %d , tarLen = %d , tarIndex = %d , index = %d ",v.weight , v.tarLen , v.tarIndex , v.index ))
+    end
 end
 
---思路
---寻找最短的路径
---path list 
 function _this:Refresh()
     
-    for i,v in ipairs(_this.SortList) do
+    for i,v in ipairs(_this.sortList) do
         
         if v.status == L_TypeStatusNode.NONE then
             --当前为空块
@@ -80,42 +99,44 @@ function _this:Refresh()
                 if v.tarIndex == 1 then
                     -- 1 为起点  直接产生
                     print("creat : " , v.index)
-                    v.status = L_TypeStatusNode.IDLE
+                    v.status = L_TypeStatusNode.DROP
                 else
                     
                     if self.nodeList[v.tarIndex].status == L_TypeStatusNode.IDLE then
                         --可转换
                         self.nodeList[v.tarIndex].status = L_TypeStatusNode.NONE
-                        v.status = L_TypeStatusNode.IDLE
+                        self.nodeList[v.tarIndex].isTranf = true
+                        v.status = L_TypeStatusNode.DROP
                         print("creat tranf : " , v.tarIndex , v.index)
-                    else
-                        self.nodeList[v.tarIndex].weight = self.nodeList[v.tarIndex].weight + 1
+                    elseif self.nodeList[v.tarIndex].isTranf then
+                        v.weight = v.weight + 1
+                        print("weight add : " , v.tarIndex , v.index)
                     end
                 end
             end
         end
     end
 
-    for i,v in ipairs(_this.SortList) do
+    for i,v in ipairs(_this.sortList) do
         
+        if v.status == L_TypeStatusNode.DROP then
+            
+            v.status = L_TypeStatusNode.IDLE
+        end
         v:UpdateStatus()
     end
-    
-    -- for i = 1 , 10 do  --for metadata
+end
 
-    --     if condition then   --寻找空格子
-            
-    --         --保存得出的路径  添加到队列中
-    --     end
-    -- end
-    --合并路径  得出需移动的路线
-    --复制元数据 标记路径 碰到路径就断开
-    --计算出每个空格子填充的方向属性
+function _this:UpdateDebugUI()
+    
+    for i,v in ipairs(_this.nodeList) do
+        
+        v:UpdateUI()
+    end
 end
 
 
 --UI
-
 function _this:CreatNodeUI()
 
     local bundle = L_Bundle:GetBundle("sgame_prefab_point")

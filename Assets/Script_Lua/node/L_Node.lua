@@ -14,6 +14,7 @@ _this.index = nil
 _this.tarIndex = nil
 _this.tarLen = nil
 _this.weight = nil
+_this.isTranf = nil
 _this.color = nil
 _this.status = nil
 _this.position = nil
@@ -26,6 +27,7 @@ function _this:Init()
     self.tarIndex = -1
     self.weight = -1
     self.tarLen = -1
+    self.isTranf = false
     self.color = -1
     self.status = L_TypeStatusNode.NONE
 end
@@ -71,6 +73,18 @@ function _this:UpdateStatus()
         end
     end
 
+    self.isTranf = false
+end
+
+function _this:UpdateUI()
+    
+    local tIndex = self.uiObject.transform:Find("txt_index"):GetComponent("Text")
+    local tLen = self.uiObject.transform:Find("txt_len"):GetComponent("Text")
+    local tarIndex = self.uiObject.transform:Find("txt_tarIndex"):GetComponent("Text")
+
+    tIndex.text = tostring(self.index)
+    tLen.text = tostring(self.tarLen)
+    tarIndex.text = tostring(self.tarIndex)
 end
 
 function _this.New(o)

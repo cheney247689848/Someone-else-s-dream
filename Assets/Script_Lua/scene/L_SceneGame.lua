@@ -1,4 +1,5 @@
 local Camera = UnityEngine.Camera
+
 require "core/scene/L_Scene"
 require "core/state/L_StateMachine"
 require "other/L_ScenePreloading"   
@@ -55,33 +56,20 @@ end
 
 function _this:UpdateInput(mousePosition)
     
-    -- blockNode
     local vPos = self.view.blockNode.transform:InverseTransformPoint(
         Camera.main:ScreenToWorldPoint(mousePosition));
+    vPos.x = vPos.x + L_Map.imgRect.x / 2
+    vPos.y = -(vPos.y - L_Map.imgRect.y / 2)
+    -- if L_Map.sceneRect:Contains(vPos) then
+        
+    --     print(true , vPos.x , vPos.y)
+    --     return L_Map:GetIndexByPosition(vPos)
+    -- else
+    --     print(false , vPos.x , vPos.y)
+    --     return -1
+    -- end
     return L_Map:GetIndexByPosition(vPos)
-    -- vPos.y = -vPos.y;
-    -- if (m_rCenter.Contains(vPos))
-    -- {
-    
-    --     int nDx = ((int)(vPos.x + nLengthPic / 2) / Block.nLengthPic) + ((int)(vPos.y + nLengthPic / 2) / Block.nLengthPic) * Block.nLengthVet;
-    --     if (0 <= nDx && nDx < Block.nLengthLife)
-    --     {
-    
-    --         for (int i = 0; i < Block.nLengthLife; ++i)
-    --         {
-    
-    --             if (m_FixedNodeList[i].GetIndex() == nDx)
-    --             {
-    
-    --                 return i;
-    --             }
-    --         }
-    --     }
-    -- }
-    -- return -1;
 end
-
-
 
 function _this:OnDestory()
 

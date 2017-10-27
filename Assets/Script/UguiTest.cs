@@ -8,6 +8,8 @@ using UnityEngine.Events;
 public class UguiTest : MonoBehaviour {
 
 	// Use this for initialization11123
+
+    int angle = 0;
 	void Start () {
 
         //Button b = this.gameObject.GetComponent<Button>();
@@ -25,13 +27,23 @@ public class UguiTest : MonoBehaviour {
         // unit
 
         // GameObject.Instantiate()
+        // transform.FindChild
 
-        
+
+        // var q =  Quaternion.Euler(0 , 30 , 0) * new Vector3(0 , 0 , 10);
+        // Debug.Log(q);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+        var q =  Quaternion.Euler(0 , angle , 0) * new Vector3(0 , 0 , 10);
+        if (angle % 90 == 0)
+        {
+            Debug.Log("angle = " + angle + " - " +  q);
+        }
+        
+        angle ++;
 	}
 
     void OnClick_Tri() {

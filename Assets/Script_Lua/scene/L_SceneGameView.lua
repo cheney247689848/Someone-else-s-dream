@@ -28,7 +28,7 @@ function _this:InitMap(fx , fy , data)
             if L_Map:IsBlock(v) then
                 
                 local block = L_Unit:Instantiate(bPrefab , _this.blockNode)
-                block.transform.localPosition = Vector3(L_Map.rect.x * x , - L_Map.rect.y * y , 0)
+                block.transform.localPosition = Vector3(L_Map.imgRect.x * x , - L_Map.imgRect.y * y , 0)
                 -- print(v , block.transform.localPosition.x , block.transform.localPosition.y)
             end
         end

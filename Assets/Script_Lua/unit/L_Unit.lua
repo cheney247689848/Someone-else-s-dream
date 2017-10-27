@@ -59,6 +59,12 @@ function _this:LoadShader(sName , bundle)
     return pShader
 end
 
+function LOG(lua_table)
+    
+    local _tempStore_string = table.concat( lua_table, ", ", 1 )
+    print(_tempStore_string)
+end
+
 function ZCLOG(Lua_table)  
 
         local function define_print(_tab,str)  
