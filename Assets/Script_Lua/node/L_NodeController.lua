@@ -15,6 +15,7 @@ _this.nodeList = nil
 _this.sortList = nil
 _this.creatList = nil
 
+
 function _this:Init(num , parent)
     
     _this.nodeParent = parent
@@ -130,7 +131,7 @@ end
 function _this:UpdateDebugUI()
     
     for i,v in ipairs(_this.nodeList) do
-        
+
         v:UpdateUI()
     end
 end

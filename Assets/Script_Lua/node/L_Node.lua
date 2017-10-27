@@ -20,6 +20,7 @@ _this.status = nil
 _this.position = nil
 
 _this.uiObject = nil
+_this.uiNode = nil
 
 function _this:Init()
     
@@ -77,10 +78,14 @@ function _this:UpdateStatus()
 end
 
 function _this:UpdateUI()
-    
-    local tIndex = self.uiObject.transform:Find("txt_index"):GetComponent("Text")
-    local tLen = self.uiObject.transform:Find("txt_len"):GetComponent("Text")
-    local tarIndex = self.uiObject.transform:Find("txt_tarIndex"):GetComponent("Text")
+
+    if self.uiNode == nil then
+        return
+    end
+
+    local tIndex = self.uiNode.transform:Find("txt_index"):GetComponent("Text")
+    local tLen = self.uiNode.transform:Find("txt_len"):GetComponent("Text")
+    local tarIndex = self.uiNode.transform:Find("txt_tarIndex"):GetComponent("Text")
 
     tIndex.text = tostring(self.index)
     tLen.text = tostring(self.tarLen)

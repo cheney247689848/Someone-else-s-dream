@@ -29,6 +29,7 @@ function _this:InitMap(fx , fy , data)
                 
                 local block = L_Unit:Instantiate(bPrefab , _this.blockNode)
                 block.transform.localPosition = Vector3(L_Map.imgRect.x * x , - L_Map.imgRect.y * y , 0)
+                L_NodeController.nodeList[v].uiNode = block
                 -- print(v , block.transform.localPosition.x , block.transform.localPosition.y)
             end
         end

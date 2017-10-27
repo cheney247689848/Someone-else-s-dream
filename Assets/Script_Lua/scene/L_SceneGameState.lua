@@ -82,8 +82,8 @@ _this.stateMapLayout = function (o , eNtity)
             
             print("配置地形")
             L_Map:SetConfigRamdom()
-            self.m_eNtity.view:InitMap(L_Map.formx ,L_Map.formy,L_Map.metaData)
             L_NodeController:Init(L_Map.formx * L_Map.formy , self.m_eNtity.view.blockNode)
+            self.m_eNtity.view:InitMap(L_Map.formx ,L_Map.formy,L_Map.metaData)
 
             for i,v in ipairs(L_NodeController.nodeList) do
                 
@@ -118,6 +118,8 @@ _this.stateMapLayout = function (o , eNtity)
 
         --优先填充pathlen短的
 
+        --用挤的方式  并非用填充方式
+
         if 1 == self.m_nTick then
 
         if Input.GetKeyDown(KeyCode.Alpha1) then
@@ -125,7 +127,7 @@ _this.stateMapLayout = function (o , eNtity)
             print("REFRESH")
             L_NodeController:Sort()
             L_NodeController:Refresh()
-            L_NodeController:UpdateDebugUI()
+            -- L_NodeController:UpdateDebugUI()
         end
 
 
@@ -133,8 +135,8 @@ _this.stateMapLayout = function (o , eNtity)
             if self.m_nTimer > 1 then
     
                 -- print("REFRESH")
-                L_NodeController:Sort()
-                L_NodeController:Refresh()
+                -- L_NodeController:Sort()
+                -- L_NodeController:Refresh()
 
                 -- self.m_nTick = 2
                 self.m_nTimer = 0
