@@ -19,6 +19,7 @@ public class AssectsExporter : EditorWindow
         public string sName;
     }
 
+    static bool isCompressedAssetBundle = false;
     static DateTime preTime;
     const string spritePath = "Assets/Script_Lua";
     public const string strDir = "pack";
@@ -159,7 +160,7 @@ public class AssectsExporter : EditorWindow
     {
 
         if (!Directory.Exists(pathName))return;
-        List<package> pl = new List<package>();
+        // List<package> pl = new List<package>();
         switch (nType)
         {
             case 1:
@@ -198,7 +199,6 @@ public class AssectsExporter : EditorWindow
 
         string strp = pathName.Replace("\\" , "/");
         int ds = strp.IndexOf("/" , 7);
-        int de = strp.IndexOf(".");
         string s = strp.Substring(ds + 1 , strp.Length - ds - 1);
         s = s.Replace("/" , "_");//Debug.Log(s);
         package p;
@@ -227,7 +227,7 @@ public class AssectsExporter : EditorWindow
         options = BuildAssetBundleOptions.DeterministicAssetBundle;
 #else
    
-        if (false)
+        if (isCompressedAssetBundle)
         {
             options = BuildAssetBundleOptions.DeterministicAssetBundle |
             BuildAssetBundleOptions.UncompressedAssetBundle;

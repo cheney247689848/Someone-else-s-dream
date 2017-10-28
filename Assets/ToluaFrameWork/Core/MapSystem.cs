@@ -135,7 +135,7 @@ public class MapSystem{
 		return new Vector3(i % rw * m_vRectPic.x + m_vRectPic.x/2 , i / rw * m_vRectPic.y + m_vRectPic.y/2, 0);
 	}
 
-	public string ToString(){
+	override public string ToString(){
 
 		return ToStringPath(m_nData);
 	}

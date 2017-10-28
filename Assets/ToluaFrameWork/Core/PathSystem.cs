@@ -19,8 +19,8 @@ public class Square{
 		H = 0;
 	}
 	
-	public string ToString(){
-		
+	override public string ToString(){
+
 		return "[" + index + "] , F = " + F + " , G = " + G + " , H = " + H;
 	}
 }
@@ -46,14 +46,14 @@ public class PathSystem {
 	private Square A;
 	private Square B;
 	private Square C;
-	private Square T;
+	// private Square T;
 	
 	private bool isFindThePath = false;
 	//是否斜线行走
 	private bool isbSlash = true;
 
 	//路径思维
-	private int nPathWeight = -1;//-1 默认不选择  0 竖  1 横
+	// private int nPathWeight = -1;//-1 默认不选择  0 竖  1 横
 	
 	public PathSystem(int w , int h , int[] d){
 
@@ -146,13 +146,13 @@ public class PathSystem {
 	/// <param name="a2">A2.</param>
 	/// <param name="a3">A3.</param>
 	/// <param name="a4">A4.</param>
-	public void SetWeight(int a1){
+	// public void SetWeight(int a1){ 
 
-		if(0 == a1 || 1 == a1){
+	// 	if(0 == a1 || 1 == a1){
 
-			nPathWeight = a1;
-		}else Debug.LogError("Error SetWeight = " + a1);
-	}
+	// 		nPathWeight = a1;
+	// 	}else Debug.LogError("Error SetWeight = " + a1);
+	// }
 	
 	// Use this for initialization
 	void Init () {
@@ -286,13 +286,13 @@ public class PathSystem {
 		A = GetSquare(oriIndex);
 		B = GetSquare(tarIndex);
 		C = A;
-		T = A;
+		// T = A;
 		//将A点添加到close列表中
 		openList.Add(A);
 		do{
 			nNum ++;
 			//计算最小
-			T = C;
+			// T = C;
 			C = GetLowerValue();
 			if(null == C){
 

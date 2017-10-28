@@ -52,7 +52,7 @@ public class AssetsBuilder : MonoBehaviour
 {
 
     public delegate void LoadDelegate(AssetBundle bundle);
-    private LoadDelegate m_LoadDelegate;
+    // private LoadDelegate m_LoadDelegate;
     private bool bLoading;
     public float fProgress;
     /// <summary>
@@ -70,7 +70,7 @@ public class AssetsBuilder : MonoBehaviour
         bLoading = true;
         fProgress = 0;
         Debug.Log("LoadBundle : " + path);
-        m_LoadDelegate = loadDelegate;
+        // m_LoadDelegate = loadDelegate;
         //string path = System.IO.Path.Combine(StreamPath, name);
         ArrayList objList = new ArrayList();
         objList.Add(path);
@@ -157,8 +157,9 @@ public class AssetsBuilder : MonoBehaviour
 			return Application.dataPath + "/StreamingAssets/";
 #elif UNITY_ANDROID
 			return Application.persistentDataPath + "/Cache/";
+#else
+            return string.Empty; 
 #endif
-			return string.Empty; 
         }
     }
 
@@ -175,8 +176,10 @@ public class AssetsBuilder : MonoBehaviour
             return Application.dataPath + "/StreamingAssets_local/";
 #elif UNITY_ANDROID
 			return Application.persistentDataPath + "/Cache/";
-#endif
+#else
             return string.Empty;
+#endif
+            
         }
     }
 }

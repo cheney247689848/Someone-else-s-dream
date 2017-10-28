@@ -33,7 +33,7 @@ public class NetServer
     //Socket
     private Socket clientSocket;
     //标识是否已经释放
-    private bool isDispose;
+    private bool m_bIsDispose;
     //会话编号
     private SessionId m_SessionId;
 
@@ -43,6 +43,8 @@ public class NetServer
         m_SessionId = new SessionId();
     }
     public SessionId Session { get { return m_SessionId; } }
+
+    public bool isDispose{get{return m_bIsDispose;}}
 
     //接收数据事件
     public event EventHandler EventRecv;
@@ -69,7 +71,7 @@ public class NetServer
     {
         if (null != clientSocket)
         {
-            isDispose = true;
+            m_bIsDispose = true;
             //clientSocket.Shutdown(SocketShutdown.Both);//缓存中的数据全部发送成功后才会返回
             //clientSocket.Disconnect(true);
             clientSocket.Close();

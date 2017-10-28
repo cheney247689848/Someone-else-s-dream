@@ -30,6 +30,10 @@ public class MesQueue
         if (mes.Count > 0)
         {
             int eState = delegateRecv(mes[0].stream);
+            if (eState == -1)
+            {
+                Debug.LogError("Error eState = " + eState);
+            }
             mes.RemoveAt(0);
         }
     }

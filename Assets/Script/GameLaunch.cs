@@ -12,65 +12,30 @@ public class GameLaunch:LuaClient
     LuaFunction function;
     LuaLooper looper;
     public TextAsset t;
-    public static GameLaunch Instance
-    {
-        get;
-        protected set;
-    }
+    // public static GameLaunch Instance
+    // {
+    //     get;
+    //     protected set;
+    // }
+    // public GameLaunch(){
 
-    public GameLaunch(){
-
-        Instance = this;
-    } 
+    //     Instance = this;
+    // } 
 
     void Start()
     {
-        
         AssetsBuilder builder = this.gameObject.AddComponent<AssetsBuilder>();
         builder.LoadBundle(System.IO.Path.Combine(AppConst.boxAssetDir , "luaScript/lua_update") , LoadBundleBack);
-
-        // string txt = "abc";
-        // Debug.Log(Encoding.Default.GetBytes(txt).Length);
-        // byte[] enc = DesEncrypt.Encrypt(Encoding.Default.GetBytes(txt));
-        // Debug.Log(enc.Length);
-
-        // DesEncrypt.Decrypt(enc);
-        // Debug.Log(System.Text.Encoding.ASCII.GetString(DesEncrypt.Decrypt(enc)));        
-
-        // DateTime d = DateTime.Now;
-        // string txt = "为什么不能转中文";
-
-        // string enc = DesEncrypt.Encrypt(txt);
-        // Debug.Log(enc);
-        // string dec = DesEncrypt.Decrypt(enc);
-        // Debug.Log(dec);
-        //Debug.Log(DesEncrypt.Decrypt(enc));
-        // Debug.Log(DateTime.Now - d);
-        // d = DateTime.Now;
-
-        // string rsa = RsaEncrypt.Encrypt(txt);
-        // // Debug.Log(rsa);
-        // RsaEncrypt.Decrypt(rsa);
-        // //Debug.Log(RsaEncrypt.Decrypt(rsa));
-        // Debug.Log(DateTime.Now - d);
-
-        // Debug.Log(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        // var mydir = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory;
-        // var monoroot = mydir.Parent.Parent.Parent.Parent;
-        // var inputdir = Path.Combine(monoroot.FullName,"builds/monodistribution/lib/mono/unity");
-        // var outputdir = Path.Combine(monoroot.FullName, "tmp/unity_linkered");
-        // Debug.Log(inputdir);
-        // Debug.Log(outputdir);
     }
 
     public void LoadBundleBack(AssetBundle bundle){
 
         LuaFileUtils.Instance.AddSearchBundle(bundle.name, bundle);
         LuaFileUtils.Instance.beZip = AppConst.isZip;
-        Init();
+        GameInit();
     }
 
-    public void Init(){
+    public void GameInit(){
 
 		Application.targetFrameRate = AppConst.GameFrameRate;
         LuaState lua = LuaClient.GetMainState();

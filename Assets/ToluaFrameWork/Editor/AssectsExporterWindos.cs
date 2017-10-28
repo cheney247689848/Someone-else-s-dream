@@ -26,9 +26,7 @@ public class AssectsExporterWindos : EditorWindow {
     static int pIndex = 0;
     static int eIndex = 0;
     static string[] options = null;
-    static AbHash[] abHashs = null;
     static List< AbHashTable> compareList = new List<AbHashTable>();
-    static bool isDeBugError = false;
     static string strTip = "";
     static string strCopyTip = "";
     static List<string> bList = new List<string>();
@@ -152,7 +150,7 @@ public class AssectsExporterWindos : EditorWindow {
             return false;
         }
         //校对发生改变
-        string strKey = DateTime.Now.ToString("yyyy");
+        // string strKey = DateTime.Now.ToString("yyyy");
         FileStream fs = new FileStream(txtPath , FileMode.Open);
         StreamReader reader = new StreamReader(fs);
         String line;
@@ -197,10 +195,8 @@ public class AssectsExporterWindos : EditorWindow {
         //Debug.Log(pIndex + " , " +  eIndex);
         strTip = "";
         strCopyTip = "";
-        isDeBugError = false;
         if (pIndex >= eIndex)
         {
-            isDeBugError = true;
             strTip = "Error : 对比的日期时间必须满足 t1 < t2";
             return;
         }

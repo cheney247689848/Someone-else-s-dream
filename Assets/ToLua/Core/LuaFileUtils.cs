@@ -240,7 +240,7 @@ namespace LuaInterface
 
         byte[] ReadZipFile(string fileName)
         {
-            AssetBundle zipFile = null;
+            // AssetBundle zipFile = null;
             byte[] buffer = null;
             string zipName = null;
             StringBuilder sb = StringBuilderCache.Acquire();

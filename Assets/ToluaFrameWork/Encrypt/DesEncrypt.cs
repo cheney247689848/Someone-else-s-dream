@@ -38,7 +38,7 @@ public class DesEncrypt{
         CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write);
         cs.Write(inputByteArray, 0, inputByteArray.Length);
         cs.FlushFinalBlock();
-        StringBuilder ret = new StringBuilder();
+        // StringBuilder ret = new StringBuilder();
         return System.Text.Encoding.UTF8.GetString(ms.ToArray());
     }
 
