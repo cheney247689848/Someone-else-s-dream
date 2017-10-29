@@ -89,6 +89,11 @@ function _this:Sort()
     end
 end
 
+--每个单独产生的G位置都存在对应整体map的寻路地址
+--G位置产生水滴
+--G位置产生的水滴按自己本身的寻路地址散布
+
+
 function _this:Refresh()
     
     for i,v in ipairs(_this.sortList) do
