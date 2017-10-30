@@ -18,6 +18,8 @@ _this.formx = 14
 _this.formy = 8
 _this.imgRect = {x = 90 , y = 90}
 _this.metaData = nil --暂定是一维数据
+_this.metaDynData = nil
+_this.mergeData = nil
 _this.pathSystem = nil
 
 _this.sceneRect = Rect.New(0,0,1280,720)
@@ -49,7 +51,54 @@ function _this:SetConfigRamdom()
     0,0,0,0,0,0,0,0,0,0,0,0,0,0
     }
 
+    self.metaDynData = {
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    }
+
+    _this.mergeData = {    
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+
     self.pathSystem = PathSystem.New(self.formx , self.formy , self.metaData)
+end
+
+function _this:CleanDynData()
+
+    for i,v in ipairs(self.metaDynData) do
+        v = 0
+    end
+end
+
+function _this:SetDynData(dex , value)
+    
+    if self.metaDynData[dex] ~= nil then
+        
+        self.metaDynData[dex] = value
+    else
+        print(string.format( "Error SetDynData index = %d", index ))
+    end
+end
+
+function _this:MergeData()
+
+    for i = 1 , #self.metaData do
+        
+        self.mergeData[i] = self.metaData[i] == self.metaDynData[i] and 0 or 1
+    end
+    self.pathSystem:RefreshData(self.mergeData)
 end
 
 function _this:IsBlock(dex)
@@ -74,7 +123,7 @@ function _this:GetPosition(index)
     
     if self.metaData[index] == nil then
         
-        print(string.format( "Error index = %d", index ))
+        print(string.format( "Error GetPosition index = %d", index ))
         return nil
     end
     local x , v1 = math.modf((index - 1) % self.formx)-- = index % _this.formx

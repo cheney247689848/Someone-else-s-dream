@@ -11,6 +11,7 @@ public class PathSystemWrap
 		L.RegFunction("DynDataClean", DynDataClean);
 		L.RegFunction("SetStaticData", SetStaticData);
 		L.RegFunction("StaticDataClean", StaticDataClean);
+		L.RegFunction("RefreshData", RefreshData);
 		L.RegFunction("SmoothPath", SmoothPath);
 		L.RegFunction("FindThePath", FindThePath);
 		L.RegFunction("IsExitBarrier", IsExitBarrier);
@@ -109,6 +110,23 @@ public class PathSystemWrap
 			ToLua.CheckArgsCount(L, 1);
 			PathSystem obj = (PathSystem)ToLua.CheckObject(L, 1, typeof(PathSystem));
 			obj.StaticDataClean();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RefreshData(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			PathSystem obj = (PathSystem)ToLua.CheckObject(L, 1, typeof(PathSystem));
+			int[] arg0 = ToLua.CheckNumberArray<int>(L, 2);
+			obj.RefreshData(arg0);
 			return 0;
 		}
 		catch(Exception e)

@@ -153,6 +153,15 @@ public class PathSystem {
 	// 		nPathWeight = a1;
 	// 	}else Debug.LogError("Error SetWeight = " + a1);
 	// }
+
+	public void RefreshData(int[] data){
+
+		if (data.Length != m_data.Length)
+		{
+			Debug.LogError("Error RefreshData diff len");
+		}
+		m_data = data;
+	}
 	
 	// Use this for initialization
 	void Init () {
@@ -264,6 +273,11 @@ public class PathSystem {
 
 	//寻找路径
 	public int[] FindThePath(int oriIndex , int tarIndex){
+
+		Debug.Log(m_data[20]);
+		Debug.Log(m_data[19]);
+		Debug.Log(m_data[21]);
+
         //Debug.LogWarning(oriIndex + " move to " + tarIndex);
 		if (oriIndex == tarIndex) return new int[1] { oriIndex };
 		

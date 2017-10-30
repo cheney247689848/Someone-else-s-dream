@@ -41,7 +41,10 @@ function _this:Sort()
 
     for i,v in ipairs(_this.nodeList) do
         
-        if v.tarIndex ~= -1 then
+        if v.tarLen == 1 then
+            
+            table.insert( _this.creatList, v)
+        elseif v.tarIndex ~= -1 then
             
             table.insert( _this.sortList, v)
         end
@@ -53,11 +56,11 @@ function _this:Sort()
     for i = 1 , #_this.sortList do  
         for j = 1 , #_this.sortList - i do 
             
-            if _this.sortList[j].weight < _this.sortList[j+1].weight then
+            if _this.sortList[j].weight > _this.sortList[j+1].weight then
                 tmp = _this.sortList[j]  
                 _this.sortList[j] = _this.sortList[j+1]
                 _this.sortList[j+1] = tmp
-            elseif _this.sortList[j].weight == _this.sortList[j+1].weight and _this.sortList[j].tarLen < _this.sortList[j+1].tarLen then
+            elseif _this.sortList[j].weight == _this.sortList[j+1].weight and _this.sortList[j].tarLen > _this.sortList[j+1].tarLen then
                 tmp = _this.sortList[j]  
                 _this.sortList[j] = _this.sortList[j+1]
                 _this.sortList[j+1] = tmp
@@ -115,7 +118,7 @@ function _this:Refresh()
                         v.status = L_TypeStatusNode.DROP
                         print("creat tranf : " , v.tarIndex , v.index)
                     elseif self.nodeList[v.tarIndex].isTranf then
-                        v.weight = v.weight + 1
+                        -- v.weight = v.weight + 1
                         print("weight add : " , v.tarIndex , v.index)
                     end
                 end

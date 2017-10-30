@@ -104,10 +104,27 @@ _this.stateMapLayout = function (o , eNtity)
                 end
             end
 
-            -- local paths = L_Map:FindPath(0 , 5)
+            -- L_Map.metaData[20] = 1
+            -- L_Map.metaData[19] = 1
+            -- L_Map.metaData[21] = 1
+
+            
+
+            L_Map:SetDynData(21 , 2)
+            L_Map:SetDynData(20 , 2)
+            L_Map:SetDynData(19 , 2)
+            L_Map:MergeData()
+
+            -- for i,v in ipairs(L_Map.mergeData) do
+
+            --     print(i,v)
+            -- end
+
+
+            -- local paths = L_Map:FindPath(1 , 6)
             -- for i = 1, #paths do
 
-            --     local pos = L_Map:GetPosition(paths[i])
+            --     local pos = L_Map:GetPosition(paths[i] + 1)
             --     self.m_eNtity.view:DebugPos(pos)
             -- end
             -- ZCLOG(paths)
