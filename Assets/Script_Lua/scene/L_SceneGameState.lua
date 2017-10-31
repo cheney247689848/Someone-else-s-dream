@@ -108,12 +108,18 @@ _this.stateMapLayout = function (o , eNtity)
             -- L_Map.metaData[19] = 1
             -- L_Map.metaData[21] = 1
 
-            
-
-            L_Map:SetDynData(21 , 2)
-            L_Map:SetDynData(20 , 2)
-            L_Map:SetDynData(19 , 2)
-            L_Map:MergeData()
+            -- for i,v in ipairs(L_NodeController.nodeList) do
+                
+            --     if v.status == L_TypeStatusNode.IDLE then
+                    
+            --         L_Map:SetDynData(v.index , 0)
+            --     else
+            --         L_Map:SetDynData(v.index , 0) --2 是临时值
+            --     end
+            -- end
+            -- L_Map:SetDynData(20 , 2)
+            -- L_Map:SetDynData(19 , 2)
+            -- L_Map:MergeData()
 
             -- for i,v in ipairs(L_Map.mergeData) do
 

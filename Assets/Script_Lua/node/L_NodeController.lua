@@ -98,30 +98,68 @@ end
 
 
 function _this:Refresh()
-    
+
+    --clear
+    for i,v in ipairs(L_NodeController.nodeList) do
+        
+        if v.status == L_TypeStatusNode.IDLE then
+            
+            L_Map:SetDynData(v.index , 0)
+        else
+            L_Map:SetDynData(v.index , 2) --2 是临时值
+        end
+    end
+
     for i,v in ipairs(_this.sortList) do
         
-        if v.status == L_TypeStatusNode.NONE then
-            --当前为空块
-            if v.tarIndex ~= -1 then
+        -- if v.status == L_TypeStatusNode.NONE then
+        --     --当前为空块
+        --     if v.tarIndex ~= -1 then
                 
-                if v.tarIndex == 1 then
-                    -- 1 为起点  直接产生
-                    print("creat : " , v.index)
-                    v.status = L_TypeStatusNode.DROP
-                else
+        --         if v.tarIndex == 1 then
+        --             -- 1 为起点  直接产生
+        --             print("creat : " , v.index)
+        --             v.status = L_TypeStatusNode.DROP
+        --         else
                     
-                    if self.nodeList[v.tarIndex].status == L_TypeStatusNode.IDLE then
-                        --可转换
-                        self.nodeList[v.tarIndex].status = L_TypeStatusNode.NONE
-                        self.nodeList[v.tarIndex].isTranf = true
-                        v.status = L_TypeStatusNode.DROP
-                        print("creat tranf : " , v.tarIndex , v.index)
-                    elseif self.nodeList[v.tarIndex].isTranf then
-                        -- v.weight = v.weight + 1
-                        print("weight add : " , v.tarIndex , v.index)
-                    end
-                end
+        --             if self.nodeList[v.tarIndex].status == L_TypeStatusNode.IDLE then
+        --                 --可转换
+        --                 self.nodeList[v.tarIndex].status = L_TypeStatusNode.NONE
+        --                 self.nodeList[v.tarIndex].isTranf = true
+        --                 v.status = L_TypeStatusNode.DROP
+        --                 print("creat tranf : " , v.tarIndex , v.index)
+        --             elseif self.nodeList[v.tarIndex].isTranf then
+        --                 -- v.weight = v.weight + 1
+        --                 print("weight add : " , v.tarIndex , v.index)
+        --             end
+        --         end
+        --     end
+        -- end
+
+        if v.status == L_TypeStatusNode.IDLE then
+            
+            -- local paths = L_Map:FindPath(1 , dex)
+            -- if paths ~= nil then
+                
+            --     if #paths >= 2 then
+            --         v:SetTarIndex(paths[#paths - 1] + 1 , #paths)
+            --     else
+            --         print("Error paths len = " , #paths , dex)
+            --     end
+            -- else
+            --     print("Error Path is nil")
+            -- end
+
+        elseif v.status == L_TypeStatusNode.NONE then 
+
+            if v.tarIndex == 1 then
+                -- 1 为起点  直接产生
+                print("creat : " , v.index)
+                v.status = L_TypeStatusNode.DROP
+                L_Map:SetDynData(v.index , 2)
+            else
+                
+
             end
         end
     end
