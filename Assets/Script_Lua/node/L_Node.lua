@@ -56,6 +56,7 @@ end
 
 function _this:UpdateStatus()
     
+    -- print(self.index , self.status)
     if self.status == L_TypeStatusNode.IDLE then
     
         if self.uiObject == nil then
@@ -89,7 +90,7 @@ function _this:UpdateUI()
 
     tIndex.text = tostring(self.index)
     tLen.text = tostring(self.tarLen)
-    tarIndex.text = tostring(self.tarIndex)
+    tarIndex.text = string.format( "%d|%d", L_Map.mergeData[self.index] , self.status)
 end
 
 function _this.New(o)

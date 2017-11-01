@@ -50,54 +50,35 @@ function _this:SetConfigRamdom()
     0,0,0,1,0,0,0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,0,0,0,0,0,0
     }
+    --clone
+    _this.mergeData = {}
+    for i = 1 , #self.metaData do
 
-    self.metaDynData = {
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0
-    }
-
-    _this.mergeData = {    
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-
+        table.insert(self.mergeData , self.metaData[i])
+    end
     self.pathSystem = PathSystem.New(self.formx , self.formy , self.metaData)
 end
 
-function _this:CleanDynData()
+function _this:CleanMergeData()
 
-    for i,v in ipairs(self.metaDynData) do
-        v = 0
+    for i= 1 , #self.metaData do
+        
+        self.mergeData[i] = self.metaData[i]
     end
 end
 
-function _this:SetDynData(dex , value)
+function _this:SetMergeData(index , value)
     
-    if self.metaDynData[dex] ~= nil then
+    if self.mergeData[index] ~= nil then
         
-        self.metaDynData[dex] = value
+        self.mergeData[index] = self.metaData[i] ~= 0 and self.metaData[i] or value
     else
-        print(string.format( "Error SetDynData index = %d", index ))
+        print(string.format( "Error SetMergeData index = %d", index ))
     end
 end
 
-function _this:MergeData()
+function _this:RefreshMergeData()
 
-    for i = 1 , #self.metaData do
-        
-        self.mergeData[i] = self.metaData[i] == self.metaDynData[i] and 0 or 1
-    end
     self.pathSystem:RefreshData(self.mergeData)
 end
 
@@ -112,11 +93,12 @@ end
 
 function _this:FindPath(sPos , ePos)
     
-    local path = _this.pathSystem:FindThePath(sPos - 1 , ePos - 1):ToTable()
-    -- if path ~= nil then
-    --     path = path:ToTable()
-    -- end
-    return path
+    local path = self.pathSystem:FindThePath(sPos - 1 , ePos - 1)
+    if path == nil then
+        return nil
+    end
+    local tPath = path:ToTable()
+    return tPath
 end
 
 function _this:GetPosition(index)

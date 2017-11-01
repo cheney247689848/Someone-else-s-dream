@@ -150,16 +150,17 @@ _this.stateMapLayout = function (o , eNtity)
             print("REFRESH")
             L_NodeController:Sort()
             L_NodeController:Refresh()
-            -- L_NodeController:UpdateDebugUI()
+            L_NodeController:UpdateDebugUI()
         end
 
 
             self.m_nTimer = self.m_nTimer + nTime
-            if self.m_nTimer > 1 then
+            if self.m_nTimer > 0.1 then
     
-                -- print("REFRESH")
-                -- L_NodeController:Sort()
-                -- L_NodeController:Refresh()
+                print("REFRESH")
+                L_NodeController:Sort()
+                L_NodeController:Refresh()
+                L_NodeController:UpdateDebugUI()
 
                 -- self.m_nTick = 2
                 self.m_nTimer = 0
@@ -189,7 +190,7 @@ _this.stateProcess = function (o , eNtity)
 
     function state:Exit()
 
-    print("------退出Process状态------")
+        print("------退出Process状态------")
     end
     return state
 end

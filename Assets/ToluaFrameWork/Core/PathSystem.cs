@@ -274,10 +274,6 @@ public class PathSystem {
 	//寻找路径
 	public int[] FindThePath(int oriIndex , int tarIndex){
 
-		Debug.Log(m_data[20]);
-		Debug.Log(m_data[19]);
-		Debug.Log(m_data[21]);
-
         //Debug.LogWarning(oriIndex + " move to " + tarIndex);
 		if (oriIndex == tarIndex) return new int[1] { oriIndex };
 		
