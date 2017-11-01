@@ -147,10 +147,19 @@ _this.stateMapLayout = function (o , eNtity)
 
             if Input.GetKeyDown(KeyCode.Alpha1) then
 
-                print("REFRESH")
+                -- print("REFRESH")
+                -- L_NodeController:Sort()
+                -- L_NodeController:Refresh()
+                -- L_NodeController:UpdateDebugUI()
+
                 L_NodeController:Sort()
-                L_NodeController:Refresh()
-                L_NodeController:UpdateDebugUI()
+                if L_NodeController:Refresh() then
+                    
+                    L_NodeController:UpdateDebugUI()
+                    self.m_nTick = 2
+                else
+                    self.m_nTick = 3
+                end
             end
 
             -- self.m_nTimer = self.m_nTimer + nTime
@@ -180,24 +189,25 @@ _this.stateMapLayout = function (o , eNtity)
                 
                 if v.status == L_TypeStatusNode.DROP then
                     
-                    if v.uiObject ~= nil then
+                    if Vector3.Distance(v.uiObject.transform.localPosition , v.position) > 1 then
                         
-                        if Vector3.Distance(v.uiObject.transform.localPosition , v.position) > 1 then
-                            
-                            v.uiObject.transform.localPosition = Vector3.MoveTowards(v.uiObject.transform.localPosition , v.position , 1 )
-                            isForBreak = true
-                        end
+                        v.uiObject.transform.localPosition = Vector3.MoveTowards(v.uiObject.transform.localPosition , v.position , 5 )
+                        isForBreak = false
+                    else
+                        L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
                     end
                 elseif v.status == L_TypeStatusNode.CREAT then
 
                     v.uiObject = L_NodeController:CreatNodeUI()
                     v.uiObject.transform.localPosition = v.position
-                    isForBreak = true
+                    L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
+                    isForBreak = false
                 end
             end
 
             if isForBreak then
                 
+                L_NodeController:UpdateDebugUI()
                 self.m_nTick = 1
             end
         end

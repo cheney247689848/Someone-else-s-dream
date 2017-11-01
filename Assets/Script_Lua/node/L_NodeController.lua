@@ -51,7 +51,7 @@ function _this:Sort()
     for i = 1 , #self.sortList do  
         for j = 1 , #self.sortList - i do 
             
-            if self.sortList[j].tarLen > self.sortList[j+1].tarLen then
+            if self.sortList[j].tarLen < self.sortList[j+1].tarLen then
                 
                 tmp = _this.sortList[j]  
                 _this.sortList[j] = _this.sortList[j+1]
@@ -107,9 +107,11 @@ function _this:Refresh()
         if v.status == L_TypeStatusNode.IDLE then
         elseif v.status == L_TypeStatusNode.NONE then 
 
-            if v.tarIndex == 1 then -- 1 为起点  直接产生
+            if v.index == 1 then
+                --原点
+            elseif v.tarLen == 2 then -- 1 为起点  直接产生
                 -- print("creat : " , v.index)
-                self:SetNodeStatus(v.index , L_TypeStatusNode.DROP)
+                self:SetNodeStatus(v.index , L_TypeStatusNode.CREAT)
                 isCreat = true
             else
                 --交换
@@ -117,8 +119,8 @@ function _this:Refresh()
                 -- print("Find :  ----------- " , 1 , v.index)
                 local paths = L_Map:FindPath(1 , v.index)
                 if paths ~= nil then
-                    
-                    if #paths >= 2 then 
+                    -- print("#paths len = " , #paths)
+                    if #paths >= 3 then 
 
                         local isExecute = true
                         for i = 2, #paths - 1 do --原点不判断
@@ -133,11 +135,21 @@ function _this:Refresh()
                         end
                         -- print(isExecute)
                         if isExecute then
-                            for i = #paths, 2 , -1 do
+
+                            --设置最近点
+                            -- print("设置最近点 : " , paths[2] + 1)
+                            self:SetNodeStatus(paths[2] + 1 , L_TypeStatusNode.DROP)
+                            for i = #paths, 3 , -1 do
                                 
+                                local preIndex = paths[i - 1] + 1
                                 local tranfIndex = paths[i] + 1
-                                -- print("tranf : " , tranfIndex)
+                                -- print(string.format( "preIndex = %d , tranfIndex = %d ", preIndex , tranfIndex))
+
+                                self.nodeList[tranfIndex].uiObject = self.nodeList[preIndex].uiObject
                                 self:SetNodeStatus(tranfIndex , L_TypeStatusNode.DROP)
+                                
+                                self.nodeList[preIndex].uiObject = nil
+                                self:SetNodeStatus(preIndex , L_TypeStatusNode.NONE)
                                 isTranf = true
                             end
                         end
@@ -151,14 +163,14 @@ function _this:Refresh()
         end
     end
 
-    for i,v in ipairs(self.sortList) do
+    -- for i,v in ipairs(self.sortList) do
         
-        if v.status == L_TypeStatusNode.DROP then
+    --     if v.status == L_TypeStatusNode.DROP then
             
-            self:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
-        end
-        v:UpdateStatus()
-    end
+    --         self:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
+    --     end
+    --     v:UpdateStatus()
+    -- end
     return isCreat or isTranf
 end
 

@@ -88,9 +88,9 @@ function _this:UpdateUI()
     local tLen = self.uiNode.transform:Find("txt_len"):GetComponent("Text")
     local tarIndex = self.uiNode.transform:Find("txt_tarIndex"):GetComponent("Text")
 
-    tIndex.text = tostring(self.index)
-    tLen.text = tostring(self.tarLen)
-    tarIndex.text = string.format( "%d|%d", L_Map.mergeData[self.index] , self.status)
+    tIndex.text = string.format( "%d(l = %d)", self.index , self.tarLen)
+    -- tLen.text = tostring(self.tarLen)
+    tarIndex.text = string.format( "%d_%d", self.status , L_Map.mergeData[self.index])
 end
 
 function _this.New(o)
