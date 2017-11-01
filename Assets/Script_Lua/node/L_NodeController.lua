@@ -25,6 +25,7 @@ function _this:Init(num , parent)
         local node = L_Node.New()
         node:Init()
         node:SetIndex(i)
+        node.position = L_Map:GetPosition(i)
         table.insert(_this.nodeList, node)
     end
     -- print(#_this.nodeList)
@@ -100,17 +101,7 @@ end
 
 function _this:Refresh()
 
-    --clear
-    -- for i,v in ipairs(L_NodeController.nodeList) do
-        
-    --     if v.status == L_TypeStatusNode.IDLE or v.status == L_TypeStatusNode.NONE then
-            
-    --         L_Map:SetMergeData(v.index , 0)
-    --     else
-    --         L_Map:SetMergeData(v.index , 2) --2 是临时值
-    --     end
-    -- end
-
+    local isCreat,isTranf = false
     for i,v in ipairs(self.sortList) do
         
         if v.status == L_TypeStatusNode.IDLE then
@@ -119,6 +110,7 @@ function _this:Refresh()
             if v.tarIndex == 1 then -- 1 为起点  直接产生
                 -- print("creat : " , v.index)
                 self:SetNodeStatus(v.index , L_TypeStatusNode.DROP)
+                isCreat = true
             else
                 --交换
                 L_Map:RefreshMergeData()
@@ -139,7 +131,6 @@ function _this:Refresh()
                                 break
                             end
                         end
-                        
                         -- print(isExecute)
                         if isExecute then
                             for i = #paths, 2 , -1 do
@@ -147,6 +138,7 @@ function _this:Refresh()
                                 local tranfIndex = paths[i] + 1
                                 -- print("tranf : " , tranfIndex)
                                 self:SetNodeStatus(tranfIndex , L_TypeStatusNode.DROP)
+                                isTranf = true
                             end
                         end
                     else
@@ -167,6 +159,7 @@ function _this:Refresh()
         end
         v:UpdateStatus()
     end
+    return isCreat or isTranf
 end
 
 function _this:SetNodeStatus(index , status)

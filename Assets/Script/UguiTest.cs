@@ -28,8 +28,6 @@ public class UguiTest : MonoBehaviour {
 
         // GameObject.Instantiate()
         // transform.FindChild
-
-
         // var q =  Quaternion.Euler(0 , 30 , 0) * new Vector3(0 , 0 , 10);
         // Debug.Log(q);
 	}

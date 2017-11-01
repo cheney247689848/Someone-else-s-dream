@@ -145,26 +145,66 @@ _this.stateMapLayout = function (o , eNtity)
 
         if 1 == self.m_nTick then
 
-        if Input.GetKeyDown(KeyCode.Alpha1) then
+            if Input.GetKeyDown(KeyCode.Alpha1) then
 
-            print("REFRESH")
-            L_NodeController:Sort()
-            L_NodeController:Refresh()
-            L_NodeController:UpdateDebugUI()
-        end
-
-
-            self.m_nTimer = self.m_nTimer + nTime
-            if self.m_nTimer > 0.1 then
-    
                 print("REFRESH")
                 L_NodeController:Sort()
                 L_NodeController:Refresh()
                 L_NodeController:UpdateDebugUI()
-
-                -- self.m_nTick = 2
-                self.m_nTimer = 0
             end
+
+            -- self.m_nTimer = self.m_nTimer + nTime
+            -- if self.m_nTimer > 0.1 then
+    
+            --     print("REFRESH")
+            --     L_NodeController:Sort()
+            --     L_NodeController:Refresh()
+            --     L_NodeController:UpdateDebugUI()
+            --     self.m_nTimer = 0
+            -- end
+
+            L_NodeController:Sort()
+            if L_NodeController:Refresh() then
+                
+                L_NodeController:UpdateDebugUI()
+                self.m_nTick = 2
+            else
+                self.m_nTick = 3
+            end
+        end
+
+        if 2 == self.m_nTick then
+            
+            local isForBreak = true
+            for i,v in ipairs(L_NodeController.nodeList) do
+                
+                if v.status == L_TypeStatusNode.DROP then
+                    
+                    if v.uiObject ~= nil then
+                        
+                        if Vector3.Distance(v.uiObject.transform.localPosition , v.position) > 1 then
+                            
+                            v.uiObject.transform.localPosition = Vector3.MoveTowards(v.uiObject.transform.localPosition , v.position , 1 )
+                            isForBreak = true
+                        end
+                    end
+                elseif v.status == L_TypeStatusNode.CREAT then
+
+                    v.uiObject = L_NodeController:CreatNodeUI()
+                    v.uiObject.transform.localPosition = v.position
+                    isForBreak = true
+                end
+            end
+
+            if isForBreak then
+                
+                self.m_nTick = 1
+            end
+        end
+
+        if 3 == self.m_nTick then
+            
+            print("结束")
         end
     end
 

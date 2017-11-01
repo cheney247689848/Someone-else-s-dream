@@ -62,7 +62,7 @@ function _this:UpdateStatus()
         if self.uiObject == nil then
             
             self.uiObject = L_NodeController:CreatNodeUI()
-            self.uiObject.transform.localPosition = L_Map:GetPosition(self.index)
+            self.uiObject.transform.localPosition = node.position --L_Map:GetPosition(self.index)
         else
             self.uiObject:SetActive(true)
         end
