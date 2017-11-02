@@ -15,12 +15,16 @@ L_TypeStatusNode = {
     IDLE = 0;               --空闲状态
     CREAT = 1;              --创建状态
     DROP = 2;               --坠落状态
-    PRE_ELIMINATE = 3;      --当前消除状态
+    TRANF = 3;              --被转移状态
     AN_ELIMINATE = 4;       --当前消除位置检测
     ELIMINATE = 5;          --消除状态
     PRE_DROP = 6;           --坠落前状态
     TES_DROP = 7;           --坠落检测状态
     REFURBISH = 8;          --刷新状态
+
+    FIXED_OBJECT = 10,      --固定 物体状态
+
+
     FREEZE = 21;            --冰冻状态
     SAND = 22;              --流沙状态
     ANIMATION = 30;         --动画

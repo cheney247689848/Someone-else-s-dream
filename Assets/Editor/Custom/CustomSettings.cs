@@ -174,6 +174,9 @@ public static class CustomSettings
         _GT(typeof(MgrLuaInterp)),
 
         _GT(typeof(PathSystem)),
+
+        _GT(typeof(AnimationCurve)),
+        _GT(typeof(Keyframe)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

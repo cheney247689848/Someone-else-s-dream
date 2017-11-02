@@ -16,24 +16,33 @@ function _this:InitView()
     _this.blockNode = GameObject.Find("BlockNode")  ---595  315
 end
 
-function _this:InitMap(fx , fy , data)
+-- function _this:InitMap(fx , fy , data)
     
+--     local bundle = L_Bundle:GetBundle("sgame_prefab_block")
+--     local bPrefab = L_Unit:LoadPrefab("block" , bundle)
+
+--     for y = 0 , fy - 1 do
+--         for x = 0 , fx - 1 do
+
+--             local v = x + y * fx + 1
+--             if L_Map:IsBlock(v) then
+                
+--                 local block = L_Unit:Instantiate(bPrefab , _this.blockNode)
+--                 block.transform.localPosition = Vector3(L_Map.imgRect.x * x , - L_Map.imgRect.y * y , 0)
+--                 L_NodeController.nodeList[v].uiNode = block
+--                 -- print(v , block.transform.localPosition.x , block.transform.localPosition.y)
+--             end
+--         end
+--     end
+-- end
+
+function _this:CreatBlock(pos)
+
     local bundle = L_Bundle:GetBundle("sgame_prefab_block")
     local bPrefab = L_Unit:LoadPrefab("block" , bundle)
-
-    for y = 0 , fy - 1 do
-        for x = 0 , fx - 1 do
-
-            local v = x + y * fx + 1
-            if L_Map:IsBlock(v) then
-                
-                local block = L_Unit:Instantiate(bPrefab , _this.blockNode)
-                block.transform.localPosition = Vector3(L_Map.imgRect.x * x , - L_Map.imgRect.y * y , 0)
-                L_NodeController.nodeList[v].uiNode = block
-                -- print(v , block.transform.localPosition.x , block.transform.localPosition.y)
-            end
-        end
-    end
+    local block = L_Unit:Instantiate(bPrefab , _this.blockNode)
+    block.transform.localPosition = pos
+    return block
 end
 
 function _this:DebugPos(pos)

@@ -30,6 +30,7 @@ public class UguiTest : MonoBehaviour {
         // transform.FindChild
         // var q =  Quaternion.Euler(0 , 30 , 0) * new Vector3(0 , 0 , 10);
         // Debug.Log(q);
+        // AnimationCurve curve
 	}
 	
 	// Update is called once per frame

@@ -83,8 +83,22 @@ _this.stateMapLayout = function (o , eNtity)
             print("配置地形")
             L_Map:SetConfigRamdom()
             L_NodeController:Init(L_Map.formx * L_Map.formy , self.m_eNtity.view.blockNode)
-            self.m_eNtity.view:InitMap(L_Map.formx ,L_Map.formy,L_Map.metaData)
+            --self.m_eNtity.view:InitMap(L_Map.formx ,L_Map.formy,L_Map.metaData)
 
+            --creat block
+            for y = 0 , L_Map.formy - 1 do
+                for x = 0 , L_Map.formx - 1 do
+        
+                    local v = x + y * L_Map.formx + 1
+                    if L_Map:IsBlock(v) then
+                        
+                        local block = self.m_eNtity.view:CreatBlock(Vector3(L_Map.imgRect.x * x , - L_Map.imgRect.y * y , 0))
+                        L_NodeController.nodeList[v].uiNode = block
+                    end
+                end
+            end
+            
+            --初始化路径
             for i,v in ipairs(L_NodeController.nodeList) do
                 
                 local dex = v.index
@@ -156,10 +170,13 @@ _this.stateMapLayout = function (o , eNtity)
                 if L_NodeController:Refresh() then
                     
                     L_NodeController:UpdateDebugUI()
-                    self.m_nTick = 2
+                    -- self.m_nTick = 2
                 else
                     self.m_nTick = 3
                 end
+            elseif Input.GetKeyDown(KeyCode.Alpha2) then
+                
+                self.m_nTick = 2
             end
 
             -- self.m_nTimer = self.m_nTimer + nTime
@@ -191,11 +208,16 @@ _this.stateMapLayout = function (o , eNtity)
                     
                     if Vector3.Distance(v.uiObject.transform.localPosition , v.position) > 1 then
                         
-                        v.uiObject.transform.localPosition = Vector3.MoveTowards(v.uiObject.transform.localPosition , v.position , 5 )
+                        v.uiObject.transform.localPosition = Vector3.MoveTowards(v.uiObject.transform.localPosition , v.position , 8 )
                         isForBreak = false
                     else
                         L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
                     end
+        
+                    --测试
+                    --v.uiObject.transform.localPosition = v.position
+                    --L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
+
                 elseif v.status == L_TypeStatusNode.CREAT then
 
                     v.uiObject = L_NodeController:CreatNodeUI()
@@ -215,6 +237,9 @@ _this.stateMapLayout = function (o , eNtity)
         if 3 == self.m_nTick then
             
             print("结束")
+            self.m_eNtity:ChangeToState(self.m_eNtity.stateProcess)
+            self.m_nTick = 4
+
         end
     end
 
@@ -244,6 +269,28 @@ _this.stateProcess = function (o , eNtity)
     end
     return state
 end
+
+
+_this.stateEliminate = function (o , eNtity)
+    
+    local state = L_State.New(o , eNtity)
+    function state:Enter()
+
+        print("------进入Eliminate状态------")
+    end
+
+    function state:Execute(nTime)
+        
+        --do thing
+    end
+
+    function state:Exit()
+
+        print("------退出Eliminate状态------")
+    end
+    return state
+end
+
 
 _this.stateExit = function (o , eNtity)
     

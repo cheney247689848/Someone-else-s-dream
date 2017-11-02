@@ -44,46 +44,30 @@ function _this:Sort()
             table.insert(self.sortList, v)
         end
     end
-    print("sortList len = " , #_this.sortList)
+    -- print("sortList len = " , #_this.sortList)
 
     --sort
     local tmp = nil
     for i = 1 , #self.sortList do  
         for j = 1 , #self.sortList - i do 
             
-            if self.sortList[j].tarLen < self.sortList[j+1].tarLen then
+            if self.sortList[j].tarLen > 2 and self.sortList[j+1].tarLen > 2 then
                 
-                tmp = _this.sortList[j]  
-                _this.sortList[j] = _this.sortList[j+1]
-                _this.sortList[j+1] = tmp
+                if self.sortList[j].tarLen > self.sortList[j+1].tarLen then
+                    
+                    tmp = _this.sortList[j]  
+                    _this.sortList[j] = _this.sortList[j+1]
+                    _this.sortList[j+1] = tmp
+                end
+            elseif self.sortList[j].tarLen <=2 and self.sortList[j+1].tarLen > 2 then
+
+                if self.sortList[j].tarLen < self.sortList[j+1].tarLen then
+                    
+                    tmp = _this.sortList[j]  
+                    _this.sortList[j] = _this.sortList[j+1]
+                    _this.sortList[j+1] = tmp
+                end
             end
-
-            -- if _this.sortList[j].weight > _this.sortList[j+1].weight then
-            --     tmp = _this.sortList[j]  
-            --     _this.sortList[j] = _this.sortList[j+1]
-            --     _this.sortList[j+1] = tmp
-            -- elseif _this.sortList[j].weight == _this.sortList[j+1].weight and _this.sortList[j].tarLen > _this.sortList[j+1].tarLen then
-            --     tmp = _this.sortList[j]  
-            --     _this.sortList[j] = _this.sortList[j+1]
-            --     _this.sortList[j+1] = tmp
-            -- end
-
-            -- if _this.sortList[j].tarIndex == 1 and _this.sortList[j+1].tarIndex ~= 1 then
-            --     tmp = _this.sortList[j]  
-            --     _this.sortList[j] = _this.sortList[j+1]
-            --     _this.sortList[j+1] = tmp
-            -- elseif _this.sortList[j].tarIndex ~= 1 and _this.sortList[j+1].tarIndex ~= 1 then
-
-            --     if _this.sortList[j].tarLen > _this.sortList[j+1].tarLen then  
-            --         tmp = _this.sortList[j]  
-            --         _this.sortList[j] = _this.sortList[j+1]
-            --         _this.sortList[j+1] = tmp
-            --     elseif _this.sortList[j].tarLen == _this.sortList[j+1].tarLen and _this.sortList[j].weight >  _this.sortList[j+1].weight then
-            --         tmp = _this.sortList[j]  
-            --         _this.sortList[j] = _this.sortList[j+1]
-            --         _this.sortList[j+1] = tmp
-            --     end 
-            -- end
         end  
     end
 
@@ -94,17 +78,20 @@ function _this:Sort()
     -- end
 end
 
---每个单独产生的G位置都存在对应整体map的寻路地址
---G位置产生水滴
---G位置产生的水滴按自己本身的寻路地址散布
-
-
 function _this:Refresh()
 
+    -- print("Refresh-------------------------------------------------")
     local isCreat,isTranf = false
     for i,v in ipairs(self.sortList) do
         
         if v.status == L_TypeStatusNode.IDLE then
+        elseif v.status == L_TypeStatusNode.TRANF then
+
+            if v.tarLen == 2 then -- 1 为起点  直接产生
+                -- print("creat : " , v.index)
+                self:SetNodeStatus(v.index , L_TypeStatusNode.CREAT)
+                isCreat = true
+            end
         elseif v.status == L_TypeStatusNode.NONE then 
 
             if v.index == 1 then
@@ -119,21 +106,21 @@ function _this:Refresh()
                 -- print("Find :  ----------- " , 1 , v.index)
                 local paths = L_Map:FindPath(1 , v.index)
                 if paths ~= nil then
-                    -- print("#paths len = " , #paths)
+                    -- print(string.format( "find : 1 to %d  len = %d ------------", v.index, #paths))
                     if #paths >= 3 then 
 
                         local isExecute = true
                         for i = 2, #paths - 1 do --原点不判断
                             
                             local tranfIndex = paths[i] + 1
-                            -- print(tranfIndex , self.nodeList[tranfIndex].status)
+                            -- print(string.format( "index = %d , status = %d", tranfIndex , self.nodeList[tranfIndex].status))
                             if self.nodeList[tranfIndex].status ~= L_TypeStatusNode.IDLE then
                                 
                                 isExecute = false
                                 break
                             end
                         end
-                        -- print(isExecute)
+                        -- print(isExecute == true and "continue" or "break")
                         if isExecute then
 
                             --设置最近点
@@ -149,7 +136,7 @@ function _this:Refresh()
                                 self:SetNodeStatus(tranfIndex , L_TypeStatusNode.DROP)
                                 
                                 self.nodeList[preIndex].uiObject = nil
-                                self:SetNodeStatus(preIndex , L_TypeStatusNode.NONE)
+                                self:SetNodeStatus(preIndex , L_TypeStatusNode.TRANF)
                                 isTranf = true
                             end
                         end
@@ -162,15 +149,6 @@ function _this:Refresh()
             end
         end
     end
-
-    -- for i,v in ipairs(self.sortList) do
-        
-    --     if v.status == L_TypeStatusNode.DROP then
-            
-    --         self:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
-    --     end
-    --     v:UpdateStatus()
-    -- end
     return isCreat or isTranf
 end
 
