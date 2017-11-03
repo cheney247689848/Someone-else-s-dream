@@ -31,6 +31,24 @@ function _this:Init(num , parent)
     -- print(#_this.nodeList)
 end
 
+function _this:GetNode(index)
+    
+    if self.nodeList[index] ~= nil then
+
+        return self.nodeList[index]
+    end
+    return nil
+end
+
+function _this:IsContainNode(index)
+    
+    if self.nodeList[index] ~= nil then
+        
+        return true
+    end
+    return false
+end
+
 function _this:Sort()
     
     --clean

@@ -25,20 +25,20 @@ _this.stateGlobal = function (o , eNtity)
         -- elseif Input.GetKeyDown(KeyCode.Alpha2) then
             
         -- end
-        if Input.GetMouseButtonDown(0) then
+        -- if Input.GetMouseButtonDown(0) then
             
-            -- print(Input.mousePosition.x , Input.mousePosition.y ,Input.mousePosition.z)
-            -- local index = self.m_eNtity:UpdateInput(Input.mousePosition)
-            -- if index ~= -1 then
+        --     print(Input.mousePosition.x , Input.mousePosition.y ,Input.mousePosition.z)
+        --     local index = self.m_eNtity:UpdateInput(Input.mousePosition)
+        --     if index ~= -1 then
 
-            --     print(string.format("index = %d , tarIndex = %d" , index ,L_NodeController.nodeList[index].tarIndex ))
-            -- end
-        end
+        --         print(string.format("index = %d , tarIndex = %d" , index ,L_NodeController.nodeList[index].tarIndex ))
+        --     end
+        -- end
     end
 
     function state:Exit()
 
-    print("------退出Global状态------")
+        print("------退出Global状态------")
     end
     return state
 end
@@ -154,7 +154,6 @@ _this.stateMapLayout = function (o , eNtity)
         end
 
         --优先填充pathlen短的
-
         --用挤的方式  并非用填充方式
 
         if 1 == self.m_nTick then
@@ -208,7 +207,7 @@ _this.stateMapLayout = function (o , eNtity)
                     
                     if Vector3.Distance(v.uiObject.transform.localPosition , v.position) > 1 then
                         
-                        v.uiObject.transform.localPosition = Vector3.MoveTowards(v.uiObject.transform.localPosition , v.position , 8 )
+                        v.uiObject.transform.localPosition = Vector3.MoveTowards(v.uiObject.transform.localPosition , v.position , 20 )
                         isForBreak = false
                     else
                         L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
@@ -253,14 +252,149 @@ end
 _this.stateProcess = function (o , eNtity)
     
     local state = L_State.New(o , eNtity)
+    state.startPosition = nil
+    state.movePosition = nil
+    state.startIndex = nil
+    state.endIndex = nil
+    state.forwardPosition = nil
+    state.forward = nil
+    state.startNode = nil
+    state.endNode = nil
     function state:Enter()
 
         print("------进入Process状态------")
     end
 
     function state:Execute(nTime)
-        
-        --do thing
+
+        if 0 == self.m_nTick then
+
+            if Input.GetMouseButtonDown(0) then
+                
+                -- print(Input.mousePosition.x , Input.mousePosition.y ,Input.mousePosition.z)
+                local index = self.m_eNtity:UpdateInput(Input.mousePosition)
+                if index ~= -1 then
+                    
+                    self.startPosition = Input.mousePosition
+                    self.startIndex = index
+                    self.movePosition = Vector3.zero
+                    self.endIndex = -1
+                    self.forwardPosition = nil
+                    self.forward = -1
+                    self.startNode = nil
+                    self.endNode = nil
+                    print(string.format("index = %d , tarIndex = %d" , index ,L_NodeController.nodeList[index].tarIndex ))
+                    self.m_nTick = 1
+                end
+            end
+        end
+
+        if 1 == self.m_nTick then
+            
+            if Input.GetMouseButton(0) then
+                
+                self.movePosition = Input.mousePosition
+                local nX = Mathf.Abs(self.startPosition.x - self.movePosition.x)
+                local nY = Mathf.Abs(self.startPosition.y - self.movePosition.y)
+                -- print(nX , nY)
+                if nX > 5 or nY > 5 then
+                    
+                    if nX > nY then
+                        --横
+                        if self.startPosition.x < self.movePosition.x then
+                            
+                            self.endIndex = self.startIndex + 1
+                            self.forward = 0
+                        else
+                            
+                            self.endIndex = self.startIndex - 1
+                            self.forward = 1
+                        end
+                    else
+                        --竖
+                        if self.startPosition.y < self.movePosition.y then
+                            
+                            self.endIndex = self.startIndex - L_Map.formx
+                            self.forward = 2
+                        else
+                            
+                            self.endIndex = self.startIndex + L_Map.formx
+                            self.forward = 3
+                        end
+                    end
+                    print(string.format( " %d swap to %d", self.startIndex , self.endIndex ))
+                    
+
+                    --判断合法性
+                    self.startNode = L_NodeController:GetNode(self.startIndex)
+                    self.endNode = L_NodeController:GetNode(self.endIndex)
+                    if self.startNode == nil then
+                        
+                        --false
+                    elseif self.endNode == nil then
+
+                        --false
+                    else
+                        self.forwardPosition = Vector3(self.startNode.position.x , self.startNode.position.y , self.startNode.position.z)
+                        if self.forward == 0 then
+                            
+                            self.forwardPosition.x = self.forwardPosition.x + 45
+                        elseif self.forward == 1 then
+
+                            self.forwardPosition.x = self.forwardPosition.x - 45
+                        elseif self.forward == 2 then
+
+                            self.forwardPosition.y = self.forwardPosition.y + 45
+                        else
+
+                            self.forwardPosition.y = self.forwardPosition.y - 45
+                        end
+                        --print(self.forwardPosition.x , self.forwardPosition.y  , self.startNode.position.x , self.startNode.position.y)
+
+                        self.m_nTick = 11 --测试
+                        if self.startNode.status ~= L_TypeStatusNode.IDLE or self.endNode.status ~= L_TypeStatusNode.IDLE then
+                            
+                            --false
+                        else
+
+                            -- if color then
+                                
+                            --     --false
+                            -- else
+                            --     --true
+                            -- end
+                        end 
+                    end
+                end
+
+            elseif Input.GetMouseButtonUp(0) then
+
+                --cancel
+                self.m_nTick = 0
+            end
+        end
+
+        if 11 == self.m_nTick then
+            
+            --false
+            if Vector3.Distance(self.startNode.uiObject.transform.localPosition , self.forwardPosition) > 1 then
+                
+                self.startNode.uiObject.transform.localPosition = Vector3.MoveTowards(self.startNode.uiObject.transform.localPosition , self.forwardPosition , 8 )
+            else
+                self.m_nTick = 3
+            end
+        end
+
+        if 12 == self.m_nTick then
+            
+            --false
+            if Vector3.Distance(self.startNode.uiObject.transform.localPosition , self.startNode.position) > 1 then
+                
+                self.startNode.uiObject.transform.localPosition = Vector3.MoveTowards(self.startNode.uiObject.transform.localPosition , self.startNode.position , 8 )
+            else
+                self.m_nTick = 0
+            end
+        end
     end
 
     function state:Exit()

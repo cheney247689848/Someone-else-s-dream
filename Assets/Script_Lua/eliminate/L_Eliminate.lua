@@ -10,5 +10,7 @@ local _this = L_Eliminate
 
 function _this:Detect(index)
 
-    
+    local list = {}
+
+    return list
 end

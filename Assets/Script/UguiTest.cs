@@ -21,6 +21,8 @@ public class UguiTest : MonoBehaviour {
         Debug.Log(0x00000010);
         Debug.Log(0x00000100);
         Debug.Log(0x00001000);
+        
+
 
         // AssetBundle bundle;
         // bundle.LoadAsset()
