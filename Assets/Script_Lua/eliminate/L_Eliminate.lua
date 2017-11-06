@@ -17,7 +17,7 @@ function _this:Detect(startIndex , endIndex)
     local startList = {}
     local tempList = {}
     tempList = self:DetectUpDown(startNode)
-    print("s : ws" , #tempList)
+    -- print("s : ws" , #tempList)
     if #tempList >= 2 then
         for i,v in ipairs(tempList) do
             
@@ -33,7 +33,7 @@ function _this:Detect(startIndex , endIndex)
     --     end
     -- end
     tempList = self:DetectLeftRight(startNode)
-    print("s : ad" , #tempList)
+    -- print("s : ad" , #tempList)
     if #tempList >= 2 then
         for i,v in ipairs(tempList) do
             
@@ -64,7 +64,7 @@ function _this:Detect(startIndex , endIndex)
     local endList = {}
     tempList = {}
     tempList = self:DetectUpDown(endNode)
-    print("e : ws" , #tempList)
+    -- print("e : ws" , #tempList)
     if #tempList >= 2 then
         for i,v in ipairs(tempList) do
             
@@ -80,7 +80,7 @@ function _this:Detect(startIndex , endIndex)
     --     end
     -- end
     tempList = self:DetectLeftRight(endNode)
-    print("e : ad" , #tempList)
+    -- print("e : ad" , #tempList)
     if #tempList >= 2 then
         for i,v in ipairs(tempList) do
             

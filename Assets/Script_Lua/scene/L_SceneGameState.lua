@@ -265,6 +265,7 @@ _this.stateProcess = function (o , eNtity)
     function state:Enter()
 
         print("------进入Process状态------")
+        self.m_nTick  = 0
     end
 
     function state:Execute(nTime)
@@ -461,7 +462,7 @@ _this.stateEliminate = function (o , eNtity)
     function state:Enter()
 
         print("------进入Eliminate状态------")
-        self.m_nTick = 0
+        self.m_nTick = 1
     end
 
     function state:Execute(nTime)
@@ -476,12 +477,12 @@ _this.stateEliminate = function (o , eNtity)
 
         if 1 == self.m_nTick then
             
-            print(#self.list)
+            --print(#self.list)
             for i,v in ipairs(self.list) do
                 
                 for j,n in ipairs(v) do
                     
-                    print(n.index)
+                    -- print(n.index)
                     GameObject.Destroy(n.uiObject)
                     n.uiObject = nil
                     L_NodeController:SetNodeStatus(n.index , L_TypeStatusNode.NONE)
@@ -506,11 +507,63 @@ _this.stateDrop = function (o , eNtity)
     function state:Enter()
 
         print("------进入Drop状态------")
+        self.m_nTick = 0
     end
 
     function state:Execute(nTime)
         
-        --do thing
+        if 0 == self.m_nTick then
+
+            L_NodeController:Sort()
+            if L_NodeController:Refresh() then
+                
+                L_NodeController:UpdateDebugUI()
+                self.m_nTick = 1
+            else
+                self.m_nTick = 2
+            end
+        end
+
+        if 1 == self.m_nTick then
+            
+            local isForBreak = true
+            for i,v in ipairs(L_NodeController.nodeList) do
+                
+                if v.status == L_TypeStatusNode.DROP then
+                    
+                    if Vector3.Distance(v.uiObject.transform.localPosition , v.position) > 1 then
+                        
+                        v.uiObject.transform.localPosition = Vector3.MoveTowards(v.uiObject.transform.localPosition , v.position , 8 )
+                        isForBreak = false
+                    else
+                        L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
+                    end
+        
+                    --测试
+                    --v.uiObject.transform.localPosition = v.position
+                    --L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
+
+                elseif v.status == L_TypeStatusNode.CREAT then
+
+                    v.uiObject = L_NodeController:CreatNodeUI()
+                    v.uiObject.transform.localPosition = v.position
+                    L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
+                    isForBreak = false
+                end
+            end
+
+            if isForBreak then
+                
+                L_NodeController:UpdateDebugUI()
+                self.m_nTick = 0
+            end
+        end
+
+        if 2 == self.m_nTick then
+            
+            self.m_eNtity:ChangeToState(self.m_eNtity.stateProcess)
+            self.m_nTick = 4
+        end
     end
 
     function state:Exit()
