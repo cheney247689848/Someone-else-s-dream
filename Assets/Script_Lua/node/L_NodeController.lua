@@ -25,6 +25,7 @@ function _this:Init(num , parent)
         local node = L_Node.New()
         node:Init()
         node:SetIndex(i)
+        node:SetColor(math.random(0 , 2))
         node.position = L_Map:GetPosition(i)
         table.insert(_this.nodeList, node)
     end

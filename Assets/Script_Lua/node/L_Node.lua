@@ -15,12 +15,12 @@ _this.tarIndex = nil
 _this.tarLen = nil
 _this.weight = nil
 _this.isTranf = nil
-_this.color = nil
 _this.status = nil
 _this.position = nil
 
 _this.uiObject = nil
 _this.uiNode = nil
+_this.meta = nil
 
 function _this:Init()
     
@@ -29,7 +29,7 @@ function _this:Init()
     self.weight = -1
     self.tarLen = -1
     self.isTranf = false
-    self.color = -1
+    self.meta = {color = -1}
     self.status = L_TypeStatusNode.NONE
 end
 
@@ -46,7 +46,7 @@ end
 
 function _this:SetColor(col)
     
-    self.color = col
+    self.meta.color = col
 end
 
 function _this:UpdatePosition()
@@ -90,7 +90,7 @@ function _this:UpdateUI()
 
     tIndex.text = string.format( "%d(l = %d)", self.index , self.tarLen)
     -- tLen.text = tostring(self.tarLen)
-    tarIndex.text = string.format( "%d_%d", self.status , L_Map.mergeData[self.index])
+    tarIndex.text = string.format( "%d_%d:%d", self.status , L_Map.mergeData[self.index] , self.meta.color)
 end
 
 function _this.New(o)

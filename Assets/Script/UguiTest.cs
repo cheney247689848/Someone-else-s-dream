@@ -33,17 +33,26 @@ public class UguiTest : MonoBehaviour {
         // var q =  Quaternion.Euler(0 , 30 , 0) * new Vector3(0 , 0 , 10);
         // Debug.Log(q);
         // AnimationCurve curve
+
+        // float angle = 470;
+        //this.transform.localRotation = Quaternion.Euler(angle , 0 , 0 );
+        //360 / 12 = 30度
+        // int index = Mathf.FloorToInt(angle / 30) % 12;
+        // Debug.Log(index);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-        var q =  Quaternion.Euler(0 , angle , 0) * new Vector3(0 , 0 , 10);
-        if (angle % 90 == 0)
-        {
-            Debug.Log("angle = " + angle + " - " +  q);
-        }
+        // var q =  Quaternion.Euler(0 , angle , 0) * new Vector3(0 , 0 , 10);
+        // if (angle % 90 == 0)
+        // {
+        //     Debug.Log("angle = " + angle + " - " +  q);
+        // }
         
+        int x = 12;
+        int index = Mathf.FloorToInt(angle / (360/x)) % x;
+        Debug.Log(index + " --- " + angle);
         angle ++;
 	}
 

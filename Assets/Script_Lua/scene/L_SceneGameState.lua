@@ -1,9 +1,11 @@
 local Input = UnityEngine.Input
 local KeyCode = UnityEngine.KeyCode
+local GameObject = UnityEngine.GameObject
 
 require "node/L_Node"
 require "node/L_NodeController"
 require "map/L_Map"
+require "eliminate/L_Eliminate"
 
 L_SceneGameState = {}
 setmetatable(L_SceneGameState, {__index = _G})
@@ -335,35 +337,48 @@ _this.stateProcess = function (o , eNtity)
 
                         --false
                     else
-                        self.forwardPosition = Vector3(self.startNode.position.x , self.startNode.position.y , self.startNode.position.z)
-                        if self.forward == 0 then
-                            
-                            self.forwardPosition.x = self.forwardPosition.x + 45
-                        elseif self.forward == 1 then
 
-                            self.forwardPosition.x = self.forwardPosition.x - 45
-                        elseif self.forward == 2 then
-
-                            self.forwardPosition.y = self.forwardPosition.y + 45
-                        else
-
-                            self.forwardPosition.y = self.forwardPosition.y - 45
-                        end
-                        --print(self.forwardPosition.x , self.forwardPosition.y  , self.startNode.position.x , self.startNode.position.y)
-
-                        self.m_nTick = 11 --测试
+                        local isExchange = false
                         if self.startNode.status ~= L_TypeStatusNode.IDLE or self.endNode.status ~= L_TypeStatusNode.IDLE then
                             
                             --false
+                            isExchange = false
                         else
 
-                            -- if color then
+                            self:ExChange()
+                            local list = L_Eliminate:Detect(self.startIndex , self.endIndex)
+                            if list ~= nil then
                                 
-                            --     --false
-                            -- else
-                            --     --true
-                            -- end
-                        end 
+                                self.m_eNtity.stateEliminate.list = list
+                                isExchange = true
+                            else
+                                self:ExChange()   --不产生交换
+                                isExchange = false
+                            end
+                        end
+                        
+                        if not isExchange then
+                            
+                            self.forwardPosition = Vector3(self.startNode.position.x , self.startNode.position.y , self.startNode.position.z)
+                            if self.forward == 0 then
+                                
+                                self.forwardPosition.x = self.forwardPosition.x + 45
+                            elseif self.forward == 1 then
+    
+                                self.forwardPosition.x = self.forwardPosition.x - 45
+                            elseif self.forward == 2 then
+    
+                                self.forwardPosition.y = self.forwardPosition.y + 45
+                            else
+    
+                                self.forwardPosition.y = self.forwardPosition.y - 45
+                            end
+                            --print(self.forwardPosition.x , self.forwardPosition.y  , self.startNode.position.x , self.startNode.position.y)
+                            self.m_nTick = 11 --测试
+                        else
+
+                            self.m_nTick = 21
+                        end
                     end
                 end
 
@@ -381,7 +396,7 @@ _this.stateProcess = function (o , eNtity)
                 
                 self.startNode.uiObject.transform.localPosition = Vector3.MoveTowards(self.startNode.uiObject.transform.localPosition , self.forwardPosition , 8 )
             else
-                self.m_nTick = 3
+                self.m_nTick = 12
             end
         end
 
@@ -395,11 +410,45 @@ _this.stateProcess = function (o , eNtity)
                 self.m_nTick = 0
             end
         end
+
+        if 21 == self.m_nTick then
+            
+            local isLoop = false
+            if Vector3.Distance(self.startNode.uiObject.transform.localPosition , self.startNode.position) > 1 then
+                
+                self.startNode.uiObject.transform.localPosition = Vector3.MoveTowards(self.startNode.uiObject.transform.localPosition , self.startNode.position , 8 )
+                isLoop = true
+            end
+
+            if Vector3.Distance(self.endNode.uiObject.transform.localPosition , self.endNode.position) > 1 then
+                
+                self.endNode.uiObject.transform.localPosition = Vector3.MoveTowards(self.endNode.uiObject.transform.localPosition , self.endNode.position , 8 )
+                isLoop = true
+            end
+
+            if not isLoop then
+                
+                L_NodeController:UpdateDebugUI()
+                self.m_eNtity:ChangeToState(self.m_eNtity.stateEliminate)
+                self.m_nTick = 99
+            end
+        end
     end
 
     function state:Exit()
 
         print("------退出Process状态------")
+    end
+
+    function state:ExChange()
+        
+        local tempMeta = self.startNode.meta
+        self.startNode.meta = self.endNode.meta
+        self.endNode.meta = tempMeta
+
+        local tempObj = self.startNode.uiObject
+        self.startNode.uiObject = self.endNode.uiObject
+        self.endNode.uiObject = tempObj
     end
     return state
 end
@@ -408,9 +457,55 @@ end
 _this.stateEliminate = function (o , eNtity)
     
     local state = L_State.New(o , eNtity)
+    state.list = nil
     function state:Enter()
 
         print("------进入Eliminate状态------")
+        self.m_nTick = 0
+    end
+
+    function state:Execute(nTime)
+        
+        if 0 == self.m_nTick then
+
+            if Input.GetKeyDown(KeyCode.Alpha1) then
+                
+                self.m_nTick = 1
+            end
+        end
+
+        if 1 == self.m_nTick then
+            
+            print(#self.list)
+            for i,v in ipairs(self.list) do
+                
+                for j,n in ipairs(v) do
+                    
+                    print(n.index)
+                    GameObject.Destroy(n.uiObject)
+                    n.uiObject = nil
+                    L_NodeController:SetNodeStatus(n.index , L_TypeStatusNode.NONE)
+                end
+            end
+            self.m_eNtity:ChangeToState(self.m_eNtity.stateDrop)
+            self.m_nTick = 1
+        end
+        
+    end
+
+    function state:Exit()
+
+        print("------退出Eliminate状态------")
+    end
+    return state
+end
+
+_this.stateDrop = function (o , eNtity)
+    
+    local state = L_State.New(o , eNtity)
+    function state:Enter()
+
+        print("------进入Drop状态------")
     end
 
     function state:Execute(nTime)
@@ -420,7 +515,7 @@ _this.stateEliminate = function (o , eNtity)
 
     function state:Exit()
 
-        print("------退出Eliminate状态------")
+        print("------退出Drop状态------")
     end
     return state
 end

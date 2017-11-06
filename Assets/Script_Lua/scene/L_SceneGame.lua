@@ -15,6 +15,7 @@ local _this = L_SceneGame
 
 _this.stateLayout = nil
 _this.stateProcess = nil
+_this.stateEliminate = nil
 _this.stateExit = nil
 _this.stateGlobal = nil
 
@@ -32,11 +33,12 @@ function _this:ConfState()
     _this.stateExit = L_StatePublic.stateExit({m_nStatus = L_TypeSceneState.Exit} , _this)
     _this.stateLayout = L_SceneGameState.stateLayout({m_nStatus = L_TypeSceneState.Layout} , _this)
     _this.stateProcess = L_SceneGameState.stateProcess({m_nStatus = L_TypeSceneState.Process} , _this)
+
     _this.stateGlobal = L_SceneGameState.stateGlobal({m_nStatus = L_TypeSceneState.Global} , _this)
-
     --other
-    _this.stateMapLayout = L_SceneGameState.stateMapLayout({m_nStatus = L_TypeSceneState.Exit} , _this)    
-
+    _this.stateMapLayout = L_SceneGameState.stateMapLayout({m_nStatus = L_TypeSceneState.Exit} , _this)
+    _this.stateEliminate = L_SceneGameState.stateEliminate({m_nStatus = L_TypeSceneState.Eliminate} , _this)
+    _this.stateDrop = L_SceneGameState.stateDrop({m_nStatus = L_TypeSceneState.Drop} , _this) 
 
     _this.machine = L_StateMachine.New()
     _this.machine:SetGlobalState(_this.stateGlobal)
