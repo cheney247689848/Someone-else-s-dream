@@ -13,10 +13,9 @@ using System.Text;
 
 public class AssectsExporterWindos : EditorWindow {
 
-    static public string[] strMeta = new string[3]{
-    "Assets/StreamingAssets/luaScript : luaScript : Recording_Main.txt : ResUpdate_Main",
-    "Assets/StreamingAssets/luaScript2 : luaScript : Recording_NN.txt : ResUpdate_NN",
-    "Assets/StreamingAssets/luaScript3 : luaScript : Recording_BJ.txt : ResUpdate_BJ"
+    static public string[] strMeta = new string[2]{
+    "Assets/StreamingAssets/Android : Android : Recording_Main.txt : Android",
+    "Assets/StreamingAssets/IOS : IOS : Recording_IOS.txt : IOS",
     };
     
     static bool isRefresh = false;
@@ -128,6 +127,10 @@ public class AssectsExporterWindos : EditorWindow {
             if (bList.Count > 0 && GUILayout.Button("copy 复制生成到以下目录 ../Assets/pack/ResUpdate" , GUILayout.Height(30)))
             {
                 CopyAsset(showIndex);
+            }
+            if (GUILayout.Button("copy lua" , GUILayout.Height(30)))
+            {
+                CopyLuaAsset(showIndex);
             }
 
             if (strCopyTip.Length > 0)
@@ -275,6 +278,39 @@ public class AssectsExporterWindos : EditorWindow {
         }
         if (builder != null)strCopyTip = builder.ToString();
         System.Diagnostics.Process.Start(copyPath);      
+    }
+
+    static public void CopyLuaAsset(int index){
+
+        //lua 不比较
+        try{
+
+            AssectsExporter.CreatDir("pack/ResUpdate/" + AssectsExporter.partform);
+
+            string[] ms = strMeta[index].Split(':');
+            string copyPath = System.IO.Path.Combine(AssectsExporter.strDir + "/" + AssectsExporter.strUpdateDir , ms[3].Trim());
+
+            var path = "Assets/StreamingAssets/" + AssectsExporter.partform + "/luaScript/";
+            AssetBundle bundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(path , "luaScript"));
+            AssetBundleManifest mainfest = bundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+            string[] abs = mainfest.GetAllAssetBundles();
+            for (int i = 0; i < abs.Length; i++)
+            {
+                string name = abs[i].Trim(); //+ "unity.3d"
+                string oldPath = System.IO.Path.Combine(path , name);
+                string newPath = System.IO.Path.Combine(copyPath , name);
+                if (!AssetDatabase.CopyAsset(oldPath, newPath))
+                {
+                    Debug.LogError(string.Format("Error CopyLuaAsset oldPath :{0} --- newPath :{1}" ,oldPath ,newPath));
+                }
+            }
+            bundle.Unload(true);
+            bundle = null;
+            System.Diagnostics.Process.Start(copyPath);
+        }catch{
+
+            Debug.LogError("CopyLuaAsset 错误");
+        }
     }
 
     static public string GetRecordPath(){

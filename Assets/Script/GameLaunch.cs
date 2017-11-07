@@ -10,28 +10,33 @@ using System.Text;
 public class GameLaunch:LuaClient
 {    
     LuaFunction function;
-    LuaLooper looper;
-    public TextAsset t;
-    // public static GameLaunch Instance
-    // {
-    //     get;
-    //     protected set;
-    // }
-    // public GameLaunch(){
-
-    //     Instance = this;
-    // } 
-
     void Start()
     {
-        AssetsBuilder builder = this.gameObject.AddComponent<AssetsBuilder>();
-        builder.LoadBundle(System.IO.Path.Combine(AppConst.boxAssetDir , "luaScript/lua_update") , LoadBundleBack);
-    }
 
+#if UNITY_EDITOR
+        LuaFileUtils.Instance.beZip = AppConst.isZip;
+#else
+        LuaFileUtils.Instance.beZip = true;
+#endif
+        if (LuaFileUtils.Instance.beZip)
+        {
+
+            AssetsBuilder builder = this.gameObject.AddComponent<AssetsBuilder>();
+            var path = System.IO.Path.Combine(AppConst.boxAssetDir , "lua_update");
+            if (!CacheTool.IsFile(path))
+            {
+                path = System.IO.Path.Combine(AppConst.AssetDir , AppConst.luaDirName + "/lua_update");
+            }
+            // Debug.Log(path);
+            builder.LoadBundle(path , LoadBundleBack);
+        }else{
+            
+            GameInit();
+        }
+    }
     public void LoadBundleBack(AssetBundle bundle){
 
         LuaFileUtils.Instance.AddSearchBundle(bundle.name, bundle);
-        LuaFileUtils.Instance.beZip = AppConst.isZip;
         GameInit();
     }
 
@@ -42,27 +47,23 @@ public class GameLaunch:LuaClient
         lua.LogGC = false;
         //lua.Start();
         //LuaBinder.Bind(lua);
-        
         lua.BeginModule(null);
         Register(lua);
         //UIEventListenerWrap.Register(lua);
         lua.EndModule();
         //DelegateFactory.dict.Add(typeof(UIEventListener.VoidDelegate), UIEventListener_OnClick);
         //DelegateFactory.dict.Add(typeof(UIEventListener.BoolDelegate), UIEventListener_OnPress);
-        lua.DoFile("update/L_UpdateLocal");  //L_Game
-        //looper = this.gameObject.AddComponent<LuaLooper>();
-        //looper.luaState = lua;
-        Debug.Log(AssetsBuilder.StreamPath);
+        lua.DoFile("update/L_UpdateLocal");
+        // Debug.Log(AssetsBuilder.StreamPath);
         lua["localPath"] = System.IO.Path.Combine(AssetsBuilder.StreamPath, "");
-        lua["persPath"] = Application.persistentDataPath;//System.IO.Path.Combine(AssetsBuilder.PersistentPath, "");
-#if UNITY_IPHONE
-
+        lua["persPath"] = Application.persistentDataPath;
+#if  UNITY_ANDROID
+        lua["platform"] = "Android";
+#elif UNITY_IPHONE
         lua["platform"] = "IOS";
 #else
-
-        lua["platform"] = "Android";
+        lua["platform"] = "Editor";
 #endif
-        //function = lua.GetFunction("Launch");
         function = lua.GetFunction("L_UpdateLocal.StartTest");
         function.Call();
     }

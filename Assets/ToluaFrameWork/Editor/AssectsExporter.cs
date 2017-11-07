@@ -27,25 +27,24 @@ public class AssectsExporter : EditorWindow
     static List<package> luaPackages = new List<package>();
     static List<package> accestsPackages = new List<package>();
 
+#if UNITY_IPHONE
+    static public string partform = "IOS";  
+#elif UNITY_ANDROID
+    static public string partform = "Android";
+#endif
+
     	[MenuItem("Build Bundle/ Build Lua Asset Bundles")]
         static void Build_Lua() {
 
-        if (!Directory.Exists(strDir))
-        {
-            Debug.Log(string.Format("创建文件夹 : {0}" , strDir));
-            Directory.CreateDirectory(strDir);
-        }
-        if (!Directory.Exists(System.IO.Path.Combine(strDir , "lua")))
-        {
-            Debug.Log(string.Format("创建文件夹 : {0}" , "lua"));
-            Directory.CreateDirectory(System.IO.Path.Combine(strDir , "lua"));
-        }
+        CreatDir(strDir);
+        // CreatDir(System.IO.Path.Combine(strDir , "lua"));
+        CreatDir(System.IO.Path.Combine("StreamingAssets" , partform));
 
         preTime = DateTime.Now;
         luaPackages.Clear();
         Directory.CreateDirectory("Assets/ResLua");
         PackLua(spritePath , "lua");
-        Pack(luaPackages , "luaScript");
+        Pack(luaPackages , partform + "/luaScript");
         Directory.Delete("Assets/ResLua" , true);
         Debug.Log("time use = " + (DateTime.Now - preTime).ToString());
         AssetDatabase.Refresh();
@@ -153,7 +152,7 @@ public class AssectsExporter : EditorWindow
                 Collect(System.IO.Path.Combine(packageList[i] , pName) , nType);
             }
         }
-        Pack(accestsPackages , "");
+        Pack(accestsPackages , partform);
     }
 
     static void Collect(string pathName  , int nType)
@@ -272,5 +271,14 @@ public class AssectsExporter : EditorWindow
 #endif
         AssetDatabase.Refresh();
         Debug.Log(string.Format("pack finsh len = {0}" , packages.Count));
+    }
+
+    static public void CreatDir(string dirPath){
+
+        if (!Directory.Exists(dirPath))
+        {
+            Debug.Log(string.Format("创建文件夹 : {0}" , dirPath));
+            Directory.CreateDirectory(dirPath);
+        }        
     }
 }

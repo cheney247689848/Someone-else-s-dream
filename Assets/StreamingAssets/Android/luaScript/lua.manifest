@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 1087435822
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6d7bdd01ef8868656b658f9360369ff2
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/ResLua/lua/L_GameInputMes.lua.bytes
+- Assets/ResLua/lua/L_Game.lua.bytes
+Dependencies: []

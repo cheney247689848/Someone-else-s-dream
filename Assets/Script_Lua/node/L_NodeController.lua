@@ -25,7 +25,12 @@ function _this:Init(num , parent)
         local node = L_Node.New()
         node:Init()
         node:SetIndex(i)
-        node:SetColor(math.random(0 , 2))
+        if not L_Map:IsBlock(i) then
+            
+            node:SetColor(L_TypeColorNode.NONE)
+        else
+            node:SetColor(math.random(0 , 2))
+        end
         node.position = L_Map:GetPosition(i)
         table.insert(_this.nodeList, node)
     end

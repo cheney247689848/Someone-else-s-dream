@@ -230,7 +230,7 @@ function _this:IEChangeToGame()
     if AppConst.isZip then
         
         _this.view:UpdateLabel("加载 Assets......")
-        local mainifestBundle = AssetBundle.LoadFromFile("Assets/StreamingAssets/luaScript/luaScript")
+        local mainifestBundle = _this:LoadLuaFile("luaScript")
         local mainfest = mainifestBundle:LoadAsset("AssetBundleManifest")
         local bundlePaths = mainfest:GetAllAssetBundles()
         for i = 0, bundlePaths.Length - 1 do
@@ -239,7 +239,7 @@ function _this:IEChangeToGame()
             local name = tostring(bundlePaths[i])
             if name ~= "lua_update" then
             
-                local bundle = AssetBundle.LoadFromFile("Assets/StreamingAssets/luaScript/" .. name)
+                local bundle = _this:LoadLuaFile(name)
                 MgrLuaInterp.AddSearchBundle(name , bundle)
                 bundle:Unload(true)
                 bundle = nil
@@ -306,4 +306,15 @@ function _this.IELoadBundle(path , type)
     _this.isLoad = false
     www:Dispose()
     www = nil
+end
+
+function _this:LoadLuaFile(bundleName)
+    
+    local path = string.format( "%s/%s/%s", AppConst.boxAssetDir , AppConst.boxLuaDirName , bundleName)
+    if not CacheTool.IsFile(path) then
+        
+        path = string.format( "%s/%s/%s", AppConst.AssetDir , AppConst.luaDirName , bundleName)
+    end
+    print(path)
+    return AssetBundle.LoadFromFile(path)
 end

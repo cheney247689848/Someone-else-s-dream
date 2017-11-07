@@ -60,7 +60,7 @@ function _this:Detect(startIndex , endIndex)
         
         return elists
     end
-
+    -- print(elists)
     local endList = {}
     tempList = {}
     tempList = self:DetectUpDown(endNode)
@@ -103,6 +103,8 @@ function _this:Detect(startIndex , endIndex)
         end
         table.insert(elists , endList)
     end
+
+    -- print(#startList , #endList)
     return elists
 end
 
