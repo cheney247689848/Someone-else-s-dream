@@ -230,7 +230,7 @@ function _this:IEChangeToGame()
     if AppConst.isZip then
         
         _this.view:UpdateLabel("加载 Assets......")
-        local mainifestBundle = _this:LoadLuaFile("luaScript")
+        local mainifestBundle = _this:LoadLuaFile("luascript")
         local mainfest = mainifestBundle:LoadAsset("AssetBundleManifest")
         local bundlePaths = mainfest:GetAllAssetBundles()
         for i = 0, bundlePaths.Length - 1 do
@@ -293,13 +293,19 @@ function _this.IELoadBundle(path , type)
         _this.fCallBack(nil)
     else
         _this.progress = 1
-        print("load finsh : len = " .. www.bytes.Length)    
-        if type == 1 then
-            _this.fCallBack(www.text)
-        elseif type == 2 then
-            _this.fCallBack(www.bytes)
+        print("load finsh : len = " .. www.bytes.Length)
+        if www.error ~= nil then
+            
+            print("load error" .. www.error);
+            _this.fCallBack(nil)
         else
-            _this.fCallBack(www.assetBundle)
+            if type == 1 then
+                _this.fCallBack(www.text)
+            elseif type == 2 then
+                _this.fCallBack(www.bytes)
+            else
+                _this.fCallBack(www.assetBundle)
+            end
         end
     end
     coroutine.stop(_this.IELoadBundle)
@@ -313,8 +319,7 @@ function _this:LoadLuaFile(bundleName)
     local path = string.format( "%s/%s/%s", AppConst.boxAssetDir , AppConst.boxLuaDirName , bundleName)
     if not CacheTool.IsFile(path) then
         
-        path = string.format( "%s/%s/%s", AppConst.AssetDir , AppConst.luaDirName , bundleName)
+        path = string.format( "%s/%s/%s/%s", AppConst.AssetDir , self.platform , AppConst.luaDirName , bundleName)
     end
-    print(path)
     return AssetBundle.LoadFromFile(path)
 end

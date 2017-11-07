@@ -10,9 +10,11 @@ function Launch()
 
     print("Launch")
     --配置加载信息
-    L_Bundle.streamPath = localPath
-    print(L_Bundle.streamPath)
-    L_Bundle:InitMainifest("StreamingAssets")
+    L_Bundle.localPath = localPath
+    L_Bundle.persPath = persPath
+    L_Bundle.platform = platform
+    -- print(L_Bundle.streamPath)
+    L_Bundle:InitMainifest(platform)
 
     --init bundle
     --L_Bundle.streamPath = localPath

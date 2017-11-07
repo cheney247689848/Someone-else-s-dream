@@ -15,8 +15,9 @@ _this.strMainifest = "StreamingAssets"
 _this.mainifest = nil
 _this.strMainifestBundles = nil
 
-_this.boxPath = ""  --沙盒路径
-_this.streamPath = "" --本地路径
+_this.persPath = ""  --沙盒路径
+_this.localPath = "" --本地路径
+_this.platform = nil
 _this.progress = 0
 _this.isLoad = false
 _this.bundleName = ""
@@ -71,7 +72,7 @@ function _this:LoadBundle(bName , call)
        self.isLoad = true
        local loadData = {["bundleName"] = bName , 
        ["call"] = call , 
-       ["path"] = self.streamPath..bName , 
+       ["path"] = _this:GetPath(bName), --self.localPath..bName , 
        ["dependencies"] = {}}
        coroutine.start(self.IELoadBundle , loadData)
     else
@@ -116,9 +117,11 @@ function _this.IELoadBundle(loadData)
 
                         print("关联" , v)
                         if not _this:IsExistBundle(v) then
-                        local ld = {["bundleName"] = v , 
+
+
+                            local ld = {["bundleName"] = v , 
                                     ["call"] = nil , 
-                                    ["path"] = _this.streamPath..v}                
+                                    ["path"] = _this:GetPath(v)}--_this.localPath..v}                
                             table.insert(ldata.dependencies ,ld)
                         end
                     end
@@ -150,7 +153,8 @@ end
 function _this:InitMainifest(mainifestName)
 
     self.strMainifest = mainifestName
-    local bundle = AssetBundle.LoadFromFile(self.streamPath..self.strMainifest)
+    print(self:GetPath(self.strMainifest))
+    local bundle = AssetBundle.LoadFromFile(self:GetPath(self.strMainifest))
     self.mainifest = bundle:LoadAsset("AssetBundleManifest")
     if self.mainifest == nil then
         
@@ -182,11 +186,21 @@ function _this:GetProgress()
     return progress
 end
 
-
 function _this:IsLoading()
 
     return isLoad
 end
+
+function _this:GetPath(bundleName)
+    
+    local path = self.persPath .. bundleName
+    if not CacheTool.IsFile(path) then
+        
+        path = self.localPath .. bundleName
+    end
+    return path
+end
+
 --function fib(n)
 --    local a, b = 0, 1
 --    while n > 0 do

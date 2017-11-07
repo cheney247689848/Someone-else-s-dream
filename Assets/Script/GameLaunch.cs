@@ -25,7 +25,7 @@ public class GameLaunch:LuaClient
             var path = System.IO.Path.Combine(AppConst.boxAssetDir , "lua_update");
             if (!CacheTool.IsFile(path))
             {
-                path = System.IO.Path.Combine(AppConst.AssetDir , AppConst.luaDirName + "/lua_update");
+                path = System.IO.Path.Combine(AppConst.AssetDir , AppConst.platform + "/" + AppConst.luaDirName + "/lua_update");
             }
             // Debug.Log(path);
             builder.LoadBundle(path , LoadBundleBack);
@@ -55,15 +55,9 @@ public class GameLaunch:LuaClient
         //DelegateFactory.dict.Add(typeof(UIEventListener.BoolDelegate), UIEventListener_OnPress);
         lua.DoFile("update/L_UpdateLocal");
         // Debug.Log(AssetsBuilder.StreamPath);
-        lua["localPath"] = System.IO.Path.Combine(AssetsBuilder.StreamPath, "");
+        lua["localPath"] = System.IO.Path.Combine(AssetsBuilder.StreamPath, AppConst.platform) + "/";
         lua["persPath"] = Application.persistentDataPath;
-#if  UNITY_ANDROID
-        lua["platform"] = "Android";
-#elif UNITY_IPHONE
-        lua["platform"] = "IOS";
-#else
-        lua["platform"] = "Editor";
-#endif
+        lua["platform"] = AppConst.platform;
         function = lua.GetFunction("L_UpdateLocal.StartTest");
         function.Call();
     }

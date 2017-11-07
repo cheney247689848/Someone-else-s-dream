@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4198657488
+CRC: 2668562819
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 296e40dfad6dcacfa1c5dcd63da7796c
+    Hash: 2171152cfac6983c546bfefc3ae04705
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,6 +12,6 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/ResLua/lua/other/L_ReadOnly.lua.bytes
 - Assets/ResLua/lua/other/L_ScenePreloading.lua.bytes
+- Assets/ResLua/lua/other/L_ReadOnly.lua.bytes
 Dependencies: []
