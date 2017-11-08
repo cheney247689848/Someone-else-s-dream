@@ -7,6 +7,7 @@
 
 local GameObject = UnityEngine.GameObject
 local Texture = UnityEngine.Texture
+local Sprite = UnityEngine.Sprite
 local Shader = UnityEngine.Shader
 local Font = UnityEngine.Font
 
@@ -45,6 +46,12 @@ function _this:LoadTexture(tName , bundle)
     
     local pTexture = bundle:LoadAsset(tName , typeof(Texture))
     return pTexture
+end
+
+function _this:LoadSprite(sName , bundle)
+    
+    local pSprite = bundle:LoadAsset(sName , typeof(Sprite))
+    return pSprite
 end
 
 function _this:LoadFont(fName , bundle)

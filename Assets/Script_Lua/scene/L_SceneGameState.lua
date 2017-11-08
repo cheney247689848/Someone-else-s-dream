@@ -209,7 +209,7 @@ _this.stateMapLayout = function (o , eNtity)
                     
                     if Vector3.Distance(v.uiObject.transform.localPosition , v.position) > 1 then
                         
-                        v.uiObject.transform.localPosition = Vector3.MoveTowards(v.uiObject.transform.localPosition , v.position , 20 )
+                        v.uiObject.transform.localPosition = Vector3.MoveTowards(v.uiObject.transform.localPosition , v.position , 12 )
                         isForBreak = false
                     else
                         L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
@@ -222,6 +222,7 @@ _this.stateMapLayout = function (o , eNtity)
                 elseif v.status == L_TypeStatusNode.CREAT then
 
                     v.uiObject = L_NodeController:CreatNodeUI()
+                    v:SetColor(math.random(0 , 4))
                     v.uiObject.transform.localPosition = v.position
                     L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
                     isForBreak = false
@@ -334,13 +335,19 @@ _this.stateProcess = function (o , eNtity)
                     if self.startNode == nil then
                         
                         --false
+                        
                     elseif self.endNode == nil then
 
                         --false
+                        -- self.m_nTick = 0
                     else
 
                         local isExchange = false
-                        if self.startNode.status ~= L_TypeStatusNode.IDLE or self.endNode.status ~= L_TypeStatusNode.IDLE then
+                        if self.startNode.status ~= L_TypeStatusNode.IDLE then
+
+                            self.m_nTick = 0
+                            return
+                        elseif self.endNode.status ~= L_TypeStatusNode.IDLE then
                             
                             --false
                             isExchange = false
@@ -546,6 +553,7 @@ _this.stateDrop = function (o , eNtity)
                 elseif v.status == L_TypeStatusNode.CREAT then
 
                     v.uiObject = L_NodeController:CreatNodeUI()
+                    v:SetColor(math.random(0 , 4))
                     v.uiObject.transform.localPosition = v.position
                     L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
                     isForBreak = false

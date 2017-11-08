@@ -16,6 +16,7 @@ public class AppConstWrap
 		L.RegVar("isZip", get_isZip, set_isZip);
 		L.RegVar("AssetDir", get_AssetDir, set_AssetDir);
 		L.RegVar("boxAssetDir", get_boxAssetDir, set_boxAssetDir);
+		L.RegVar("platform", get_platform, set_platform);
 		L.RegVar("luaDirName", get_luaDirName, set_luaDirName);
 		L.RegVar("boxLuaDirName", get_boxLuaDirName, set_boxLuaDirName);
 		L.EndClass();
@@ -116,6 +117,20 @@ public class AppConstWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_platform(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, AppConst.platform);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_luaDirName(IntPtr L)
 	{
 		try
@@ -195,6 +210,21 @@ public class AppConstWrap
 		{
 			string arg0 = ToLua.CheckString(L, 2);
 			AppConst.boxAssetDir = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_platform(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			AppConst.platform = arg0;
 			return 0;
 		}
 		catch(Exception e)

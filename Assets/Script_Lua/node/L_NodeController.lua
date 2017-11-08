@@ -25,12 +25,13 @@ function _this:Init(num , parent)
         local node = L_Node.New()
         node:Init()
         node:SetIndex(i)
-        if not L_Map:IsBlock(i) then
+        node:SetColor(L_TypeColorNode.NONE)
+        -- if not L_Map:IsBlock(i) then
             
-            node:SetColor(L_TypeColorNode.NONE)
-        else
-            node:SetColor(math.random(0 , 2))
-        end
+        --     node:SetColor(L_TypeColorNode.NONE)
+        -- else
+        --     node:SetColor(math.random(0 , 2))
+        -- end
         node.position = L_Map:GetPosition(i)
         table.insert(_this.nodeList, node)
     end
@@ -211,5 +212,12 @@ function _this:CreatNodeUI()
     local bundle = L_Bundle:GetBundle("sgame_prefab_point")
     local point = L_Unit:LoadPrefabInstantiate("point" , bundle , self.nodeParent)
     return point
+end
+
+function _this:GetGemImg(color)
+    
+    local bundle = L_Bundle:GetBundle("sgame_packtextures")
+    local sprite = L_Unit:LoadSprite("Gem_" .. color , bundle)
+    return sprite
 end
 

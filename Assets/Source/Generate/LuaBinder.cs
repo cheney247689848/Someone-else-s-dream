@@ -68,6 +68,7 @@ public static class LuaBinder
 		UnityEngine_UILineInfoWrap.Register(L);
 		UnityEngine_AnimationCurveWrap.Register(L);
 		UnityEngine_KeyframeWrap.Register(L);
+		UnityEngine_SpriteWrap.Register(L);
 		L.BeginModule("Experimental");
 		L.BeginModule("Director");
 		UnityEngine_Experimental_Director_DirectorPlayerWrap.Register(L);

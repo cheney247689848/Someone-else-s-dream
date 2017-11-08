@@ -47,6 +47,12 @@ end
 function _this:SetColor(col)
     
     self.meta.color = col
+    if self.uiObject ~= nil then
+
+        local image = self.uiObject:GetComponent("Image")
+        image.sprite = L_NodeController:GetGemImg(col)
+        image.transform.sizeDelta = Vector2(86 , 86)
+    end
 end
 
 function _this:UpdatePosition()

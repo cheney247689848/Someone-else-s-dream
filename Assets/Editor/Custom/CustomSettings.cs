@@ -177,6 +177,8 @@ public static class CustomSettings
 
         _GT(typeof(AnimationCurve)),
         _GT(typeof(Keyframe)),
+
+        _GT(typeof(Sprite)),
     };
 
     public static List<Type> dynamicList = new List<Type>()
