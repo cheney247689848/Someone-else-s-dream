@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4004065672
+CRC: 1805176576
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ddb3f1398c928206486c63111a82cf7f
+    Hash: 9ff465d3c5a396de849bf3f5002b6398
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,6 +12,6 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/ResLua/lua/bundle/L_Bundle.lua.bytes
 - Assets/ResLua/lua/bundle/L_BundleObserver.lua.bytes
+- Assets/ResLua/lua/bundle/L_Bundle.lua.bytes
 Dependencies: []

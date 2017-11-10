@@ -159,9 +159,11 @@ function _this:Refresh()
 
                                 self.nodeList[tranfIndex].uiObject = self.nodeList[preIndex].uiObject
                                 self:SetNodeStatus(tranfIndex , L_TypeStatusNode.DROP)
+                                self.nodeList[tranfIndex].meta = self.nodeList[preIndex].meta
                                 
                                 self.nodeList[preIndex].uiObject = nil
                                 self:SetNodeStatus(preIndex , L_TypeStatusNode.TRANF)
+                                self.nodeList[preIndex].meta = {color = -1}
                                 isTranf = true
                             end
                         end

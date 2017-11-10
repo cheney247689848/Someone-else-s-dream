@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1608435997
+CRC: 2185141977
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 015a2bb397de57bf0dd115085f80abe1
+    Hash: 280c1242bcf34bff348d4eea4d659014
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -13,7 +13,7 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/ResLua/lua/example/L_ExpTextScene.lua.bytes
-- Assets/ResLua/lua/example/L_ExpBundleScene.lua.bytes
 - Assets/ResLua/lua/example/L_ExpOverScene.lua.bytes
+- Assets/ResLua/lua/example/L_ExpBundleScene.lua.bytes
 - Assets/ResLua/lua/example/L_ExpSceneObserver.lua.bytes
 Dependencies: []
