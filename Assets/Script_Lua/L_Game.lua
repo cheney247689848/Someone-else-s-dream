@@ -37,7 +37,10 @@ function Launch()
     -- three:AddBranch(three.trunk)
     -- print("res = " .. three.trunk[1].abc)
 
-    L_ProxyScene:ChangeScene(L_SceneLogin)
+    -- L_ProxyScene:ChangeScene(L_SceneLogin)
+
+    require "example/L_ExpAiBotScene"
+    L_ExpAiBotScene:Init()
 
     -- require "other/L_ReadOnly"
     -- require "table/L_TestTable"

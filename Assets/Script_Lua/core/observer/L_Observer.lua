@@ -36,7 +36,7 @@ L_Mt.__sub = function ( a , b )
     
     for i = #a , 0 , -1 do
         if a[i] == b then
-            print(i)
+            -- print(i)
             table.remove( a, i )
             break
         end

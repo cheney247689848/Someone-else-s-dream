@@ -9,9 +9,10 @@ L_MessageObserver = {}
 setmetatable(L_MessageObserver, {__index = _G})
 local _this = L_MessageObserver
 
-function _this.New()
+_this.notifyer = nil
+function _this.New(o)
     
-    local observer = L_Observer.New({})
+    local observer = L_Observer.New(o)
     --==============================--
     --desc: 发送事件  type 事件的类型
     --time:2017-09-11 11:45:37

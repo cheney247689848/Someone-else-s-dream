@@ -1,45 +1,42 @@
---[[
-function listener(arg1 , arg2 , arg3)
+-- function listener(arg1 , arg2 , arg3)
     
-    print("listener")
-    --print("listener")
-    print(arg1 , arg2 , arg3)
-end
+--     print("listener")
+--     --print("listener")
+--     print(arg1 , arg2 , arg3)
+-- end
 
-require "observer/L_SceneObserver"
-print("value - " , L_SceneObserver["adfs"] , #L_SceneObserver["adfs"])
-L_SceneObserver["adfs"] = L_SceneObserver["adfs"] + listener  
-L_SceneObserver["adfs"] = L_SceneObserver["adfs"] + listener 
-L_SceneObserver["adfs"] = L_SceneObserver["adfs"] + listener 
-L_SceneObserver["adfs"] = L_SceneObserver["adfs"] + listener 
-L_SceneObserver["adfs"] = L_SceneObserver["adfs"] + listener   
-print("value - " , L_SceneObserver["adfs"] , #L_SceneObserver["adfs"])
+-- require "observer/L_MessageObserver"
+-- local mesObserver = L_MessageObserver.New()
 
-L_SceneObserver:PostEvent("adfs" , 1 , 2 , 3)
-L_SceneObserver:PostEvent("adfs" , 1 , 2 , 3)
-L_SceneObserver:PostEvent("adfs" , 1 , 2 , 3)
-L_SceneObserver:PostEvent("adfs" , 1 , 2 , 3)
-L_SceneObserver:PostEvent("adfs" , 1 , 2 , 3)
+-- print("value - " , mesObserver["adfs"] , #mesObserver["adfs"])
+-- mesObserver["adfs"] = mesObserver["adfs"] + listener  
+-- mesObserver["adfs"] = mesObserver["adfs"] + listener 
+-- mesObserver["adfs"] = mesObserver["adfs"] + listener 
+-- mesObserver["adfs"] = mesObserver["adfs"] + listener 
+-- mesObserver["adfs"] = mesObserver["adfs"] + listener   
+-- print("value - " , mesObserver["adfs"] , #mesObserver["adfs"])
 
-print("clean")
-L_SceneObserver:Clean()
+-- mesObserver:PostEvent("adfs" , 1 , 2 , 3)
 
-L_SceneObserver["adfs"] = L_SceneObserver["adfs"] - listener 
-print("value - " , L_SceneObserver["adfs"] , #L_SceneObserver["adfs"])
+-- print("clean")
+-- mesObserver:Clean() 
 
-L_SceneObserver["adfs"] = L_SceneObserver["adfs"] - listener 
-print("value - " , L_SceneObserver["adfs"] , #L_SceneObserver["adfs"])
+-- mesObserver:PostEvent("adfs" , 1 , 2 , 3)
 
-L_SceneObserver["adfs"] = L_SceneObserver["adfs"] - listener 
-print("value - " , L_SceneObserver["adfs"] , #L_SceneObserver["adfs"])
+-- mesObserver["adfs"] = mesObserver["adfs"] - listener 
+-- print("value - " , mesObserver["adfs"] , #mesObserver["adfs"])
 
-L_SceneObserver["adfs"] = L_SceneObserver["adfs"] - listener 
-print("value - " , L_SceneObserver["adfs"] , #L_SceneObserver["adfs"])
+-- mesObserver["adfs"] = mesObserver["adfs"] - listener 
+-- print("value - " , mesObserver["adfs"] , #mesObserver["adfs"])
 
-L_SceneObserver["adfs"] = L_SceneObserver["adfs"] - listener 
-print("value - " , L_SceneObserver["adfs"] , #L_SceneObserver["adfs"])
+-- mesObserver["adfs"] = mesObserver["adfs"] - listener 
+-- print("value - " , mesObserver["adfs"] , #mesObserver["adfs"])
 
-L_SceneObserver["adfs"] = L_SceneObserver["adfs"] - listener 
-print("value - " , L_SceneObserver["adfs"] , #L_SceneObserver["adfs"])
+-- mesObserver["adfs"] = mesObserver["adfs"] - listener 
+-- print("value - " , mesObserver["adfs"] , #mesObserver["adfs"])
 
-]]
+-- mesObserver["adfs"] = mesObserver["adfs"] - listener 
+-- print("value - " , mesObserver["adfs"] , #mesObserver["adfs"])
+
+-- mesObserver["adfs"] = mesObserver["adfs"] - listener 
+-- print("value - " , mesObserver["adfs"] , #mesObserver["adfs"])

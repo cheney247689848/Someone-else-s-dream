@@ -36,12 +36,19 @@ function _this:ChangeState(newState)
 end
 
 function _this:SetCurrentState(newState)
+    if self.m_pCurrentState ~= nil then
+        self.m_pCurrentState:Exit()
+    end
     self.m_pCurrentState = newState;
     self.m_pCurrentState.m_pOwner = self
     self.m_pCurrentState:Enter()
 end
 
 function _this:SetGlobalState(newState)
+
+    if self.m_pGlobalState ~= nil then
+        self.m_pGlobalState:Exit()
+    end
     self.m_pGlobalState = newState;
     self.m_pGlobalState.m_pOwner = self;
     self.m_pGlobalState:Enter ()

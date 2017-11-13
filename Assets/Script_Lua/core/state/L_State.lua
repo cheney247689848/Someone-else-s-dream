@@ -9,6 +9,7 @@ _this.m_pOwner = nil
 _this.m_nTimer = 0
 _this.m_nTick = 0
 _this.m_nTimerMax = 1
+_this.m_bEnd = false
 
 function _this.New(o , entity)--entity
     --m_eNtity = entity
