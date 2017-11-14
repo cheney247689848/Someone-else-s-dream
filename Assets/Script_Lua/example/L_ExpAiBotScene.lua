@@ -16,9 +16,9 @@ function _this:Init()
     self.ai = L_AiBot.New({name = "Ai-Tester"})
 
     self.stateIdle = self.GetStateIdle({m_nStatus = 0} , self.ai)
-    self.stateWalk = self.GetStateIdle({m_nStatus = 0} , self.ai)
-    self.stateAttack = self.GetStateIdle({m_nStatus = 0} , self.ai)
-    self.stateFreeze = self.GetStateIdle({m_nStatus = 0} , self.ai)
+    self.stateWalk = self.GetStateWalk({m_nStatus = 0} , self.ai)
+    self.stateAttack = self.GetStateAttack({m_nStatus = 0} , self.ai)
+    self.stateFreeze = self.GetStateFreeze({m_nStatus = 0} , self.ai)
     
     local layout0 = L_AiBotLayout.New()
     layout0:AddState(self.stateWalk)
@@ -91,6 +91,7 @@ _this.GetStateWalk = function (o , eNtity)
         if 0 == self.m_nTick then
 
             self.m_bEnd = true
+            self.m_eNtity.mesObserver:PostEvent(L_TypeMesAiBot.MES_STATE_END)
         end
     end
 
@@ -114,6 +115,7 @@ _this.GetStateAttack = function (o , eNtity)
         
         --do thing
         self.m_bEnd = true
+        self.m_eNtity.mesObserver:PostEvent(L_TypeMesAiBot.MES_STATE_END)
     end
 
     function state:Exit()
@@ -136,6 +138,7 @@ _this.GetStateFreeze = function (o , eNtity)
         
         --do thing
         self.m_bEnd = true
+        self.m_eNtity.mesObserver:PostEvent(L_TypeMesAiBot.MES_STATE_END)
     end
 
     function state:Exit()

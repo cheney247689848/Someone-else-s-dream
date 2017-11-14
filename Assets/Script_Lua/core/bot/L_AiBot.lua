@@ -112,12 +112,6 @@ function _this:Update()
     
     if self.machine ~= nil then
 
-        -- if self.machine:GetCurrentState().m_bEnd then
-            
-        --     if condition then
-        --         -- body
-        --     end
-        -- end
         self.machine:Update(UnityEngine.Time.deltaTime)
     end
 end
