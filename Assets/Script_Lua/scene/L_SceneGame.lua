@@ -38,7 +38,10 @@ function _this:ConfState()
     --other
     _this.stateMapLayout = L_SceneGameState.stateMapLayout({m_nStatus = L_TypeSceneState.Exit} , _this)
     _this.stateEliminate = L_SceneGameState.stateEliminate({m_nStatus = L_TypeSceneState.Eliminate} , _this)
-    _this.stateDrop = L_SceneGameState.stateDrop({m_nStatus = L_TypeSceneState.Drop} , _this) 
+
+    _this.stateObject = L_SceneGameState.stateObject({m_nStatus = L_TypeSceneState.Object} , _this)
+
+    _this.stateDrop = L_SceneGameState.stateDrop({m_nStatus = L_TypeSceneState.Drop} , _this)
 
     _this.machine = L_StateMachine.New()
     _this.machine:SetGlobalState(_this.stateGlobal)

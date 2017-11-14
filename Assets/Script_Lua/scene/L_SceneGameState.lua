@@ -57,7 +57,8 @@ _this.stateLayout = function (o , eNtity)
     function state:Execute(nTime)
         
         --do thing
-        self.m_eNtity:ChangeToState(self.m_eNtity.stateMapLayout)
+        -- self.m_eNtity:ChangeToState(self.m_eNtity.stateMapLayout)
+        self.m_eNtity:ChangeToState(self.m_eNtity.stateObject)
     end
 
     function state:Exit()
@@ -238,7 +239,12 @@ _this.stateMapLayout = function (o , eNtity)
 
         if 3 == self.m_nTick then
             
-            print("结束")
+            print("配置怪物")
+            for i = 1, 2 do
+                
+                local object = L_ObjectController:CreatObject(777)
+            end
+
             self.m_eNtity:ChangeToState(self.m_eNtity.stateProcess)
             self.m_nTick = 4
 
@@ -495,7 +501,7 @@ _this.stateEliminate = function (o , eNtity)
                     L_NodeController:SetNodeStatus(n.index , L_TypeStatusNode.NONE)
                 end
             end
-            self.m_eNtity:ChangeToState(self.m_eNtity.stateDrop)
+            self.m_eNtity:ChangeToState(self.m_eNtity.stateObject)
             self.m_nTick = 1
         end
         
@@ -507,6 +513,51 @@ _this.stateEliminate = function (o , eNtity)
     end
     return state
 end
+
+
+_this.stateObject = function (o , eNtity)
+    
+    local state = L_State.New(o , eNtity)
+    function state:Enter()
+
+        print("------进入object状态------")
+
+    end
+
+    function state:Execute(nTime)
+        
+        if 0 == self.m_nTick then
+            
+            if L_ObjectController:Update() then
+                
+                self.m_eNtity:ChangeToState(self.m_eNtity.stateDrop)
+                self.m_nTick = 1
+            end
+        end 
+    end
+
+    function state:Exit()
+
+        print("------退出object状态------")
+    end
+    return state
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 _this.stateDrop = function (o , eNtity)
     

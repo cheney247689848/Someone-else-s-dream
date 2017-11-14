@@ -18,6 +18,7 @@ _this.botLayouts = nil
 _this.botLayoutIndex = nil
 _this.stateIndex = nil
 _this.machine = nil
+_this.isActive = nil
 
 function _this.New(o)
     o = o or {}
@@ -33,17 +34,72 @@ function _this:Init()
     self.botLayouts = {}
     self.botLayoutIndex = -1
     self.stateIndex = -1
+    self.isActive = false
     self.mesObserver = L_MessageObserver.New()
+end
 
+--==============================--
+--desc:  注册事件 
+--事件本身可以分开处理回合制和即时战略
+--time:2017-11-14 03:57:26
+--@return 
+--==============================--
+function _this:RegisterEvent()
+    
     local event_stateEnd = function ()
-
+        
         self:SetNextState()
     end
     self.mesObserver[L_TypeMesAiBot.MES_STATE_END] = self.mesObserver[L_TypeMesAiBot.MES_STATE_END] + event_stateEnd
 end
 
-function _this:AddBotLayout(layout)
 
+--==============================--
+--desc: 设置进入下一个状态
+--time:2017-11-14 03:59:11
+--@return 
+--==============================--
+function _this:SetNextState()
+    
+    if self.stateIndex + 1 <= self.botLayouts[self.botLayoutIndex]:GetLength()  then
+        
+        self.stateIndex = self.stateIndex + 1
+        local state = self.botLayouts[self.botLayoutIndex]:GetState(self.stateIndex)
+        if state == nil then
+            
+            print("Error ChangeLayout state = nil")
+            return
+        end
+        self.machine:ChangeState(state)
+    end
+end
+
+--==============================--
+--desc:休眠开关
+--time:2017-11-14 03:59:26
+--@active:
+--@return 
+--==============================--
+function _this:SetActive(active)
+    
+    self.isActive = active
+end
+
+function _this:Update()
+    
+    if not self.isActive then
+        return false
+    end
+
+    if self.machine ~= nil then
+
+        self.machine:Update(UnityEngine.Time.deltaTime)
+    end
+    return true
+end
+
+function _this:AddBotLayout(layout)
+    
     table.insert( self.botLayouts, layout )
 end
 
@@ -90,30 +146,6 @@ function _this:ChangeBotLayout(index)
         return
     end
     self.machine:SetCurrentState(state)
-end
-
-function _this:SetNextState()
-    
-    --进入下一个状态
-    if self.stateIndex + 1 <= self.botLayouts[self.botLayoutIndex]:GetLength()  then
-        
-        self.stateIndex = self.stateIndex + 1
-        local state = self.botLayouts[self.botLayoutIndex]:GetState(self.stateIndex)
-        if state == nil then
-            
-            print("Error ChangeLayout state = nil")
-            return
-        end
-        self.machine:ChangeState(state)
-    end
-end
-
-function _this:Update()
-    
-    if self.machine ~= nil then
-
-        self.machine:Update(UnityEngine.Time.deltaTime)
-    end
 end
 
 

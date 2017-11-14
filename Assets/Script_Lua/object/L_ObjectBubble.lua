@@ -5,20 +5,23 @@ local KeyCode = UnityEngine.KeyCode
 require("core/bot/L_AiBot")
 require("core/bot/L_AiBotLayout")
 
-L_ExpAiBotScene = {}
-setmetatable(L_ExpAiBotScene, {__index = _G})
-local _this = L_ExpAiBotScene
+L_ObjectBubble = L_AiBot.New({name = "object - bubble"})
+local _this = L_ObjectBubble
 
-_this.ai = nil
+function _this.New(o)
+    o = o or {}
+    setmetatable(o , _this)
+    _this.__index = _this
+    o:Init()
+    return o;
+end
 
-function _this:Init()
+function _this:Config()
 
-    self.ai = L_AiBot.New({name = "Ai-Tester"})
-
-    self.stateIdle = self.GetStateIdle({m_nStatus = 0} , self.ai)
-    self.stateWalk = self.GetStateWalk({m_nStatus = 0} , self.ai)
-    self.stateAttack = self.GetStateAttack({m_nStatus = 0} , self.ai)
-    self.stateFreeze = self.GetStateFreeze({m_nStatus = 0} , self.ai)
+    self.stateIdle = self.GetStateIdle({m_nStatus = 0} , self)
+    self.stateWalk = self.GetStateWalk({m_nStatus = 0} , self)
+    self.stateAttack = self.GetStateAttack({m_nStatus = 0} , self)
+    self.stateFreeze = self.GetStateFreeze({m_nStatus = 0} , self)
     
     local layout0 = L_AiBotLayout.New()
     layout0:AddState(self.stateWalk)
@@ -30,26 +33,25 @@ function _this:Init()
     layout1:AddState(self.stateFreeze)
     layout1:AddState(self.stateAttack)
 
-    self.ai:AddBotLayout(layout0)
-    self.ai:AddBotLayout(layout1)
-    self.ai:ChangeBotLayout(1)
-
-    UpdateBeat:Add(self.Update , self)
+    self:AddBotLayout(layout0)
+    self:AddBotLayout(layout1)
+    self:ChangeBotLayout(1)
 end
 
-function _this:Update()
-
-    if Input.GetKeyDown(KeyCode.Alpha1) then
-
-        self.ai:ChangeBotLayout(1)
-    elseif Input.GetKeyDown(KeyCode.Alpha2) then
-
-        self.ai:ChangeBotLayout(2)
+--==============================--
+--desc:重写事件方法
+--time:2017-11-14 05:53:56
+--@return 
+--==============================--
+function _this:RegisterEvent()
+    
+    local event_stateEnd = function ()
+        
+        --self:SetNextState()
+        self:SetActive(false) -- 回合休眠
     end
-
-    self.ai:Update()
+    self.mesObserver[L_TypeMesAiBot.MES_STATE_END] = self.mesObserver[L_TypeMesAiBot.MES_STATE_END] + event_stateEnd
 end
-
 
 _this.GetStateIdle = function (o , eNtity)
     

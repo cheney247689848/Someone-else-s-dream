@@ -14,4 +14,5 @@ L_TypeSceneState = {
     MapLayout = 20,
     Eliminate = 21,
     Drop = 22,
+    Object = 23,
 }
