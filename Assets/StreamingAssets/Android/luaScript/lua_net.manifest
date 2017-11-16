@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3061665526
+CRC: 2038079513
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5becb5a4a3ab1ebb5b323083c3783188
+    Hash: 1a7b7f7a5d976419e17e989f42694dbb
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -13,7 +13,7 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/ResLua/lua/net/L_NetInfoProcess.lua.bytes
-- Assets/ResLua/lua/net/L_NetServerObserver.lua.bytes
-- Assets/ResLua/lua/net/L_ByteStream.lua.bytes
 - Assets/ResLua/lua/net/L_NetServer.lua.bytes
+- Assets/ResLua/lua/net/L_ByteStream.lua.bytes
+- Assets/ResLua/lua/net/L_NetServerObserver.lua.bytes
 Dependencies: []

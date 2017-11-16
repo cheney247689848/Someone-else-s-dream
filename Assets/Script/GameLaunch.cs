@@ -2,7 +2,7 @@
 using UnityEngine;
 using LuaInterface;
 using ToLuaFramework;
-
+using System.Collections;
 using System.Reflection;
 using System.IO;
 using System.Security.Cryptography;
@@ -10,34 +10,24 @@ using System.Text;
 public class GameLaunch:LuaClient
 {    
     LuaFunction function;
+
+    public GameLaunch(){}
+
     void Start()
     {
-
-#if UNITY_EDITOR
+ #if UNITY_EDITOR
         LuaFileUtils.Instance.beZip = AppConst.isZip;
 #else
         LuaFileUtils.Instance.beZip = true;
 #endif
         if (LuaFileUtils.Instance.beZip)
         {
-
-            AssetsBuilder builder = this.gameObject.AddComponent<AssetsBuilder>();
-            var path = System.IO.Path.Combine(AppConst.boxAssetDir , "lua_update");
-            if (!CacheTool.IsFile(path))
-            {
-                path = System.IO.Path.Combine(AppConst.AssetDir , AppConst.platform + "/" + AppConst.luaDirName + "/lua_update");
-            }
-            // Debug.Log(path);
-            builder.LoadBundle(path , LoadBundleBack);
-        }else{
-            
+            StartCoroutine("IELoading");
+        }else
+        {
+            Init();
             GameInit();
         }
-    }
-    public void LoadBundleBack(AssetBundle bundle){
-
-        LuaFileUtils.Instance.AddSearchBundle(bundle.name, bundle);
-        GameInit();
     }
 
     public void GameInit(){
@@ -62,14 +52,6 @@ public class GameLaunch:LuaClient
         function.Call();
     }
 
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    void Update()
-    {
-        
-    }
-
     public override void Destroy()
     {
 
@@ -90,6 +72,49 @@ public class GameLaunch:LuaClient
     void OnApplicationPause(bool pauseStatus){
 
         //Debug.LogError("OnApplicationPause : " + pauseStatus);
+    }
+
+    public void LoadBundleBack(AssetBundle bundle){
+
+        LuaFileUtils.Instance.AddSearchBundle(bundle.name, bundle);
+    }
+    IEnumerator IELoading(){
+        Debug.Log("IELoading Loading ... ... ");
+        string[] loadList = new String[10]{
+
+            "tolua" , 
+            "tolua_cjson" , 
+            "tolua_lpeg" , 
+            "tolua_misc" , 
+            "tolua_protobuf" , 
+            "tolua_socket" , 
+            "tolua_system" , 
+            "tolua_system_reflection" , 
+            "tolua_unityengine",
+            "lua_update"
+        };
+        AssetsBuilder builder = this.gameObject.AddComponent<AssetsBuilder>();
+        for (int i = 0; i < loadList.Length; i++)
+        {
+            var path = System.IO.Path.Combine(AppConst.boxAssetDir , loadList[i]);
+            if (!CacheTool.IsFile(path))
+            {
+#if UNITY_EDITOR
+        path = System.IO.Path.Combine(AppConst.AssetDir , AppConst.platform + "/" + AppConst.luaDirName + "/" + loadList[i]);
+#else
+        path = System.IO.Path.Combine(AppConst.AssetDir , loadList[i]);
+#endif
+            }
+            builder.LoadBundle(path , LoadBundleBack);
+            do
+            {
+                yield return new WaitForEndOfFrame();
+            } while (builder.isLoading);
+        }
+        Debug.Log("IELoading LoadFinsh");   
+
+        Init();
+        GameInit();
     }
 
 

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1027925230
+CRC: 1523465402
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a79d95646cbc2aedec1cf37c8f3dc342
+    Hash: 0447d657694e390890bb747ba3b826fc
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -13,5 +13,6 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/ResLua/lua/type/L_TypeNode.lua.bytes
+- Assets/ResLua/lua/type/L_TypeMesAiBot.lua.bytes
 - Assets/ResLua/lua/type/L_TypeSceneState.lua.bytes
 Dependencies: []

@@ -6,6 +6,7 @@ require "node/L_Node"
 require "node/L_NodeController"
 require "map/L_Map"
 require "eliminate/L_Eliminate"
+require "object/L_ObjectController"
 
 L_SceneGameState = {}
 setmetatable(L_SceneGameState, {__index = _G})
@@ -57,8 +58,7 @@ _this.stateLayout = function (o , eNtity)
     function state:Execute(nTime)
         
         --do thing
-        -- self.m_eNtity:ChangeToState(self.m_eNtity.stateMapLayout)
-        self.m_eNtity:ChangeToState(self.m_eNtity.stateObject)
+        self.m_eNtity:ChangeToState(self.m_eNtity.stateMapLayout)
     end
 
     function state:Exit()
@@ -75,7 +75,7 @@ _this.stateMapLayout = function (o , eNtity)
 
         print("------进入MapLayout状态------")
         self.m_nTimer = 0
-        self.m_nTick = 0
+        self.m_nTick = 3
     end
 
     function state:Execute(nTime)
@@ -240,14 +240,15 @@ _this.stateMapLayout = function (o , eNtity)
         if 3 == self.m_nTick then
             
             print("配置怪物")
-            for i = 1, 2 do
-                
-                local object = L_ObjectController:CreatObject(777)
+            for i = 1, 1 do
+                local id = 1654867
+                local object = L_ObjectController:CreatObject(id)
+                print("creat " , id)
             end
 
-            self.m_eNtity:ChangeToState(self.m_eNtity.stateProcess)
+            self.m_eNtity:ChangeToState(self.m_eNtity.stateObject)
+            -- self.m_eNtity:ChangeToState(self.m_eNtity.stateProcess)
             self.m_nTick = 4
-
         end
     end
 
@@ -521,10 +522,16 @@ _this.stateObject = function (o , eNtity)
     function state:Enter()
 
         print("------进入object状态------")
-
+        L_ObjectController:SetNextState()
     end
 
     function state:Execute(nTime)
+
+        -- if 0 == self.m_nTick then
+
+        --     L_ObjectController:SetNextState()
+        --     self.m_nTick = 1
+        -- end
         
         if 0 == self.m_nTick then
             
@@ -542,21 +549,6 @@ _this.stateObject = function (o , eNtity)
     end
     return state
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 _this.stateDrop = function (o , eNtity)

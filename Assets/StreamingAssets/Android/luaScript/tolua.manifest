@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 2218004891
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 628c3fbee0255d5b1650a10eae61c78b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/ResLua/tolua/ltn12.lua.bytes
+- Assets/ResLua/tolua/slot.lua.bytes
+- Assets/ResLua/tolua/mime.lua.bytes
+- Assets/ResLua/tolua/typeof.lua.bytes
+- Assets/ResLua/tolua/tolua.lua.bytes
+- Assets/ResLua/tolua/socket.lua.bytes
+- Assets/ResLua/tolua/list.lua.bytes
+- Assets/ResLua/tolua/event.lua.bytes
+Dependencies: []

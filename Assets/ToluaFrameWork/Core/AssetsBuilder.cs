@@ -54,6 +54,8 @@ public class AssetsBuilder : MonoBehaviour
     public delegate void LoadDelegate(AssetBundle bundle);
     // private LoadDelegate m_LoadDelegate;
     private bool bLoading;
+    public bool isLoading{get{return bLoading;}}
+
     public float fProgress;
     /// <summary>
     /// Loads the bundle.
@@ -64,7 +66,7 @@ public class AssetsBuilder : MonoBehaviour
     {
         if (bLoading) {
 
-            Debug.Log("Error : bLoading = " + path);
+            Debug.LogError("Error : is Loading ");
             return;
         }
         bLoading = true;
@@ -102,13 +104,14 @@ public class AssetsBuilder : MonoBehaviour
             yield break;
         }
        Debug.Log("加载成功 :" + bunReq.assetBundle);
-       bLoading = false;
        if (null != loadDelegate){
 
 			loadDelegate(bunReq.assetBundle);
 			loadDelegate = null;
 	   }
-        
+       bunReq.assetBundle.Unload(true);
+       bunReq = null;
+       bLoading = false;
     }
 
 	/// <summary>

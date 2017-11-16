@@ -8,12 +8,14 @@ public class MgrLuaInterpWrap
 	{
 		L.BeginClass(typeof(MgrLuaInterp), typeof(System.Object));
 		L.RegFunction("GetLuaFileUtils", GetLuaFileUtils);
+		L.RegFunction("IsContainBundle", IsContainBundle);
 		L.RegFunction("AddSearchBundle", AddSearchBundle);
-		L.RegFunction("GetLuaAssets", GetLuaAssets);
+		L.RegFunction("GetLuaBytes", GetLuaBytes);
 		L.RegFunction("New", _CreateMgrLuaInterp);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("luaFileUtils", get_luaFileUtils, set_luaFileUtils);
 		L.RegVar("assetsMap", get_assetsMap, set_assetsMap);
+		L.RegVar("tags", get_tags, set_tags);
 		L.EndClass();
 	}
 
@@ -59,6 +61,23 @@ public class MgrLuaInterpWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsContainBundle(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			bool o = MgrLuaInterp.IsContainBundle(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int AddSearchBundle(IntPtr L)
 	{
 		try
@@ -76,14 +95,15 @@ public class MgrLuaInterpWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetLuaAssets(IntPtr L)
+	static int GetLuaBytes(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
+			ToLua.CheckArgsCount(L, 2);
 			string arg0 = ToLua.CheckString(L, 1);
-			LuaAssets o = MgrLuaInterp.GetLuaAssets(arg0);
-			ToLua.PushObject(L, o);
+			string arg1 = ToLua.CheckString(L, 2);
+			byte[] o = MgrLuaInterp.GetLuaBytes(arg0, arg1);
+			ToLua.Push(L, o);
 			return 1;
 		}
 		catch(Exception e)
@@ -121,6 +141,20 @@ public class MgrLuaInterpWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_tags(IntPtr L)
+	{
+		try
+		{
+			ToLua.PushObject(L, MgrLuaInterp.tags);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_luaFileUtils(IntPtr L)
 	{
 		try
@@ -142,6 +176,21 @@ public class MgrLuaInterpWrap
 		{
 			System.Collections.Generic.Dictionary<string,LuaAssets> arg0 = (System.Collections.Generic.Dictionary<string,LuaAssets>)ToLua.CheckObject(L, 2, typeof(System.Collections.Generic.Dictionary<string,LuaAssets>));
 			MgrLuaInterp.assetsMap = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_tags(IntPtr L)
+	{
+		try
+		{
+			System.Collections.Generic.List<string> arg0 = (System.Collections.Generic.List<string>)ToLua.CheckObject(L, 2, typeof(System.Collections.Generic.List<string>));
+			MgrLuaInterp.tags = arg0;
 			return 0;
 		}
 		catch(Exception e)

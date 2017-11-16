@@ -13,6 +13,7 @@ public class MgrLuaInterp{
     const bool isLoadLuaBundle = false;
     static public LuaFileUtils luaFileUtils = null;
     static public Dictionary<string , LuaAssets> assetsMap = new Dictionary<string, LuaAssets>();
+    static public List<string> tags = new List<string>();
     public MgrLuaInterp(LuaFileUtils lfUtiles){
 
       luaFileUtils = lfUtiles;
@@ -23,8 +24,18 @@ public class MgrLuaInterp{
         return luaFileUtils;
     }
 
+    static public bool IsContainBundle(string name){
+
+        return assetsMap.ContainsKey(name);
+    }
+
     static public void AddSearchBundle(string name , AssetBundle bundle){
 
+        string tag = name.Split('_')[0];
+        if (!tags.Contains(tag))
+        {
+            tags.Add(tag);
+        }
         TextAsset[] textAssets = bundle.LoadAllAssets<TextAsset>();
         if (textAssets.Length <= 0)
         {
@@ -39,14 +50,27 @@ public class MgrLuaInterp{
         assetsMap.Add(name , las);
     }
 
-    static public LuaAssets GetLuaAssets(string name){
+    static public byte[] GetLuaBytes(string zipName , string fileName){
 
-        LuaAssets las = null;
-        if (!assetsMap.TryGetValue(name , out las))
+    LuaAssets las = null;
+    for (int i = 0; i < tags.Count; i++)
+    {
+        string mapName = null;
+        if (zipName.Length > 0)
         {
-            Debug.LogError(string.Format("LuaAssets {0} is not exists" , name));
+            mapName = tags[i] + zipName;
+        }else mapName = tags[i];
+        if (assetsMap.TryGetValue(mapName , out las))
+        {
+            byte[] b = las.GetBytesFromName(fileName);
+            if (b != null)
+            {
+                return b;
+            }
         }
-        return las;
+    }
+    // Debug.LogError(string.Format("LuaAssets {0} is not exists" , name));
+    return null;
     }
 }
 
@@ -72,11 +96,12 @@ public class LuaAssets{
             byteMap.Add(name , bytes);
         }else{
             Debug.LogError(string.Format("lua {0} is already exists" , name));
-        } 
+        }
     }
 
     public byte[] GetBytesFromName(string name){
 
+        Debug.Log(strPackName + " , " + name);
         byte[] bytes = null;
         if (!byteMap.TryGetValue(name , out bytes))
         {

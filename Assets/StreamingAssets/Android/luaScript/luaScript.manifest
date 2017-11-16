@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 472437150
+CRC: 1888153277
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -12,59 +12,92 @@ AssetBundleManifest:
       Name: lua_core
       Dependencies: {}
     Info_3:
-      Name: lua_core_observer
+      Name: lua_core_bot
       Dependencies: {}
     Info_4:
-      Name: lua_core_scene
+      Name: lua_core_observer
       Dependencies: {}
     Info_5:
-      Name: lua_core_state
+      Name: lua_core_scene
       Dependencies: {}
     Info_6:
-      Name: lua_eliminate
+      Name: lua_core_state
       Dependencies: {}
     Info_7:
-      Name: lua_example
+      Name: lua_eliminate
       Dependencies: {}
     Info_8:
-      Name: lua_map
+      Name: lua_example
       Dependencies: {}
     Info_9:
-      Name: lua_net
+      Name: lua_map
       Dependencies: {}
     Info_10:
-      Name: lua_node
+      Name: lua_net
       Dependencies: {}
     Info_11:
-      Name: lua_observer
+      Name: lua_node
       Dependencies: {}
     Info_12:
-      Name: lua_other
+      Name: lua_object
       Dependencies: {}
     Info_13:
-      Name: lua_overwrite
+      Name: lua_observer
       Dependencies: {}
     Info_14:
-      Name: lua_proxyscene
+      Name: lua_other
       Dependencies: {}
     Info_15:
-      Name: lua_scene
+      Name: lua_overwrite
       Dependencies: {}
     Info_16:
-      Name: lua_table
+      Name: lua_proxyscene
       Dependencies: {}
     Info_17:
-      Name: lua_three
+      Name: lua_scene
       Dependencies: {}
     Info_18:
-      Name: lua_tool
+      Name: lua_table
       Dependencies: {}
     Info_19:
-      Name: lua_type
+      Name: lua_three
       Dependencies: {}
     Info_20:
-      Name: lua_unit
+      Name: lua_tool
       Dependencies: {}
     Info_21:
+      Name: lua_type
+      Dependencies: {}
+    Info_22:
+      Name: lua_unit
+      Dependencies: {}
+    Info_23:
       Name: lua_update
+      Dependencies: {}
+    Info_24:
+      Name: tolua
+      Dependencies: {}
+    Info_25:
+      Name: tolua_cjson
+      Dependencies: {}
+    Info_26:
+      Name: tolua_lpeg
+      Dependencies: {}
+    Info_27:
+      Name: tolua_misc
+      Dependencies: {}
+    Info_28:
+      Name: tolua_protobuf
+      Dependencies: {}
+    Info_29:
+      Name: tolua_socket
+      Dependencies: {}
+    Info_30:
+      Name: tolua_system
+      Dependencies: {}
+    Info_31:
+      Name: tolua_system_reflection
+      Dependencies: {}
+    Info_32:
+      Name: tolua_unityengine
       Dependencies: {}

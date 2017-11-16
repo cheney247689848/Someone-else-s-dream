@@ -17,7 +17,8 @@ function _this.New(o)
 end
 
 function _this:Config()
-
+    
+    self.stateNone = self.GetStateNone({m_nStatus = 0} , self)
     self.stateIdle = self.GetStateIdle({m_nStatus = 0} , self)
     self.stateWalk = self.GetStateWalk({m_nStatus = 0} , self)
     self.stateAttack = self.GetStateAttack({m_nStatus = 0} , self)
@@ -36,6 +37,8 @@ function _this:Config()
     self:AddBotLayout(layout0)
     self:AddBotLayout(layout1)
     self:ChangeBotLayout(1)
+
+    self.machine:SetCurrentState(self.stateNone)
 end
 
 --==============================--
@@ -51,6 +54,26 @@ function _this:RegisterEvent()
         self:SetActive(false) -- 回合休眠
     end
     self.mesObserver[L_TypeMesAiBot.MES_STATE_END] = self.mesObserver[L_TypeMesAiBot.MES_STATE_END] + event_stateEnd
+end
+
+_this.GetStateNone = function (o , eNtity)
+    
+    local state = L_State.New(o , eNtity)
+    function state:Enter()
+
+        print("------进入None状态------")
+    end
+
+    function state:Execute(nTime)
+        
+
+    end
+
+    function state:Exit()
+
+        print("------退出None状态------")
+    end
+    return state
 end
 
 _this.GetStateIdle = function (o , eNtity)

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3959244880
+CRC: 31768113
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c8195735a25525dc0c70db42c09f755a
+    Hash: 53cfeddbad3d68734593e86f230cd31a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,8 +12,8 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
+- Assets/ResLua/lua/core/scene/L_SceneTemplate.lua.bytes
+- Assets/ResLua/lua/core/scene/L_Scene.lua.bytes
 - Assets/ResLua/lua/core/scene/L_SceneViewTemplate.lua.bytes
 - Assets/ResLua/lua/core/scene/L_SceneStateTemplate.lua.bytes
-- Assets/ResLua/lua/core/scene/L_Scene.lua.bytes
-- Assets/ResLua/lua/core/scene/L_SceneTemplate.lua.bytes
 Dependencies: []

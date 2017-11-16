@@ -21,6 +21,7 @@ public class AssectsExporter : EditorWindow
 
     static bool isCompressedAssetBundle = false;
     static DateTime preTime;
+    const string resLuaPath = "Assets/ResLua";
     const string spritePath = "Assets/Script_Lua";
     public const string strDir = "pack";
     public const string strUpdateDir = "ResUpdate";
@@ -37,13 +38,14 @@ public class AssectsExporter : EditorWindow
         static void Build_Lua() {
 
         CreatDir(strDir);
-        // CreatDir(System.IO.Path.Combine(strDir , "lua"));
         CreatDir(System.IO.Path.Combine("StreamingAssets" , partform));
 
         preTime = DateTime.Now;
         luaPackages.Clear();
         Directory.CreateDirectory("Assets/ResLua");
-        PackLua(spritePath , "lua");
+        PackLua("Assets/Script_Lua" , "lua");
+        PackLua("Assets/ToLua/Lua" , "tolua");
+        AssetDatabase.Refresh();
         Pack(luaPackages , partform + "/luaScript");
         Directory.Delete("Assets/ResLua" , true);
         Debug.Log("time use = " + (DateTime.Now - preTime).ToString());
@@ -52,29 +54,22 @@ public class AssectsExporter : EditorWindow
 
     static void PackLua(string pathDir , string preName , bool isPre = false){
 
-        //Debug.Log(string.Format("Pack lua : pathDir = {0} , preName = {1}" , pathDir, preName));
-        string dir = pathDir.Substring(pathDir.LastIndexOf('/') + 1);
-        string sp = System.IO.Path.Combine("Assets/ResLua" , "lua");//strDir
-        string newDir = "";
-        string bundleName = "";
+        // Debug.Log(string.Format(" ----  Pack lua : pathDir = {0} , preName = {1}" , pathDir, preName));
         StringBuilder strBundleName = new StringBuilder();
-        if (isPre)
+        string dirName = null;
+        strBundleName.Append(preName);
+        if (!isPre)
         {
-            strBundleName.Append(preName);
-            strBundleName.Append("_" + dir);
-            bundleName =  "lua_" + pathDir.Replace(spritePath + "/" , "").Replace("/" , "_");
-            newDir = pathDir.Replace(spritePath + "/" , "");
+            dirName = preName;
         }else{
-            
-            strBundleName.Append(preName);
-            bundleName = "lua";
-            newDir = pathDir.Replace(spritePath , "");
-        }
-        Debug.Log("isPre  " + isPre);
-        Debug.Log("bundleName  " + bundleName);
 
-        newDir = System.IO.Path.Combine(sp , newDir);
-        Directory.CreateDirectory(newDir);   
+            dirName = pathDir.Substring(pathDir.LastIndexOf('/') + 1);
+            strBundleName.Append("_" + dirName);
+        }
+        string bundleName = strBundleName.ToString();
+        string newDir = System.IO.Path.Combine(resLuaPath , strBundleName.ToString().Replace('_' , '/'));
+        // Debug.Log(String.Format("bundleName = {0} , newDir = {1}" , bundleName , newDir));
+        Directory.CreateDirectory(newDir);
 
         //读取文件夹下的lua文件
         string[] luaPaths = Directory.GetFiles(pathDir, "*.lua", SearchOption.TopDirectoryOnly);
@@ -83,18 +78,16 @@ public class AssectsExporter : EditorWindow
         {
             string sLua = luaPaths[i];
             string operaStr = sLua.Replace("/", "\\");
-            string newPath = operaStr.Replace(spritePath.Replace("/" , "\\") + "\\" , "");
-            newPath = System.IO.Path.Combine(sp , newPath).Replace(".lua" , ".lua.bytes");
+            string name = sLua.Substring(sLua.LastIndexOf("\\") + 1);
+            string newPath = System.IO.Path.Combine(newDir , name).Replace(".lua" , ".lua.bytes");
             assetsPaths[i] = newPath;
 
             StreamReader render = new StreamReader(sLua);
             string desStr = DesEncrypt.Encrypt(render.ReadToEnd());
             render.Close();
-            byte[] bytes = Encoding.UTF8.GetBytes(desStr);//Debug.Log(bytes.Length);
+            byte[] bytes = Encoding.UTF8.GetBytes(desStr);
             CacheTool.CreatFile(newPath , bytes);
-            AssetDatabase.ImportAsset(newPath);
-            //Debug.Log("sLua :" + sLua);
-     
+            // AssetDatabase.ImportAsset(newPath);
         }
         
         package pack;

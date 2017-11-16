@@ -226,7 +226,7 @@ end
 --加载mainifest文件
 --加载所有 lua assets
 function _this:IEChangeToGame()
-    
+    print(AppConst.isZip)
     if AppConst.isZip then
         
         _this.view:UpdateLabel("加载 Assets......")
@@ -237,8 +237,8 @@ function _this:IEChangeToGame()
 
             --print('Array: '..tostring(bundlePaths[i]))
             local name = tostring(bundlePaths[i])
-            if name ~= "lua_update" then
-            
+            if not MgrLuaInterp.IsContainBundle(name) then
+                print(name)
                 local bundle = _this:LoadLuaFile(name)
                 MgrLuaInterp.AddSearchBundle(name , bundle)
                 bundle:Unload(true)

@@ -173,7 +173,7 @@ public class LuaClient : MonoBehaviour
     protected void Awake()
     {
         Instance = this;
-        Init();
+        // Init();
 
 #if UNITY_5_4_OR_NEWER
         SceneManager.sceneLoaded += OnSceneLoaded;

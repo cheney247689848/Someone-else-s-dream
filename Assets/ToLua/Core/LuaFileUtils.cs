@@ -244,7 +244,7 @@ namespace LuaInterface
             byte[] buffer = null;
             string zipName = null;
             StringBuilder sb = StringBuilderCache.Acquire();
-            sb.Append("lua");
+            // sb.Append("lua");
             int pos = fileName.LastIndexOf('/');
 
             if (pos > 0)
@@ -284,11 +284,8 @@ namespace LuaInterface
             //overwrite ------
             // Debug.Log(zipName);
             // Debug.Log(fileName);
-            LuaAssets las = MgrLuaInterp.GetLuaAssets(zipName);
-            if (las != null)
-            {
-                buffer = las.GetBytesFromName(fileName);
-            }
+            // Debug.Log(string.Format("zipName = {0} , fileName = {1}" , zipName , fileName));
+            buffer = MgrLuaInterp.GetLuaBytes(zipName , fileName);
             return buffer;
         }
 

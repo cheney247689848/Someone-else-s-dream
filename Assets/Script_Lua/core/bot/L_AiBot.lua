@@ -36,6 +36,12 @@ function _this:Init()
     self.stateIndex = -1
     self.isActive = false
     self.mesObserver = L_MessageObserver.New()
+    self:Config()
+end
+
+function _this:Config()
+    
+    print("you need to overwrite function Config")
 end
 
 --==============================--
@@ -61,9 +67,8 @@ end
 --==============================--
 function _this:SetNextState()
     
-    if self.stateIndex + 1 <= self.botLayouts[self.botLayoutIndex]:GetLength()  then
+    if self.stateIndex <= self.botLayouts[self.botLayoutIndex]:GetLength()  then
         
-        self.stateIndex = self.stateIndex + 1
         local state = self.botLayouts[self.botLayoutIndex]:GetState(self.stateIndex)
         if state == nil then
             
@@ -71,6 +76,7 @@ function _this:SetNextState()
             return
         end
         self.machine:ChangeState(state)
+        self.stateIndex = self.stateIndex + 1
     end
 end
 
@@ -98,6 +104,12 @@ function _this:Update()
     return true
 end
 
+--==============================--
+--desc:
+--time:2017-11-15 02:45:06
+--@layout:
+--@return 
+--==============================--
 function _this:AddBotLayout(layout)
     
     table.insert( self.botLayouts, layout )
@@ -113,11 +125,22 @@ function _this:SubBotLayout(layout)
     end
 end
 
+--==============================--
+--desc:
+--time:2017-11-15 02:45:10
+--@return 
+--==============================--
 function _this:CurrentBotLayout()
     
     return self.botLayouts[self.botLayoutIndex]
 end
 
+--==============================--
+--desc:
+--time:2017-11-15 02:45:13
+--@index:
+--@return 
+--==============================--
 function _this:ChangeBotLayout(index)
     
     if self.botLayouts[index] == nil then
@@ -145,7 +168,7 @@ function _this:ChangeBotLayout(index)
         print("Error ChangeLayout state = nil")
         return
     end
-    self.machine:SetCurrentState(state)
+    -- self.machine:SetCurrentState(state)
 end
 
 

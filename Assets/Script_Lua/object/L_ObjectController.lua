@@ -17,6 +17,14 @@ function _this:CreatObject(id)
     return object
 end
 
+function _this:SetNextState()
+
+    for i,v in ipairs(self.objcetList) do
+        v:SetActive(true)
+        v:SetNextState()
+    end
+end
+
 function _this:Clear()
 
     --destroy gameobject

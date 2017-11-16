@@ -15,6 +15,8 @@ L_GameInputMes = {}
 setmetatable(L_GameInputMes, {__index = _G})
 local _this = L_GameInputMes
 
+print(123123123123123123123)
+
 function _this:Update()
     
     -- if Input.GetKeyDown(KeyCode.Alpha1) then
