@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3595119845
+CRC: 2688911856
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4bb66b06c7ea43f15132cdbaf3ac4ece
+    Hash: 00464c21d881d08c7cc49659fa3b49bb
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,6 +12,6 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/ResLua/lua/object/L_ObjectBubble.lua.bytes
 - Assets/ResLua/lua/object/L_ObjectController.lua.bytes
+- Assets/ResLua/lua/object/L_ObjectBubble.lua.bytes
 Dependencies: []

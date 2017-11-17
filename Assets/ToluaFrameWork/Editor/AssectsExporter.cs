@@ -19,7 +19,7 @@ public class AssectsExporter : EditorWindow
         public string sName;
     }
 
-    static bool isCompressedAssetBundle = false;
+    static bool isCompressedAssetBundle = true;
     static DateTime preTime;
     const string resLuaPath = "Assets/ResLua";
     const string spritePath = "Assets/Script_Lua";
@@ -219,7 +219,7 @@ public class AssectsExporter : EditorWindow
         options = BuildAssetBundleOptions.DeterministicAssetBundle;
 #else
    
-        if (isCompressedAssetBundle)
+        if (!isCompressedAssetBundle)
         {
             options = BuildAssetBundleOptions.DeterministicAssetBundle |
             BuildAssetBundleOptions.UncompressedAssetBundle;

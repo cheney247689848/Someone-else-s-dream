@@ -14,11 +14,15 @@ public class AppConstWrap
 		L.RegConstant("DebugMode", 0);
 		L.RegVar("isUpdateMode", get_isUpdateMode, set_isUpdateMode);
 		L.RegVar("isZip", get_isZip, set_isZip);
+		L.RegVar("platform", get_platform, set_platform);
 		L.RegVar("AssetDir", get_AssetDir, set_AssetDir);
 		L.RegVar("boxAssetDir", get_boxAssetDir, set_boxAssetDir);
-		L.RegVar("platform", get_platform, set_platform);
 		L.RegVar("luaDirName", get_luaDirName, set_luaDirName);
 		L.RegVar("boxLuaDirName", get_boxLuaDirName, set_boxLuaDirName);
+		L.RegVar("luaPath", get_luaPath, null);
+		L.RegVar("luaBoxPath", get_luaBoxPath, null);
+		L.RegVar("resPath", get_resPath, null);
+		L.RegVar("resBoxPath", get_resBoxPath, null);
 		L.EndClass();
 	}
 
@@ -89,6 +93,20 @@ public class AppConstWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_platform(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, AppConst.platform);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_AssetDir(IntPtr L)
 	{
 		try
@@ -117,20 +135,6 @@ public class AppConstWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_platform(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushstring(L, AppConst.platform);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_luaDirName(IntPtr L)
 	{
 		try
@@ -150,6 +154,62 @@ public class AppConstWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, AppConst.boxLuaDirName);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_luaPath(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, AppConst.luaPath);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_luaBoxPath(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, AppConst.luaBoxPath);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_resPath(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, AppConst.resPath);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_resBoxPath(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, AppConst.resBoxPath);
 			return 1;
 		}
 		catch(Exception e)
@@ -189,6 +249,21 @@ public class AppConstWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_platform(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			AppConst.platform = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_AssetDir(IntPtr L)
 	{
 		try
@@ -210,21 +285,6 @@ public class AppConstWrap
 		{
 			string arg0 = ToLua.CheckString(L, 2);
 			AppConst.boxAssetDir = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_platform(IntPtr L)
-	{
-		try
-		{
-			string arg0 = ToLua.CheckString(L, 2);
-			AppConst.platform = arg0;
 			return 0;
 		}
 		catch(Exception e)

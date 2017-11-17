@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1406739319
+CRC: 2177923735
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f1bb64970cdb44d0f14e079baa7762bb
+    Hash: 14efb488005dfd3f1bf5137bbcce9ef5
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,7 +12,7 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
+- Assets/ResLua/tolua/misc/functions.lua.bytes
 - Assets/ResLua/tolua/misc/strict.lua.bytes
 - Assets/ResLua/tolua/misc/utf8.lua.bytes
-- Assets/ResLua/tolua/misc/functions.lua.bytes
 Dependencies: []

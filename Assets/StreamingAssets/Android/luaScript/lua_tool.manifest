@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2174842553
+CRC: 2996163087
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: be57836c02b119b0ce1d1ac2fcd9f7df
+    Hash: e3c5a3109ae88046fb4cfa4c86ba70e7
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,7 +12,7 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
+- Assets/ResLua/lua/tool/L_TextMaker.lua.bytes
 - Assets/ResLua/lua/tool/L_TextSprite.lua.bytes
 - Assets/ResLua/lua/tool/L_TextMeta.lua.bytes
-- Assets/ResLua/lua/tool/L_TextMaker.lua.bytes
 Dependencies: []

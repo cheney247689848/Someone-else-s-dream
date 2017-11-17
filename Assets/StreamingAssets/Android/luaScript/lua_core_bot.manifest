@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 437412632
+CRC: 3286228035
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e41fa5fbcbb1088a85d19ebba767d86c
+    Hash: eb400c907956a360262b5a673ae5779f
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,6 +12,6 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/ResLua/lua/core/bot/L_AiBotLayout.lua.bytes
 - Assets/ResLua/lua/core/bot/L_AiBot.lua.bytes
+- Assets/ResLua/lua/core/bot/L_AiBotLayout.lua.bytes
 Dependencies: []

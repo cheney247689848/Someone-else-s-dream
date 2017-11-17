@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1891178265
+CRC: 1313204446
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 013e4a8b62e7bbdaa255d20850dde752
+    Hash: ebb5dcf192202b06a58d3197f4f346b2
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -13,13 +13,13 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/ResLua/lua/scene/L_SceneGameView.lua.bytes
+- Assets/ResLua/lua/scene/L_SceneLogin.lua.bytes
 - Assets/ResLua/lua/scene/L_SceneMajorState.lua.bytes
-- Assets/ResLua/lua/scene/L_StatePublic.lua.bytes
+- Assets/ResLua/lua/scene/L_SceneGame.lua.bytes
+- Assets/ResLua/lua/scene/L_SceneMajor.lua.bytes
 - Assets/ResLua/lua/scene/L_SceneLoginState.lua.bytes
 - Assets/ResLua/lua/scene/L_SceneLoginView.lua.bytes
-- Assets/ResLua/lua/scene/L_SceneGame.lua.bytes
-- Assets/ResLua/lua/scene/L_SceneMajorView.lua.bytes
-- Assets/ResLua/lua/scene/L_SceneMajor.lua.bytes
 - Assets/ResLua/lua/scene/L_SceneGameState.lua.bytes
-- Assets/ResLua/lua/scene/L_SceneLogin.lua.bytes
+- Assets/ResLua/lua/scene/L_StatePublic.lua.bytes
+- Assets/ResLua/lua/scene/L_SceneMajorView.lua.bytes
 Dependencies: []

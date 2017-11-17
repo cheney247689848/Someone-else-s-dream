@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Text;
 public class AppConst
 {
     public const string Name = "example";                       //游戏名字
@@ -10,28 +10,50 @@ public class AppConst
     
     //沙盒目录
 #if UNITY_EDITOR
-    static public string boxAssetDir = Application.persistentDataPath;
+    static public string platform = "Android";
     static public string AssetDir = Application.dataPath + "/StreamingAssets/";
-    static public string platform = "Android";
+    static public string boxAssetDir = Application.persistentDataPath;
 #elif UNITY_IPHONE
-    static public string boxAssetDir = Application.persistentDataPath;
-    static public string AssetDir = Application.dataPath + "/Raw";
     static public string platform = "IOS";
-#elif UNITY_ANDROID
+    static public string AssetDir = Application.dataPath + "/Raw/";
     static public string boxAssetDir = Application.persistentDataPath;
-    static public string AssetDir = "jar:file:// + Application.dataPath + !/assets/";
+#elif UNITY_ANDROID
     static public string platform = "Android";
+    static public string AssetDir = Application.dataPath + "!assets/";
+    static public string boxAssetDir = Application.persistentDataPath;
+    
 #endif
 
     //lua
     static public string luaDirName = "luaScript";
     static public string boxLuaDirName = "";
-// #if UNITY_EDITOR
-//     static public string boxLuaDirName = Application.dataPath + "/StreamingAssets/luaScript";
-// #elif UNITY_IPHONE
-//     static public string boxLuaAssetDir = Application.persistentDataPath + "/";
-// #elif UNITY_ANDROID
-//     static public string boxLuaAssetDir = Application.persistentDataPath + "/";
-// #endif
-    
+
+    static public string luaPath{
+
+        get{
+            return System.IO.Path.Combine(AssetDir  , platform ) +  "/luaScript";
+        }
+    }
+
+    static public string luaBoxPath{
+
+        get{
+            return System.IO.Path.Combine(boxAssetDir , platform) + "/luaScript";
+        }
+    }
+
+
+    static public string resPath{
+
+        get{
+            return System.IO.Path.Combine(AssetDir  , platform );
+        }
+    }
+
+    static public string resBoxPath{
+
+        get{
+            return System.IO.Path.Combine(boxAssetDir , platform);
+        }
+    }
 }

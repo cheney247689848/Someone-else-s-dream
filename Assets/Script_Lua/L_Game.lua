@@ -8,7 +8,7 @@ require "proxyScene/L_ProxyScene"
 require "scene/L_SceneLogin"
 function Launch()
 
-    print("Launch")
+    print(" --- Launch --- ")
     --配置加载信息
     L_Bundle.localPath = localPath
     L_Bundle.persPath = persPath

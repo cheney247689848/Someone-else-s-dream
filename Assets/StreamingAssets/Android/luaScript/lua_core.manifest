@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2215870834
+CRC: 2430921723
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 23e6bd934280ff33d439e6f0e6482f77
+    Hash: 475fca46f9df44c122ed1f8ccbd18aee
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,6 +12,6 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/ResLua/lua/core/L_Enum.lua.bytes
 - Assets/ResLua/lua/core/L_Proxy.lua.bytes
+- Assets/ResLua/lua/core/L_Enum.lua.bytes
 Dependencies: []

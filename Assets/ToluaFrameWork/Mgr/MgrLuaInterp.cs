@@ -101,11 +101,10 @@ public class LuaAssets{
 
     public byte[] GetBytesFromName(string name){
 
-        Debug.Log(strPackName + " , " + name);
         byte[] bytes = null;
         if (!byteMap.TryGetValue(name , out bytes))
         {
-            Debug.LogError(string.Format("lua {0} is not exists" , name));
+            // Debug.LogError(string.Format("lua {0} is not exists" , name));
             return null;
         }
         return bytes;

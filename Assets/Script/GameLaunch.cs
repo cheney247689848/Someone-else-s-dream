@@ -96,14 +96,10 @@ public class GameLaunch:LuaClient
         AssetsBuilder builder = this.gameObject.AddComponent<AssetsBuilder>();
         for (int i = 0; i < loadList.Length; i++)
         {
-            var path = System.IO.Path.Combine(AppConst.boxAssetDir , loadList[i]);
+            var path = System.IO.Path.Combine(AppConst.luaBoxPath , loadList[i]);
             if (!CacheTool.IsFile(path))
             {
-#if UNITY_EDITOR
-        path = System.IO.Path.Combine(AppConst.AssetDir , AppConst.platform + "/" + AppConst.luaDirName + "/" + loadList[i]);
-#else
-        path = System.IO.Path.Combine(AppConst.AssetDir , loadList[i]);
-#endif
+                path = System.IO.Path.Combine(AppConst.luaPath , loadList[i]);
             }
             builder.LoadBundle(path , LoadBundleBack);
             do

@@ -537,7 +537,7 @@ _this.stateObject = function (o , eNtity)
             
             if L_ObjectController:Update() then
                 
-                self.m_eNtity:ChangeToState(self.m_eNtity.stateDrop)
+                -- self.m_eNtity:ChangeToState(self.m_eNtity.stateDrop)
                 self.m_nTick = 1
             end
         end 

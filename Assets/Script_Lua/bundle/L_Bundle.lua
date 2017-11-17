@@ -153,8 +153,8 @@ end
 function _this:InitMainifest(mainifestName)
 
     self.strMainifest = mainifestName
-    print(self:GetPath(self.strMainifest))
-    local bundle = AssetBundle.LoadFromFile(self:GetPath(self.strMainifest))
+    print(self:GetPath(mainifestName))
+    local bundle = AssetBundle.LoadFromFile(self:GetPath(mainifestName))
     self.mainifest = bundle:LoadAsset("AssetBundleManifest")
     if self.mainifest == nil then
         
@@ -193,10 +193,10 @@ end
 
 function _this:GetPath(bundleName)
     
-    local path = self.persPath .. bundleName
+    local path = string.format("%s/%s", AppConst.resBoxPath , bundleName)
     if not CacheTool.IsFile(path) then
         
-        path = self.localPath .. bundleName
+        path = string.format("%s/%s", AppConst.resPath , bundleName)
     end
     return path
 end

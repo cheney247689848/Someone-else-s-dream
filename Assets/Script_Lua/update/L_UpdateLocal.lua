@@ -226,11 +226,11 @@ end
 --加载mainifest文件
 --加载所有 lua assets
 function _this:IEChangeToGame()
-    print(AppConst.isZip)
+    -- print(AppConst.isZip)
     if AppConst.isZip then
         
         _this.view:UpdateLabel("加载 Assets......")
-        local mainifestBundle = _this:LoadLuaFile("luascript")
+        local mainifestBundle = _this:LoadLuaFile("luaScript")
         local mainfest = mainifestBundle:LoadAsset("AssetBundleManifest")
         local bundlePaths = mainfest:GetAllAssetBundles()
         for i = 0, bundlePaths.Length - 1 do
@@ -238,7 +238,7 @@ function _this:IEChangeToGame()
             --print('Array: '..tostring(bundlePaths[i]))
             local name = tostring(bundlePaths[i])
             if not MgrLuaInterp.IsContainBundle(name) then
-                print(name)
+                -- print(name)
                 local bundle = _this:LoadLuaFile(name)
                 MgrLuaInterp.AddSearchBundle(name , bundle)
                 bundle:Unload(true)
@@ -316,10 +316,10 @@ end
 
 function _this:LoadLuaFile(bundleName)
     
-    local path = string.format( "%s/%s/%s", AppConst.boxAssetDir , AppConst.boxLuaDirName , bundleName)
+    local path = string.format("%s/%s", AppConst.luaBoxPath , bundleName)
     if not CacheTool.IsFile(path) then
         
-        path = string.format( "%s/%s/%s/%s", AppConst.AssetDir , self.platform , AppConst.luaDirName , bundleName)
+        path = string.format("%s/%s", AppConst.luaPath , bundleName)
     end
     return AssetBundle.LoadFromFile(path)
 end

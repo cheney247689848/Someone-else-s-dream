@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2568301477
+CRC: 1241251839
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ead0f6ce134991fa087c189a8e168268
+    Hash: d71eafeafa09a10695cdead0d998e268
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,17 +12,17 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/ResLua/tolua/UnityEngine/Plane.lua.bytes
-- Assets/ResLua/tolua/UnityEngine/Ray.lua.bytes
-- Assets/ResLua/tolua/UnityEngine/LayerMask.lua.bytes
-- Assets/ResLua/tolua/UnityEngine/Touch.lua.bytes
-- Assets/ResLua/tolua/UnityEngine/Bounds.lua.bytes
-- Assets/ResLua/tolua/UnityEngine/Mathf.lua.bytes
-- Assets/ResLua/tolua/UnityEngine/Vector3.lua.bytes
-- Assets/ResLua/tolua/UnityEngine/Color.lua.bytes
-- Assets/ResLua/tolua/UnityEngine/Vector2.lua.bytes
-- Assets/ResLua/tolua/UnityEngine/Vector4.lua.bytes
-- Assets/ResLua/tolua/UnityEngine/Time.lua.bytes
 - Assets/ResLua/tolua/UnityEngine/Quaternion.lua.bytes
+- Assets/ResLua/tolua/UnityEngine/Plane.lua.bytes
+- Assets/ResLua/tolua/UnityEngine/Touch.lua.bytes
+- Assets/ResLua/tolua/UnityEngine/Vector4.lua.bytes
+- Assets/ResLua/tolua/UnityEngine/Vector2.lua.bytes
+- Assets/ResLua/tolua/UnityEngine/Ray.lua.bytes
+- Assets/ResLua/tolua/UnityEngine/Mathf.lua.bytes
+- Assets/ResLua/tolua/UnityEngine/Time.lua.bytes
+- Assets/ResLua/tolua/UnityEngine/Bounds.lua.bytes
 - Assets/ResLua/tolua/UnityEngine/RaycastHit.lua.bytes
+- Assets/ResLua/tolua/UnityEngine/Color.lua.bytes
+- Assets/ResLua/tolua/UnityEngine/Vector3.lua.bytes
+- Assets/ResLua/tolua/UnityEngine/LayerMask.lua.bytes
 Dependencies: []
