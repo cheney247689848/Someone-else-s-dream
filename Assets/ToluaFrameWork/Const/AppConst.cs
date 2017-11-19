@@ -6,7 +6,7 @@ public class AppConst
     public const int GameFrameRate = 60;                        //游戏帧频
     public const bool DebugMode = false;
     static public bool isUpdateMode = false;
-    static public bool isZip = true;                            //是否加载脚本bundle
+    static public bool isZip = false;                            //是否加载脚本bundle
     
     //沙盒目录
 #if UNITY_EDITOR

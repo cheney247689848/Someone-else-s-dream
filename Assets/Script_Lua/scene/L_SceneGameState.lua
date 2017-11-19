@@ -75,7 +75,7 @@ _this.stateMapLayout = function (o , eNtity)
 
         print("------进入MapLayout状态------")
         self.m_nTimer = 0
-        self.m_nTick = 3
+        self.m_nTick = 0
     end
 
     function state:Execute(nTime)

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1561286532
+CRC: 1394830847
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9eae92470e828e582fb5b76055cf500a
+    Hash: 810070bfb3d23b51d5278e20726e83c3
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9dea23ffc7e96552740e12d1ee5309d8
@@ -14,12 +14,16 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Res/sGame/PackTextures/m_0.png
 - Assets/Res/sGame/PackTextures/gem_1.png
 - Assets/Res/sGame/PackTextures/gem_4.png
 - Assets/Res/sGame/PackTextures/gem_0.png
 - Assets/Res/sGame/PackTextures/block90X90.png
+- Assets/Res/sGame/PackTextures/gem_31.png
 - Assets/Res/sGame/PackTextures/pathPoint.png
-- Assets/Res/sGame/PackTextures/gem_5.png
+- Assets/Res/sGame/PackTextures/gem_140.png
+- Assets/Res/sGame/PackTextures/gem_11.png
+- Assets/Res/sGame/PackTextures/Exom.png
 - Assets/Res/sGame/PackTextures/gem_2.png
 - Assets/Res/sGame/PackTextures/gem_3.png
 Dependencies: []
