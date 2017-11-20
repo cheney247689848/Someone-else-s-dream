@@ -18,6 +18,7 @@ public class GameLaunch:LuaClient
  #if UNITY_EDITOR
         LuaFileUtils.Instance.beZip = AppConst.isZip;
 #else
+        AppConst.isZip = true;
         LuaFileUtils.Instance.beZip = true;
 #endif
         if (LuaFileUtils.Instance.beZip)
