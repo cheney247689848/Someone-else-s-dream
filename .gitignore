@@ -28,4 +28,6 @@ sysinfo.txt
 
 
 # StreamingAssets files
-Assets\StreamingAssets\
+/Assets/StreamingAssets/
+
+*.manifest
