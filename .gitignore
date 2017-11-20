@@ -30,4 +30,6 @@ sysinfo.txt
 # StreamingAssets files
 /Assets/StreamingAssets/
 
-*.manifest
+# Pack files
+/Pack/ResUpdate
+/Pack/Recording_Main.txt
