@@ -75,7 +75,7 @@ _this.stateMapLayout = function (o , eNtity)
 
         print("------进入MapLayout状态------")
         self.m_nTimer = 0
-        self.m_nTick = 3
+        self.m_nTick = 0
     end
 
     function state:Execute(nTime)
@@ -246,8 +246,8 @@ _this.stateMapLayout = function (o , eNtity)
                 print("creat " , id)
             end
 
-            self.m_eNtity:ChangeToState(self.m_eNtity.stateObject)
-            -- self.m_eNtity:ChangeToState(self.m_eNtity.stateProcess)
+            -- self.m_eNtity:ChangeToState(self.m_eNtity.stateObject) --直接测试怪物状态
+            self.m_eNtity:ChangeToState(self.m_eNtity.stateProcess)
             self.m_nTick = 4
         end
     end
@@ -522,6 +522,7 @@ _this.stateObject = function (o , eNtity)
     function state:Enter()
 
         print("------进入object状态------")
+        self.m_nTick = 0
         L_ObjectController:SetNextState()
     end
 
@@ -537,7 +538,7 @@ _this.stateObject = function (o , eNtity)
             
             if L_ObjectController:Update() then
                 
-                -- self.m_eNtity:ChangeToState(self.m_eNtity.stateDrop)
+                self.m_eNtity:ChangeToState(self.m_eNtity.stateDrop)
                 self.m_nTick = 1
             end
         end 
