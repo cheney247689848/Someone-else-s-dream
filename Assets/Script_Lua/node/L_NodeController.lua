@@ -14,12 +14,13 @@ _this.nodeParent = nil
 _this.nodeList = nil
 _this.sortList = nil
 _this.creatList = nil
-
+_this.nodePool = nil
 
 function _this:Init(num , parent)
     
     _this.nodeParent = parent
     _this.nodeList = {}
+    _this.nodePool = {}
     for i = 1, num do
 
         local node = L_Node.New()
@@ -119,7 +120,7 @@ function _this:Refresh()
             end
         elseif v.status == L_TypeStatusNode.NONE then 
 
-            if v.index == 1 then
+            if v.tarLen <= 1 then
                 --原点
             elseif v.tarLen == 2 then -- 1 为起点  直接产生
                 -- print("creat : " , v.index)
@@ -129,7 +130,7 @@ function _this:Refresh()
                 --交换
                 L_Map:RefreshMergeData()
                 -- print("Find :  ----------- " , 1 , v.index)
-                local paths = L_Map:FindPath(1 , v.index)
+                local paths = L_Map:FindPath(L_Map.glassPoint , v.index)
                 if paths ~= nil then
                     -- print(string.format( "find : 1 to %d  len = %d ------------", v.index, #paths))
                     if #paths >= 3 then 
@@ -221,5 +222,12 @@ function _this:GetGemImg(color)
     local bundle = L_Bundle:GetBundle("sgame_packtextures")
     local sprite = L_Unit:LoadSprite("Gem_" .. color , bundle)
     return sprite
+end
+
+
+function _this:AddInPool(obj)
+    
+    table.insert( self.nodePool, obj)
+    obj.transform.localPosition = Vector3(0 , 20000 , 0)
 end
 

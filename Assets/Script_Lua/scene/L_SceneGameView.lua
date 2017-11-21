@@ -45,6 +45,15 @@ function _this:CreatBlock(pos)
     return block
 end
 
+function _this:CreatGlass(pos)
+    
+    local bundle = L_Bundle:GetBundle("sgame_prefab_glass")
+    local bPrefab = L_Unit:LoadPrefab("glass" , bundle)
+    local glass = L_Unit:Instantiate(bPrefab , _this.blockNode)
+    glass.transform.localPosition = pos
+    return glass
+end
+
 function _this:DebugPos(pos)
     
     local bundle = L_Bundle:GetBundle("sgame_prefab_point")

@@ -21,6 +21,7 @@ _this.metaData = nil --暂定是一维数据
 _this.metaDynData = nil
 _this.mergeData = nil
 _this.pathSystem = nil
+_this.glassPoint = 1
 
 _this.sceneRect = Rect.New(0,0,1280,720)
 
@@ -40,6 +41,7 @@ end
 
 function _this:SetConfigRamdom()
     
+    self.glassPoint = 50
     self.metaData = {
     0,0,0,0,0,0,0,0,0,0,0,0,1,0,
     0,0,0,0,1,0,0,0,0,0,0,0,0,0,
@@ -69,6 +71,12 @@ end
 
 function _this:SetMergeData(index , value)
     
+    if self.glassPoint == index then
+        
+        print(string.format( "Error SetMergeData glassPoint = index = %d", index ))
+        return
+    end
+
     if self.mergeData[index] ~= nil then
         
         self.mergeData[index] = self.metaData[i] ~= 0 and self.metaData[i] or value
@@ -84,7 +92,21 @@ end
 
 function _this:IsBlock(dex)
 
+    if self.glassPoint == dex then
+        
+        return false
+    end
+
     if self.metaData[dex] == 0 then
+        
+        return true
+    end
+    return false
+end
+
+function _this:IsGlass(dex)
+
+    if self.glassPoint == dex then
         
         return true
     end

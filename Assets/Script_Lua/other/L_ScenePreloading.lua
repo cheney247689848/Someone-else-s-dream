@@ -13,7 +13,7 @@ _this.data = {
 
     {name = "Login" , loadBundles = "slogin_texture_noticebg|slogin_prefab_prafabimage|slogin_prefab_cube"},
     {name = "Major" , loadBundles = ""},
-    {name = "Game" , loadBundles = "sgame_packtextures|sgame_prefab_cube|sgame_prefab_block|sgame_prefab_point"}
+    {name = "Game" , loadBundles = "sgame_packtextures|sgame_prefab_cube|sgame_prefab_block|sgame_prefab_point|sgame_prefab_glass"}
 }
 
 function _this:GetPreLoadingData(sceneName)

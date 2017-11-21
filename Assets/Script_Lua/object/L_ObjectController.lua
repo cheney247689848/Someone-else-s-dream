@@ -4,17 +4,51 @@
 -- In 2017
 -------------------------------------------------------------------
 require "object/L_ObjectBubble"
+require "node/L_NodeController"
 
 L_ObjectController = {}
 setmetatable(L_ObjectController, {__index = _G})
 local _this = L_ObjectController
 
 _this.objcetList = {}
-function _this:CreatObject(id)
+function _this:CreatObject(id , index)
     
     local object = L_ObjectBubble.New()
-    table.insert( self.objcetList, object )
+    if not self:SetIndex(object , index) then
+        
+        print(string.format("Error CreatObject SetIndex = %d" , index))
+        return
+    end
+    object:Instantiate()
+    table.insert( self.objcetList, object)
     return object
+end
+
+function _this:SetIndex(obj , index)
+    
+    local node = L_NodeController:GetNode(index)
+    if node == nil then
+        
+        print(string.format("Error SetIndex node = nil index = %d" , index))
+        return false
+    end
+
+    if node.status ~= L_TypeStatusNode.IDLE then
+        
+        print("Error SetIndex node status ~= IDLE")
+        return false
+    end
+
+    if obj.index ~= -1 then
+        --reset
+        L_NodeController:SetNodeStatus(index , L_TypeStatusNode.NONE)
+    end
+    obj.index = index
+    L_NodeController:SetNodeStatus(index , L_TypeStatusNode.MONSTER)
+    --ui
+    L_NodeController:AddInPool(node.uiObject)
+    node.uiObject = nil
+    return true
 end
 
 function _this:SetNextState()

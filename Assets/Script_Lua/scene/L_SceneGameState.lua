@@ -7,6 +7,7 @@ require "node/L_NodeController"
 require "map/L_Map"
 require "eliminate/L_Eliminate"
 require "object/L_ObjectController"
+require "object/L_ObjectGlass"
 
 L_SceneGameState = {}
 setmetatable(L_SceneGameState, {__index = _G})
@@ -23,7 +24,6 @@ _this.stateGlobal = function (o , eNtity)
     function state:Execute(nTime)
         
         -- if Input.GetKeyDown(KeyCode.Alpha1) then
-
 
         -- elseif Input.GetKeyDown(KeyCode.Alpha2) then
             
@@ -89,6 +89,7 @@ _this.stateMapLayout = function (o , eNtity)
             --self.m_eNtity.view:InitMap(L_Map.formx ,L_Map.formy,L_Map.metaData)
 
             --creat block
+            local glassIndex = 1
             for y = 0 , L_Map.formy - 1 do
                 for x = 0 , L_Map.formx - 1 do
         
@@ -97,6 +98,11 @@ _this.stateMapLayout = function (o , eNtity)
                         
                         local block = self.m_eNtity.view:CreatBlock(Vector3(L_Map.imgRect.x * x , - L_Map.imgRect.y * y , 0))
                         L_NodeController.nodeList[v].uiNode = block
+                    elseif L_Map:IsGlass(v) then
+                        
+                        glassIndex = v
+                        local objNode = self.m_eNtity.view:CreatGlass(Vector3(L_Map.imgRect.x * x , - L_Map.imgRect.y * y , 0))
+                        L_ObjectGlass:Config(nil , objNode)
                     end
                 end
             end
@@ -105,9 +111,9 @@ _this.stateMapLayout = function (o , eNtity)
             for i,v in ipairs(L_NodeController.nodeList) do
                 
                 local dex = v.index
-                if 1 ~= dex and L_Map:IsBlock(dex) then
+                if glassIndex ~= dex and L_Map:IsBlock(dex) then
                     
-                    local paths = L_Map:FindPath(1 , dex)
+                    local paths = L_Map:FindPath(glassIndex , dex)
                     if paths ~= nil then
                         
                         if #paths >= 2 then
@@ -161,36 +167,6 @@ _this.stateMapLayout = function (o , eNtity)
 
         if 1 == self.m_nTick then
 
-            if Input.GetKeyDown(KeyCode.Alpha1) then
-
-                -- print("REFRESH")
-                -- L_NodeController:Sort()
-                -- L_NodeController:Refresh()
-                -- L_NodeController:UpdateDebugUI()
-
-                L_NodeController:Sort()
-                if L_NodeController:Refresh() then
-                    
-                    L_NodeController:UpdateDebugUI()
-                    -- self.m_nTick = 2
-                else
-                    self.m_nTick = 3
-                end
-            elseif Input.GetKeyDown(KeyCode.Alpha2) then
-                
-                self.m_nTick = 2
-            end
-
-            -- self.m_nTimer = self.m_nTimer + nTime
-            -- if self.m_nTimer > 0.1 then
-    
-            --     print("REFRESH")
-            --     L_NodeController:Sort()
-            --     L_NodeController:Refresh()
-            --     L_NodeController:UpdateDebugUI()
-            --     self.m_nTimer = 0
-            -- end
-
             L_NodeController:Sort()
             if L_NodeController:Refresh() then
                 
@@ -199,6 +175,21 @@ _this.stateMapLayout = function (o , eNtity)
             else
                 self.m_nTick = 3
             end
+
+            -- if Input.GetKeyDown(KeyCode.Alpha1) then
+
+            --     L_NodeController:Sort()
+            --     if L_NodeController:Refresh() then
+                    
+            --         L_NodeController:UpdateDebugUI()
+            --         -- self.m_nTick = 2
+            --     else
+            --         self.m_nTick = 3
+            --     end
+            -- elseif Input.GetKeyDown(KeyCode.Alpha2) then
+                
+            --     self.m_nTick = 2
+            -- end
         end
 
         if 2 == self.m_nTick then
@@ -217,13 +208,13 @@ _this.stateMapLayout = function (o , eNtity)
                     end
         
                     --测试
-                    --v.uiObject.transform.localPosition = v.position
-                    --L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
+                    -- v.uiObject.transform.localPosition = v.position
+                    -- L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
 
                 elseif v.status == L_TypeStatusNode.CREAT then
 
                     v.uiObject = L_NodeController:CreatNodeUI()
-                    v:SetColor(math.random(0 , 4))
+                    v:SetColor(math.random(0 , 4)) --设置颜色
                     v.uiObject.transform.localPosition = v.position
                     L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
                     isForBreak = false
@@ -242,7 +233,7 @@ _this.stateMapLayout = function (o , eNtity)
             print("配置怪物")
             for i = 1, 1 do
                 local id = 1654867
-                local object = L_ObjectController:CreatObject(id)
+                local object = L_ObjectController:CreatObject(id , 15)
                 print("creat " , id)
             end
 

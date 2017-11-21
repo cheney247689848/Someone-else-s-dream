@@ -43,6 +43,14 @@ function _this:GetBundle(bName)
     
         return self.bundles[bName]
     end
+
+    local path = self:GetPath(bName)
+    local bundle = AssetBundle.LoadFromFile(path)
+    if bundle ~= nil then
+        
+        self:AddBundle(bundle.name , bundle)
+        return bundle
+    end
     print(string.format( "Error :: GetBundle name = %s ", bName ))
     return nil
 end

@@ -5,7 +5,11 @@ local KeyCode = UnityEngine.KeyCode
 require("core/bot/L_AiBot")
 require("core/bot/L_AiBotLayout")
 
-L_ObjectBubble = L_AiBot.New({name = "object - bubble"})
+L_ObjectBubble = L_AiBot.New({
+    name = "object - bubble" , 
+    index = -1,
+    objImg = nil
+})
 local _this = L_ObjectBubble
 
 function _this.New(o)
@@ -39,6 +43,14 @@ function _this:Config()
     self:ChangeBotLayout(1)
 
     self.machine:SetCurrentState(self.stateNone)
+end
+
+function _this:Instantiate()
+    
+    local bundle = L_Bundle:GetBundle("sgame_prefab_monster")
+    local bPrefab = L_Unit:LoadPrefab("monster" , bundle)
+    self.objImg = L_Unit:Instantiate(bPrefab , GameObject.Find("BlockNode"))
+    self.objImg.transform.localPosition =  L_Map:GetPosition(self.index)
 end
 
 --==============================--
