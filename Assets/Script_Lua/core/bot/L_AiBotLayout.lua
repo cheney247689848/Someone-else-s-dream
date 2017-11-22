@@ -2,6 +2,7 @@
 -- The Long night
 -- The night gives me black eyes, but I use it to find the light. 
 -- In 2017
+-- 读表配置状态队列 or global动态状态判断执行
 -------------------------------------------------------------------
 
 L_AiBotLayout = {}

@@ -8,7 +8,8 @@ require("core/bot/L_AiBotLayout")
 L_ObjectBubble = L_AiBot.New({
     name = "object - bubble" , 
     index = -1,
-    objImg = nil
+    objImg = nil,
+    isClose = false,
 })
 local _this = L_ObjectBubble
 
@@ -21,14 +22,17 @@ function _this.New(o)
 end
 
 function _this:Config()
+ 
+    self.stateNone = self.GetStateNone({m_nStatus = L_TypeObjectState.NONE} , self)
+    self.stateIdle = self.GetStateIdle({m_nStatus = L_TypeObjectState.IDLE} , self)
+    self.stateWalk = self.GetStateWalk({m_nStatus = L_TypeObjectState.WALK} , self)
+    self.stateAttack = self.GetStateAttack({m_nStatus = L_TypeObjectState.ATTACK} , self)
+    self.stateFreeze = self.GetStateFreeze({m_nStatus = L_TypeObjectState.FREEZE} , self)
+    self.stateAnger = self.GetStateAnger({m_nStatus = L_TypeObjectState.ANGER} , self)
     
-    self.stateNone = self.GetStateNone({m_nStatus = 0} , self)
-    self.stateIdle = self.GetStateIdle({m_nStatus = 0} , self)
-    self.stateWalk = self.GetStateWalk({m_nStatus = 0} , self)
-    self.stateAttack = self.GetStateAttack({m_nStatus = 0} , self)
-    self.stateFreeze = self.GetStateFreeze({m_nStatus = 0} , self)
     
     local layout0 = L_AiBotLayout.New()
+    layout0:SetStateGlobal()
     layout0:AddState(self.stateWalk)
     layout0:AddState(self.stateAttack)
 
@@ -61,12 +65,32 @@ end
 function _this:RegisterEvent()
     
     local event_stateEnd = function ()
-        
-        --self:SetNextState()
+
         self:SetActive(false) -- 回合休眠
     end
     self.mesObserver[L_TypeMesAiBot.MES_STATE_END] = self.mesObserver[L_TypeMesAiBot.MES_STATE_END] + event_stateEnd
 end
+
+function _this:SetPreState()
+
+    if self:GetStatus() == L_TypeObjectState.WALK then
+        
+        if not self.isClose then
+            --set state  --
+            return self.stateIndex
+        end
+    elseif self:GetStatus() == L_TypeObjectState.ANGER then
+        --特殊动态状态不需要并入队列
+        return self.stateIndex
+    end
+    self.stateIndex = self.stateIndex + 1
+    if self.stateIndex > self.botLayouts[self.botLayoutIndex]:GetLength() then
+        
+        self.stateIndex = 1
+    end
+    return self.stateIndex
+end
+
 
 _this.GetStateNone = function (o , eNtity)
     
@@ -114,19 +138,42 @@ end
 _this.GetStateWalk = function (o , eNtity)
     
     local state = L_State.New(o , eNtity)
+    state.paths = nil
+    state.pathIndex = nil
     function state:Enter()
 
         print("------进入Walk状态------")
-        self.m_bEnd = false
+        self.m_eNtity.isClose = false
+        self.m_nTick = 0
+        if self.paths == nil or self.pathIndex + 1 > #self.paths then
+            
+            self.paths = L_Map:FindPath(self.m_eNtity.index , L_Map.glassPoint)
+            self.pathIndex = 1
+            if self.paths == nil then
+
+                self.m_eNtity.machine:ChangeState(self.stateAnger)
+            else
+                self.m_nTick = 1
+            end
+        else
+            --继续上一次路径
+            self.pathIndex = self.pathIndex + 1
+            self.m_nTick = 1
+        end
     end
 
     function state:Execute(nTime)
         
-        --do thing
-        if 0 == self.m_nTick then
+        if 1 == self.m_nTick then
 
-            self.m_bEnd = true
+            self.m_eNtity.index = self.paths[self.pathIndex] + 1
+            self.m_eNtity.objImg.transform.localPosition =  L_Map:GetPosition(self.m_eNtity.index)
             self.m_eNtity.mesObserver:PostEvent(L_TypeMesAiBot.MES_STATE_END)
+            if self.pathIndex == #self.paths - 1 then
+                
+                self.m_eNtity.isClose = true
+            end
+            self.m_nTick = 2
         end
     end
 
@@ -179,6 +226,26 @@ _this.GetStateFreeze = function (o , eNtity)
     function state:Exit()
 
         print("------退出Freeze状态------")
+    end
+    return state
+end
+
+_this.GetStateAnger = function (o , eNtity)
+    
+    local state = L_State.New(o , eNtity)
+    function state:Enter()
+
+        print("------进入Anger状态------")
+    end
+
+    function state:Execute(nTime)
+        
+
+    end
+
+    function state:Exit()
+
+        print("------退出Anger状态------")
     end
     return state
 end

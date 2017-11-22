@@ -59,25 +59,45 @@ function _this:RegisterEvent()
     self.mesObserver[L_TypeMesAiBot.MES_STATE_END] = self.mesObserver[L_TypeMesAiBot.MES_STATE_END] + event_stateEnd
 end
 
+--==============================--
+--desc: overwrite the state
+-- 处理动态状态插入  当前特殊状态判断
+--time:2017-11-22 02:35:27
+--@return 
+--==============================--
+function _this:SetPreState()
+    
+    print("Please Overwrite Function GetNextState")
+    return -1
+end
 
 --==============================--
 --desc: 设置进入下一个状态
 --time:2017-11-14 03:59:11
 --@return 
 --==============================--
-function _this:SetNextState()
+function _this:SetNextState(index)
     
-    if self.stateIndex <= self.botLayouts[self.botLayoutIndex]:GetLength()  then
+    local index = self:SetPreState()
+    if index <= 0 then
+        print("return " , index)
+        return
+    end
+    if  index <= self.botLayouts[self.botLayoutIndex]:GetLength() then
         
-        local state = self.botLayouts[self.botLayoutIndex]:GetState(self.stateIndex)
+        local state = self.botLayouts[self.botLayoutIndex]:GetState(index)
         if state == nil then
             
             print("Error ChangeLayout state = nil")
             return
         end
         self.machine:ChangeState(state)
-        self.stateIndex = self.stateIndex + 1
     end
+end
+
+function _this:GetStatus()
+    
+    return self.machine:GetCurrentState().m_nStatus
 end
 
 --==============================--
@@ -161,7 +181,7 @@ function _this:ChangeBotLayout(index)
         self.machine:SetGlobalState(layout.stateGlobal)
     end
 
-    self.stateIndex = 1 --默认第一个状态
+    self.stateIndex = 0 --默认第一个状态为空
     local state = layout:GetState(self.stateIndex)
     if state == nil then
         

@@ -269,6 +269,12 @@ _this.stateProcess = function (o , eNtity)
 
     function state:Execute(nTime)
 
+        if Input.GetKeyDown(KeyCode.Alpha1) then
+
+            --测试  跳过状态
+            self.m_eNtity:ChangeToState(self.m_eNtity.stateEliminate)
+        end
+
         if 0 == self.m_nTick then
 
             if Input.GetMouseButtonDown(0) then
@@ -472,14 +478,6 @@ _this.stateEliminate = function (o , eNtity)
 
     function state:Execute(nTime)
         
-        if 0 == self.m_nTick then
-
-            if Input.GetKeyDown(KeyCode.Alpha1) then
-                
-                self.m_nTick = 1
-            end
-        end
-
         if 1 == self.m_nTick then
             
             --print(#self.list)
@@ -494,7 +492,7 @@ _this.stateEliminate = function (o , eNtity)
                 end
             end
             self.m_eNtity:ChangeToState(self.m_eNtity.stateObject)
-            self.m_nTick = 1
+            self.m_nTick = 2
         end
         
     end
@@ -519,12 +517,6 @@ _this.stateObject = function (o , eNtity)
 
     function state:Execute(nTime)
 
-        -- if 0 == self.m_nTick then
-
-        --     L_ObjectController:SetNextState()
-        --     self.m_nTick = 1
-        -- end
-        
         if 0 == self.m_nTick then
             
             if L_ObjectController:Update() then
