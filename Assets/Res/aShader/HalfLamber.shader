@@ -1,4 +1,4 @@
-﻿Shader "Unity Shaders Book/Diffuse Vertex-PixelLevel"
+﻿Shader "Unity Shaders Book/HalfLamber"
 {
 	Properties
 	{
@@ -47,7 +47,9 @@
 
 				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
 
-				fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * saturate(dot(worldNormal , worldLightDir));
+				fixed3 halfLamber = dot(worldNormal , worldLightDir) * 0.5 + 0.5;
+
+				fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * halfLamber;
 
 				fixed3 color = ambient + diffuse;
 
@@ -57,3 +59,4 @@
 		}
 	}
 }
+
