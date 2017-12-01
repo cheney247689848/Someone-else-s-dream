@@ -39,9 +39,10 @@ function Launch()
 
     -- L_ProxyScene:ChangeScene(L_SceneLogin)
 
+    require "example/L_ExpSceneObserver"
 
-    require "example/L_ExpLandlordsScene"
-    L_ExpLandlordsScene:Init()
+    -- require "example/L_ExpLandlordsScene"
+    -- L_ExpLandlordsScene:Init()
 
     -- require "example/L_ExpAiBotScene"
     -- L_ExpAiBotScene:Init()

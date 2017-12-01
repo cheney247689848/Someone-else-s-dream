@@ -32,7 +32,7 @@ function _this.New(o)
     --==============================--
     function observer:NotifyUpdate(lType, ...)
         --write the mes 
-        --print(string.format( "notify len = %d ", #_this[lType] ))
+        -- print(string.format( "notify len = %d ", #observer[lType] ))
         for i,v in ipairs(observer[lType]) do
             v(...)
         end

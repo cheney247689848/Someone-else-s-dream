@@ -28,12 +28,28 @@ end
 L_Mt = {}
 L_Mt.__add = function ( a , b )
     
+    if b == nil then
+        print(error("error func = nil"))
+        return nil
+    end
+
+    for i,v in ipairs(a) do
+        if v == b then
+            print(error("error b is contan!"))
+            return nil
+        end
+    end
+
     table.insert( a, b)
     return a
 end
 
 L_Mt.__sub = function ( a , b )
     
+    if b == nil then
+        print(error("error func = nil"))
+        return nil
+    end
     for i = #a , 0 , -1 do
         if a[i] == b then
             -- print(i)
