@@ -211,18 +211,28 @@ _this.stateMapLayout = function (o , eNtity)
                     -- v.uiObject.transform.localPosition = v.position
                     -- L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
 
-                elseif v.status == L_TypeStatusNode.CREAT then
+                -- elseif v.status == L_TypeStatusNode.CREAT then
 
-                    v.uiObject = L_NodeController:CreatNodeUI()
-                    v:SetColor(math.random(0 , 4)) --设置颜色
-                    v.uiObject.transform.localPosition = v.position
-                    L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
-                    isForBreak = false
+                --     v.uiObject = L_NodeController:CreatNodeUI()
+                --     v:SetColor(math.random(0 , 4)) --设置颜色
+                --     v.uiObject.transform.localPosition = v.position
+                --     L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
+                --     isForBreak = false
                 end
             end
 
             if isForBreak then
                 
+                for i,v in ipairs(L_NodeController.nodeList) do
+                    
+                    if v.status == L_TypeStatusNode.CREAT then
+    
+                        v.uiObject = L_NodeController:CreatNodeUI()
+                        v:SetColor(math.random(0 , 4))
+                        v.uiObject.transform.localPosition = v.position
+                        L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
+                    end
+                end
                 L_NodeController:UpdateDebugUI()
                 self.m_nTick = 1
             end
@@ -577,18 +587,28 @@ _this.stateDrop = function (o , eNtity)
                     --v.uiObject.transform.localPosition = v.position
                     --L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
 
-                elseif v.status == L_TypeStatusNode.CREAT then
+                -- elseif v.status == L_TypeStatusNode.CREAT then
 
-                    v.uiObject = L_NodeController:CreatNodeUI()
-                    v:SetColor(math.random(0 , 4))
-                    v.uiObject.transform.localPosition = v.position
-                    L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
-                    isForBreak = false
+                --     v.uiObject = L_NodeController:CreatNodeUI()
+                --     v:SetColor(math.random(0 , 4))
+                --     v.uiObject.transform.localPosition = v.position
+                --     L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
+                --     isForBreak = false
                 end
             end
 
             if isForBreak then
                 
+                for i,v in ipairs(L_NodeController.nodeList) do
+                    
+                    if v.status == L_TypeStatusNode.CREAT then
+    
+                        v.uiObject = L_NodeController:CreatNodeUI()
+                        v:SetColor(math.random(0 , 4))
+                        v.uiObject.transform.localPosition = v.position
+                        L_NodeController:SetNodeStatus(v.index , L_TypeStatusNode.IDLE)
+                    end
+                end
                 L_NodeController:UpdateDebugUI()
                 self.m_nTick = 0
             end

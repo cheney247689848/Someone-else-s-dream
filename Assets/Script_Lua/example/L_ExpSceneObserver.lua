@@ -7,9 +7,9 @@ end
 
 require "observer/L_MessageObserver"
 local mesObserver = L_MessageObserver.New()
-
+-- 
 print("value - " , mesObserver["adfs"] , #mesObserver["adfs"])
-mesObserver["adfs1"] = mesObserver["adfs"] + listener  
+mesObserver["adfs"] = mesObserver["adfs"] + listener  
 mesObserver["adfs"] = mesObserver["adfs"] + listener 
 mesObserver["adfs"] = mesObserver["adfs"] + listener 
 mesObserver["adfs"] = mesObserver["adfs"] + listener 

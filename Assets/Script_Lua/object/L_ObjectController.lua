@@ -41,7 +41,8 @@ function _this:SetIndex(obj , index)
 
     if obj.index ~= -1 then
         --reset
-        L_NodeController:SetNodeStatus(index , L_TypeStatusNode.NONE)
+        L_NodeController:SetNodeStatus(obj.index , L_TypeStatusNode.NONE)
+        print("------------------------------------------------" , obj.index)
     end
     obj.index = index
     L_NodeController:SetNodeStatus(index , L_TypeStatusNode.MONSTER)

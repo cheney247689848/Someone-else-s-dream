@@ -184,13 +184,13 @@ function _this:SetNodeStatus(index , status)
     
     if L_Map.mergeData[index] == nil then
         
-        print("Error SetNodeStatus mergeData index = %d" , index)
+        print(Error(string.format( "Error SetNodeStatus mergeData index = %d", index )))
         return
     end
 
     if self.nodeList[index] == nil then
         
-        print("Error SetNodeStatus nodeList index = %d" , index)
+        print(Error(string.format( "Error SetNodeStatus nodeList index = %d", index )))
         return
     end
     self.nodeList[index].status = status

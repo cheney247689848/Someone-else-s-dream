@@ -143,35 +143,38 @@ _this.GetStateWalk = function (o , eNtity)
     function state:Enter()
 
         print("------进入Walk状态------")
-        self.m_eNtity.isClose = false
         self.m_nTick = 0
-        if self.paths == nil or self.pathIndex + 1 > #self.paths then
-            
-            self.paths = L_Map:FindPath(self.m_eNtity.index , L_Map.glassPoint)
-            self.pathIndex = 1
-            if self.paths == nil then
-
-                self.m_eNtity.machine:ChangeState(self.stateAnger)
-            else
-                self.m_nTick = 1
-            end
-        else
-            --继续上一次路径
-            self.pathIndex = self.pathIndex + 1
-            self.m_nTick = 1
-        end
     end
 
     function state:Execute(nTime)
         
-        if 1 == self.m_nTick then
+        if 0 == self.m_nTick then
 
-            self.m_eNtity.index = self.paths[self.pathIndex] + 1
-            self.m_eNtity.objImg.transform.localPosition =  L_Map:GetPosition(self.m_eNtity.index)
-            self.m_eNtity.mesObserver:PostEvent(L_TypeMesAiBot.MES_STATE_END)
-            if self.pathIndex == #self.paths - 1 then
+            self.paths = L_Map:FindPath(self.m_eNtity.index , L_Map.glassPoint)
+            if self.paths == nil then
                 
-                self.m_eNtity.isClose = true
+                self.m_eNtity.machine:ChangeState(self.stateAnger)
+                self.m_nTick = 2
+            else
+                self.pathIndex = 2  --初始化路径
+                self.m_nTick = 1
+            end
+        end
+
+        if 1 == self.m_nTick then
+            
+            print(self.pathIndex , #self.paths)
+            local newIndex = self.paths[self.pathIndex] + 1
+            if L_ObjectController:SetIndex(self.m_eNtity , newIndex) then
+                
+                self.m_eNtity.objImg.transform.localPosition =  L_Map:GetPosition(newIndex)
+                self.m_eNtity.mesObserver:PostEvent(L_TypeMesAiBot.MES_STATE_END)
+                if self.pathIndex == #self.paths - 2 then
+                    
+                    self.m_eNtity.isClose = true
+                end
+            else
+                print(Error("Error walk state SetIndex false"))            
             end
             self.m_nTick = 2
         end

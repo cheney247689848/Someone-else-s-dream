@@ -280,7 +280,8 @@ public class PathSystem {
 		if(oriIndex < 0 || oriIndex >= m_data.Length || 0 != m_data[oriIndex] ||
 		   tarIndex < 0 || tarIndex >= m_data.Length || 0 != m_data[tarIndex]){
 
-			Debug.LogError("Error index = " + oriIndex + " = " + m_data[oriIndex] + "  TO  " + tarIndex + " = " + m_data[tarIndex]);
+			Debug.LogError(string.Format("Error index = {0} , data = {1} , tarIndex = {2} , data = {3} " , oriIndex , m_data[oriIndex] , tarIndex , m_data[tarIndex]));
+			// Debug.LogError("Error index = " + oriIndex + " = " + m_data[oriIndex] + "  TO  " + tarIndex + " = " + m_data[tarIndex]);
 			return new int[1] { oriIndex };
 		}
 

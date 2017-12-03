@@ -35,11 +35,9 @@ L_Mt.__add = function ( a , b )
 
     for i,v in ipairs(a) do
         if v == b then
-            print(error("error b is contan!"))
-            return nil
+            return a
         end
     end
-
     table.insert( a, b)
     return a
 end
