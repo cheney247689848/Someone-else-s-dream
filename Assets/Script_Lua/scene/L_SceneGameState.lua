@@ -475,7 +475,6 @@ _this.stateProcess = function (o , eNtity)
     return state
 end
 
-
 _this.stateEliminate = function (o , eNtity)
     
     local state = L_State.New(o , eNtity)
@@ -514,7 +513,6 @@ _this.stateEliminate = function (o , eNtity)
     return state
 end
 
-
 _this.stateObject = function (o , eNtity)
     
     local state = L_State.New(o , eNtity)
@@ -543,7 +541,6 @@ _this.stateObject = function (o , eNtity)
     end
     return state
 end
-
 
 _this.stateDrop = function (o , eNtity)
     
@@ -627,7 +624,6 @@ _this.stateDrop = function (o , eNtity)
     end
     return state
 end
-
 
 _this.stateExit = function (o , eNtity)
     

@@ -17,7 +17,7 @@ function Launch()
     L_Bundle:InitMainifest(platform)
 
     --正式
-    L_ProxyScene:ChangeScene(L_SceneLogin)
+    -- L_ProxyScene:ChangeScene(L_SceneLogin)
 
     --测试
     -- require "example/L_ExpLandlordsScene"
@@ -35,4 +35,5 @@ function Launch()
 
     -- require("example/L_ExpBundleScene")
     -- L_ExpBundleScene:Init()
+
 end
